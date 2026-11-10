@@ -15,7 +15,7 @@ from .detect import analyze
 from .fix import polish
 from .model import VERSION
 from .rules import load_rules
-from .samples import AI_MID, AI_STRONG, GOLDEN, HUMAN
+from .samples import AI_MID, AI_STRONG, CHOPPY, CONNECTED, GOLDEN, HUMAN, STAGED
 from .verify import verify
 
 Check = Tuple[str, bool, str]
@@ -42,6 +42,27 @@ def _scores() -> List[Check]:
         s = analyze(text).score
         out.append((f"사람 글 {name} <= 15", s <= 15, f"지수 {s}"))
     return out
+
+
+def _cohesion() -> List[Check]:
+    def cut(text: str) -> int:
+        return sum(1 for f in analyze(text).findings if f.category == "cohesion" and not f.shadowed and f.weight > 0)
+    missed = [k for k, t in CHOPPY.items() if cut(t) == 0]
+    flagged = [k for k, t in CONNECTED.items() if cut(t) > 0]
+    return [("끊긴 단문 표본을 8개 언어에서 연결 단절로 잡음", not missed, ", ".join(missed) or "이상 없음"),
+            ("이어 쓴 표본은 연결 단절로 잡지 않음", not flagged, ", ".join(flagged) or "이상 없음")]
+
+
+def _voice() -> List[Check]:
+    from .rules import en_voice, ko_voice
+    mine = {r.id for r in en_voice.RULES + ko_voice.RULES}
+    weak = [k for k, t in STAGED.items()
+            if len({f.rule_id for f in analyze(t).findings if f.rule_id in mine}) < 3]
+    v = verify("The cache stores responses for 60 seconds.",
+               "In my experience, the cache stores responses for 60 seconds. Now more than ever, that matters.")
+    ok = any("관점" in m or "perspective" in m for _, m in v.messages)
+    return [("연출형 표지 표본이 새 규칙 셋 이상에 걸림", not weak, ", ".join(weak) or "이상 없음"),
+            ("대조 검증이 지어 넣은 관점·경험 표지를 알림", ok, v.status)]
 
 
 def _golden() -> List[Check]:
@@ -88,7 +109,7 @@ def _cli() -> Check:
 
 def collect() -> List[Check]:
     checks: List[Check] = [_rules()]
-    for fn in (_scores, _golden, _properties):
+    for fn in (_scores, _cohesion, _voice, _golden, _properties):
         checks += fn()  # type: ignore[operator]
     checks.append(_cli())
     return checks

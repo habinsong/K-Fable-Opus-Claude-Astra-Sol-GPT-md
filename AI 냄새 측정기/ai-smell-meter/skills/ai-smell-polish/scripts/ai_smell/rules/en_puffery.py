@@ -86,9 +86,11 @@ RULES = [
 
     # ---- 출처 없는 권위 (인용 표시가 뒤따르면 세지 않는다)
     R("en.attribution.vague", "en", "attribution", "B",
-      r"\b(?:experts|researchers|scientists|analysts|observers|critics|historians|scholars|economists|"
-      r"industry (?:experts|observers|analysts|insiders|leaders|reports?)|many (?:experts|people|scholars|"
-      r"observers)|some (?:critics|experts|observers)|studies (?:show|suggest|indicate|have shown|have found|reveal)|"
+      r"\b(?:(?:experts|researchers|scientists|analysts|observers|critics|historians|scholars|economists) "
+      r"(?:say|believe|argue|agree|claim|note|suggest|contend|maintain|have (?:found|shown|argued|noted))|"
+      r"industry (?:experts|observers|analysts|insiders|leaders|reports?)|many (?:experts|scholars|"
+      r"observers) (?:say|believe|agree|argue)|some (?:critics|experts|observers) (?:say|believe|argue)|"
+      r"studies (?:show|suggest|indicate|have shown|have found|reveal)|"
       r"research (?:shows|suggests|indicates|has shown)|reports suggest|"
       r"it is (?:widely|generally|commonly|often) (?:believed|known|accepted|recognized|agreed|said|argued))\b",
       "Authority without a named source.", guard=fx.no_cite_after,

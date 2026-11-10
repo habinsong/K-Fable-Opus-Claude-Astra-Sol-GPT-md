@@ -46,7 +46,7 @@ class InstallTests(unittest.TestCase):
             self.assertTrue((d / installer.MARK).is_file())
             self.assertTrue((d / "scripts" / "ai_smell" / "cli.py").is_file())
             self.assertTrue((d / "agents" / "claude" / installer.AGENT_FILE).is_file())
-        self.assertTrue(all(r["check"].startswith("selftest 26/26") for r in data["results"] if r["kind"] == "skill"))
+        self.assertTrue(all(r["check"].startswith("selftest 30/30") for r in data["results"] if r["kind"] == "skill"))
 
     def test_no_tool_found_adds_claude_and_subagent(self):
         rc, _ = run_install("--home", str(self.home))

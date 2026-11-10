@@ -147,7 +147,7 @@ class MinCountAndCluster(unittest.TestCase):
         info = [f for f in a.findings if f.rule_id in ("ko.trans.tonghae", "ko.trans.geosida")]
         self.assertTrue(info)
         self.assertTrue(all(f.weight == 0 for f in info))
-        self.assertEqual(a.score, 0)
+        self.assertEqual(set(a.categories) - {"cohesion"}, set())     # 이 짧은 예문의 끊김은 따로 센다
 
 
 if __name__ == "__main__":

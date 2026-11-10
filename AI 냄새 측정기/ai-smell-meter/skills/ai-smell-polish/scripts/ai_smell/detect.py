@@ -6,7 +6,7 @@ import re
 import statistics
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-from . import analyzers, score as scoring
+from . import analyzers, cohesion, habits, linkers, score as scoring
 from .model import Analysis, Ctx, Edit, Finding, Rule, TIER_RANK, line_starts, weigh
 from .rules import load_rules
 from .textutil import (count_units, detect_lang, excerpt, in_spans, locate, mask, paragraph_spans,
@@ -79,8 +79,10 @@ def _apply_filters(found: List[Tuple[Rule, Finding]]) -> List[Finding]:
 
 
 def _shadow(findings: List[Finding]) -> None:
-    """겹치는 검출 항목은 가장 가중치가 큰 하나만 점수에 반영한다. 가려진 항목의 교정안은 그대로 둔다."""
-    items = sorted((f for f in findings if f.end > f.start), key=lambda f: (f.start, -f.end))
+    """겹치는 검출 항목은 가장 가중치가 큰 하나만 점수에 반영한다. 가려진 항목의 교정안은 그대로 둔다.
+    연결 단절(cohesion)은 문장 사이의 성질이라 첫 문장에 붙여 두었을 뿐이므로 다른 신호를 가리지도 가려지지도 않는다."""
+    items = sorted((f for f in findings if f.end > f.start and f.category != "cohesion"),
+                   key=lambda f: (f.start, -f.end))
     group: List[Finding] = []
     group_end = -1
 
@@ -100,13 +102,15 @@ def _shadow(findings: List[Finding]) -> None:
     close()
 
 
-def _metrics(masked: str, sents: Sequence[Tuple[int, int]], units: int) -> Dict[str, object]:
+def _metrics(masked: str, sents: Sequence[Tuple[int, int]], units: int,
+             profile: Dict[str, object]) -> Dict[str, object]:
     lens = [len(masked[a:b].split()) for a, b in sents]
     return {
         "avg_sentence_units": round(statistics.mean(lens), 1) if lens else 0,
         "sentence_length_cv": round(statistics.pstdev(lens) / statistics.mean(lens), 2) if len(lens) > 1 and statistics.mean(lens) else 0,
         "em_dashes_per_1000_units": round(1000 * len(re.findall("[—―]", masked)) / max(units, 1), 1),
-        "note": "문장 길이 변동(burstiness)은 약한 지표라 점수에 넣지 않는다(docs/research.md 6절).",
+        "cohesion": profile,
+        "note": "문장 길이 변동(burstiness)은 약한 지표라 점수에 넣지 않는다(docs/research.md 4절).",
     }
 
 
@@ -136,7 +140,9 @@ def analyze(text: str, *, genre: str = "general", lang: str = "auto", ban: Itera
                         lang=rule.lang, edit=edit)
             found.append((rule, f))
     findings = _apply_filters(found)
-    for f in analyzers.run_all(text, masked, sents, paras, units, genre):
+    cohesion_findings, profile = cohesion.signals(masked, sents, paras, genre)
+    habit_findings = habits.signals(text, masked, sents, paras, units, genre)
+    for f in analyzers.run_all(text, masked, sents, paras, units, genre) + cohesion_findings + habit_findings:
         f.line, f.col = locate(starts, f.start)
         findings.append(f)
     _shadow(findings)
@@ -145,6 +151,10 @@ def analyze(text: str, *, genre: str = "general", lang: str = "auto", ban: Itera
     notes: List[str] = []
     if units < 40:
         notes.append("표본이 짧아(40단위 미만) 점수가 불안정하다.")
+    lang_main = linkers.detect(masked) if units >= 20 else ""        # 짧은 글은 언어를 가리기 어려워 안내하지 않는다
+    if lang_main and lang_main not in ("ko", "en"):
+        notes.append(f"이 언어({lang_main})에는 AI 냄새 규칙이 없고 연결 단절·서식 신호만 있다. 점수는 AI 판별에 쓸 수 없다"
+                     "(실측: 중국어·러시아어에서는 사람 글이 더 높게 나왔다).")
     if not findings:
         notes.append("검출된 항목이 없다. 검출 항목이 없다고 사람이 쓴 글이라는 보증은 아니다.")
     return Analysis(lang=detect_lang(masked), genre=genre, units=units, sentences=len(sents),
@@ -152,7 +162,7 @@ def analyze(text: str, *, genre: str = "general", lang: str = "auto", ban: Itera
                     label_en=str(res["label_en"]), density=float(res["density"]), residue=float(res["residue"]),
                     categories=dict(res["categories"]), findings=findings,
                     paragraph_scores=scoring.paragraph_scores(findings, masked, paras),
-                    metrics=_metrics(masked, sents, units), notes=notes)
+                    metrics=_metrics(masked, sents, units, profile), notes=notes)
 
 
 def excerpt_of(text: str, f: Finding) -> str:

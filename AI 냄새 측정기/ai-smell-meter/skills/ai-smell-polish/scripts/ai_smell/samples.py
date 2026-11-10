@@ -90,6 +90,37 @@ HUMAN = {
     ),
 }
 
+# 끊긴 단문의 나열. 8개 언어 모두 '연결 단절'로 잡혀야 한다(같은 사실을 이어 쓴 CONNECTED는 안 잡혀야 한다)
+CHOPPY = {
+    "ko": "캐시는 60초 저장합니다. 프로세스마다 따로 있습니다. 워커 값이 다릅니다. 만료되면 맞춰집니다.",
+    "en": "The cache stores responses for 60 seconds. Each process keeps its own copy. Two workers can disagree. Entries expire on their own.",
+    "ja": "キャッシュは60秒保存します。プロセスごとに別々です。ワーカーは違う値を返します。期限が切れれば揃います。",
+    "zh": "缓存会把响应保存60秒。每个进程各有一份副本。两个工作者可能返回不同的值。条目过期后值会一致。",
+    "es": "La caché guarda las respuestas durante 60 segundos. Es independiente en cada proceso. Dos trabajadores pueden devolver valores distintos. Los valores coinciden cuando caducan las entradas.",
+    "fr": "Le cache garde les réponses pendant 60 secondes. Chaque processus a sa propre copie. Deux workers peuvent renvoyer des valeurs différentes. Les entrées expirent d'elles-mêmes.",
+    "de": "Der Cache speichert Antworten 60 Sekunden lang. Jeder Prozess hat seine eigene Kopie. Zwei Worker können abweichende Werte liefern. Einträge laufen von selbst ab.",
+    "ru": "Кэш хранит ответы 60 секунд. У каждого процесса своя копия. Воркеры могут расходиться. Записи истекают сами.",
+}
+CONNECTED = {
+    "ko": "캐시는 응답을 60초 동안 저장하는데, 프로세스마다 따로 있어서 워커 둘이 다른 값을 줄 수도 있습니다. 다만 항목이 만료되면 값이 다시 맞춰집니다.",
+    "en": "The cache stores responses for 60 seconds, but each process keeps its own copy, so two workers can disagree until their entries expire.",
+    "ja": "キャッシュは応答を60秒間保存しますが、プロセスごとに別々なので、ワーカーが違う値を返すことがあります。ただし、エントリが期限切れになれば値は揃います。",
+    "zh": "缓存会把响应保存60秒，但每个进程各有一份副本，所以两个工作者可能返回不同的值；不过条目过期后，值会重新一致。",
+    "es": "La caché guarda las respuestas durante 60 segundos, pero es independiente en cada proceso, así que dos trabajadores pueden devolver valores distintos hasta que caducan las entradas.",
+    "fr": "Le cache garde les réponses pendant 60 secondes, mais chaque processus a sa propre copie, donc deux workers peuvent renvoyer des valeurs différentes jusqu'à ce que les entrées expirent.",
+    "de": "Der Cache speichert Antworten 60 Sekunden lang, aber jeder Prozess hat seine eigene Kopie, deshalb können zwei Worker abweichende Werte liefern, bis die Einträge von selbst ablaufen.",
+    "ru": "Кэш хранит ответы 60 секунд, но у каждого процесса своя копия, поэтому два воркера могут вернуть разные значения, пока записи не истекут.",
+}
+
+# 연출형 표지(깊은 척, 솔직한 척, 아무도 안 한 반론에 답하기)가 몰린 글. 둘 다 새 규칙 셋 이상에 걸려야 한다
+STAGED = {
+    "en": ("Make no mistake: at its core, this is about trust. I want to be upfront about the limits. What surprised "
+           "me most was the speed. Nobody is talking about caching. I'm not saying it fails. To be clear, it works. "
+           "Here are the top five reasons."),
+    "ko": ("핵심은 신뢰다. 본질은 속도다. 근본적으로 같은 이야기다. 솔직하게 말씀드리면 조금 느리다. 오해하지 마세요. "
+           "아무도 말하지 않는 사실이 있다.\n\n이것이 바로 핵심입니다."),
+}
+
 # 교정 결과가 글자 단위로 정해진 경우: (이름, 입력, 단계, 기대 출력)
 GOLDEN = [
     ("en-standard",

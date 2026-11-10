@@ -41,7 +41,7 @@ RULES = [
       r"[^.!?\n]{1,90}?[,;:—–.]\s*(?:it(?:'s| is)|but|they(?:'re| are)|rather)\b",
       "Negative parallelism ('isn't about X, it's about Y').", sugg="State the point directly."),
     R("en.structure.not-only", "en", "structure", "B",
-      r"\bnot only\b[^.!?\n]{1,120}?\bbut(?: also)?\b", "'Not only X but also Y' frame.", w=0.7,
+      r"\bnot only\b[^.!?\n]{1,120}?\bbut(?: also)?\b", "'Not only X but also Y' frame (common in human prose; weak).", w=0.25,
       sugg="Use it only when both halves matter equally."),
     R("en.structure.more-than-just", "en", "structure", "B",
       r"\bmore than (?:just|merely|simply|only) (?:an? |the )|\bno longer (?:just|merely|only|simply)\b",

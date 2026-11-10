@@ -61,7 +61,7 @@
 | `en.structure.isnt-x-but-y` | en | 구조 습관 | B | 0.8 | - | 'isn't the X but the Y' contrast. |
 | `en.structure.on-one-hand` | en | 구조 습관 | C | 0.5 | - | Balanced both-sides frame. |
 | `en.structure.neg-parallel-about` | en | 구조 습관 | A | 1.2 | - | Negative parallelism ('isn't about X, it's about Y'). |
-| `en.structure.not-only` | en | 구조 습관 | B | 0.7 | - | 'Not only X but also Y' frame. |
+| `en.structure.not-only` | en | 구조 습관 | B | 0.25 | - | 'Not only X but also Y' frame (common in human prose; weak). |
 | `en.structure.more-than-just` | en | 구조 습관 | B | 1.2 | - | Negative-parallel variant. |
 | `en.structure.less-more` | en | 구조 습관 | B | 1.2 | - | Negative-parallel variant ('less about X, more about Y'). |
 | `en.structure.no-no-just` | en | 구조 습관 | B | 1.2 | - | 'No X. No Y. Just Z.' triple. |
@@ -84,7 +84,7 @@
 | `en.hedging.worth-ing` | en | 군더더기·유보 | B | 0.5 | - | Throat-clearing that points at the next point. |
 | `en.hedging.when-it-comes` | en | 군더더기·유보 | C | 0.4 | - | Wordy topic marker; 'for' or 'with' is usually enough. |
 | `en.hedging.arguably` | en | 군더더기·유보 | C | 0.4 | - | Weasel hedge. |
-| `en.hedging.wordy` | en | 군더더기·유보 | C | 0.3 | standard | Wordier than the plain phrase. |
+| `en.hedging.wordy` | en | 군더더기·유보 | C | 0.0 | standard | Wordier than the plain phrase (conciseness only; humans use these more often, so it is not scored). |
 | `en.vocab.notably-lead` | en | 과다 어휘 | A | 0.8 | strong | Sentence adverb that comments on itself. |
 | `en.vocab.delve` | en | 과다 어휘 | A | 0.8 | - | Peak 'LLM word' in academic prose. |
 | `en.vocab.delve-into` | en | 과다 어휘 | A | 0.8 | standard | Peak 'LLM word' in academic prose. |
@@ -134,6 +134,23 @@
 | `en.vocab.seamless-action` | en | 과다 어휘 | B | 0.8 | standard | Overused 'seamless' buzzword with verbs. |
 | `en.vocab.automatically` | en | 과다 어휘 | B | 0.8 | standard | Unnecessary 'automatically' modifier. |
 | `en.vocab.hardcode` | en | 과다 어휘 | B | 0.8 | standard | Slang verb for embedding or baking in. |
+| `en.puffery.authority` | en | 의미 부풀리기 | B | 0.7 | - | Asserts depth or stakes instead of showing them. |
+| `en.puffery.aphorism` | en | 의미 부풀리기 | C | 0.4 | - | Aphorism formula ('X is the language of Y'). |
+| `en.puffery.closer-line` | en | 의미 부풀리기 | B | 0.8 | - | One-line closer that repeats the point. |
+| `en.puffery.performed-insight` | en | 의미 부풀리기 | C | 0.5 | - | Announces profundity instead of delivering it. |
+| `en.signpost.candor` | en | 예고·안내 | C | 0.45 | - | Narrates its own candor instead of disclosing. |
+| `en.puffery.lingering` | en | 의미 부풀리기 | C | 0.5 | - | Unfalsifiable claim about the writer's own lingering attention. |
+| `en.puffery.reaction` | en | 의미 부풀리기 | C | 0.25 | - | Stock reaction frame. Keep a real reaction; cut the empty frame. |
+| `en.signpost.endorse` | en | 예고·안내 | C | 0.4 | - | Generic endorsement closer. |
+| `en.signpost.no-one` | en | 예고·안내 | C | 0.4 | - | Answers an objection nobody raised. |
+| `en.puffery.novelty` | en | 의미 부풀리기 | B | 0.6 | - | Claims scarcity of knowledge where none exists. |
+| `en.puffery.self-label` | en | 의미 부풀리기 | C | 0.5 | - | Labels its own item as clever or surprising. |
+| `en.signpost.reasoning` | en | 예고·안내 | B | 0.6 | - | Reasoning scaffold left in the prose. |
+| `en.signpost.numbered` | en | 예고·안내 | C | 0.3 | - | Numbered list framing chosen for structure, not for the count of items. |
+| `en.hedging.parenthetical` | en | 군더더기·유보 | C | 0.4 | - | Parenthetical aside that sounds nuanced without committing. |
+| `en.signpost.fake-casual` | en | 예고·안내 | C | 0.3 | - | Props that stand in for a casual voice. |
+| `en.puffery.launch` | en | 의미 부풀리기 | B | 0.6 | - | Launch-copy introduction. |
+| `en.vocab.era-gpt6` | en | 과다 어휘 | C | 0.3 | - | Words reported for GPT-6-era output (Wikipedia, 2026); only counted in a cluster. |
 | `ko.residue.opener` | ko | 챗봇 잔재 | A | 1.0 | standard | 챗봇식 수락 서두. |
 | `ko.residue.hope-helps` | ko | 챗봇 잔재 | A | 1.0 | standard | 챗봇식 맺음 인사. |
 | `ko.residue.ask-more` | ko | 챗봇 잔재 | A | 1.0 | standard | 더 도울 일을 묻는 맺음. |
@@ -210,6 +227,18 @@
 | `ko.vocab.ssang` | ko | 과다 어휘 | B | 0.6 | standard | '쌍을 이루다': 둘의 병렬·대응을 상투적으로 표현한 어구. |
 | `ko.vocab.sinho` | ko | 과다 어휘 | B | 0.6 | standard | '신호': 징후·단서·특징을 '신호(signal)'로 직역한 번역투. |
 | `ko.vocab.bakda` | ko | 과다 어휘 | B | 0.6 | standard | '박다/박아 넣다': 거칠거나 비격식적인 삽입·하드코딩 표현 상투구. |
+| `ko.puffery.authority` | ko | 의미 부풀리기 | C | 0.35 | - | 깊이나 무게를 주장하는 말('핵심은', '본질적으로'). |
+| `ko.puffery.closer-line` | ko | 의미 부풀리기 | B | 0.6 | - | 앞 문장을 되풀이하는 한 줄 맺음. |
+| `ko.signpost.candor` | ko | 예고·안내 | C | 0.4 | - | 솔직함을 알리는 말만 있고 내용은 따로다. |
+| `ko.signpost.no-one` | ko | 예고·안내 | C | 0.4 | - | 아무도 하지 않은 반론에 답한다. |
+| `ko.puffery.novelty` | ko | 의미 부풀리기 | B | 0.6 | - | 알려진 것을 아무도 모르는 것처럼 말한다. |
+| `ko.signpost.numbered` | ko | 예고·안내 | C | 0.3 | - | 항목 수를 앞세운 틀. |
+| `ko.puffery.reaction` | ko | 의미 부풀리기 | C | 0.25 | - | 정형 반응 틀. 실제 반응은 남기고 빈 틀만 뺀다. |
+| `ko.signpost.endorse` | ko | 예고·안내 | C | 0.35 | - | 이유 없는 추천 맺음. |
+| `ko.signpost.reasoning` | ko | 예고·안내 | B | 0.5 | - | 추론 과정의 비계가 글에 남았다. |
+| `ko.puffery.lingering` | ko | 의미 부풀리기 | C | 0.5 | - | 필자의 주의가 머물렀다는 확인할 수 없는 주장. |
+| `ko.trans.enable` | ko | 번역투 | C | 0.3 | - | 무생물 주어가 '~를 가능하게 한다'로 서술한다(영어 allow, enable의 직역). |
+| `ko.trans.plural` | ko | 번역투 | C | 0.0 | - | 복수 표지가 겹친다('여러 정보들'). 영어 복수형의 직역(실측에서 사람 글과 구분되지 않아 점수에서 뺀다). |
 | `any.markup.oaicite` | any | 누출된 마크업 | A | 1.0 | safe | 누출된 인용 토큰. |
 | `any.markup.turn-ref` | any | 누출된 마크업 | A | 1.0 | safe | 누출된 도구 참조 토큰. |
 | `any.markup.private-use` | any | 누출된 마크업 | A | 1.0 | safe | 비공개 영역 인용 표지. |

@@ -14,7 +14,7 @@ GRADES = ("A", "B", "C")
 # 근거 등급 계수. A는 뚜렷한 잔재이거나 독립된 정량 근거가 둘 이상, B는 정량 근거 하나이거나
 # 편집자 합의, C는 실무자 목록이나 일화다. 근거는 docs/research.md에 있다.
 GRADE_FACTOR = {"A": 1.0, "B": 0.75, "C": 0.45}
-GENRES = ("general", "academic", "everyday", "literary")
+GENRES = ("general", "academic", "everyday", "literary", "technical")
 LANGS = ("ko", "en", "any")
 
 
@@ -38,6 +38,7 @@ CATEGORIES: Dict[str, Category] = {c.key: c for c in (
     Category("structure", "구조 습관", "structural habits", 1.2, 6.0),
     Category("hedging", "군더더기·유보", "filler and hedging", 0.7, 3.0),
     Category("transition", "접속어 남발", "stacked transitions", 0.6, 2.0),
+    Category("cohesion", "연결 단절", "disconnected sentences", 1.0, 2.0),
     Category("signpost", "예고·안내", "signposting", 0.8, 2.5),
     Category("attribution", "출처 없는 권위", "vague attribution", 1.0, 3.0),
     Category("translationese", "번역투", "translationese", 0.6, 3.0),

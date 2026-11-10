@@ -11,6 +11,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple
 
+from . import guards
 from .detect import analyze
 from .textutil import mask, protected_spans, sentence_spans
 
@@ -130,6 +131,8 @@ def verify(original: str, revised: str, *, genre: str = "general", lang: str = "
     before, after = analyze(original, genre=genre, lang=lang), analyze(revised, genre=genre, lang=lang)
     ids_before = {f.rule_id for f in before.findings if f.weight > 0 and not f.shadowed}
     new_signals = sorted({f.rule_id for f in after.findings if f.weight > 0 and not f.shadowed} - ids_before)
+    cut_before = sum(1 for f in before.findings if f.category == "cohesion" and f.weight > 0 and not f.shadowed)
+    cut_after = sum(1 for f in after.findings if f.category == "cohesion" and f.weight > 0 and not f.shadowed)
     rate = change_rate(original, revised)
     ratio = len(re.sub(r"\s", "", revised)) / max(1, len(re.sub(r"\s", "", original)))
     r = VerifyResult("PASS", round(rate, 3), round(ratio, 3), before.score, after.score,
@@ -152,6 +155,17 @@ def verify(original: str, revised: str, *, genre: str = "general", lang: str = "
         msgs.append(("WARN", f"영문 고유명사 후보가 달라졌다: 빠짐 {r.names_missing[:6]}, 새로 생김 {r.names_added[:6]}"))
     if new_signals:
         msgs.append(("WARN", f"원문에 없던 어색한 표현이 생겼다: {new_signals[:6]}"))
+    fl_before = int(before.metrics.get("cohesion", {}).get("flood_paragraphs", 0) or 0)
+    fl_after = int(after.metrics.get("cohesion", {}).get("flood_paragraphs", 0) or 0)
+    if fl_after > fl_before:
+        msgs.append(("WARN", "문장마다 접속어를 붙인 문단이 생겼다. 관계가 없는 곳의 접속어는 가짜 인과·반전이다. 접속어 수로 "
+                             "연결 단절을 때우지 말고 합치기·지시어·되받기와 섞는다."))
+    injected = guards.added(original, revised)
+    if injected:
+        msgs.append(("WARN", guards.message(injected)))
+    if cut_after > cut_before:
+        msgs.append(("WARN", f"문장 사이 이음이 더 끊겼다(연결 단절 {cut_before} → {cut_after}건). 문장을 쪼갰거나 "
+                             "접속어를 지웠는지 보고, 이음말로 다시 잇는다."))
     if ratio < 0.6:
         msgs.append(("WARN", f"분량이 {1 - ratio:.0%} 줄었다. 의미가 빠졌는지 확인한다."))
     if after.score >= before.score and before.score > 0:

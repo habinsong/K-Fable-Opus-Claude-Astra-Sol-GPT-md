@@ -12,7 +12,8 @@ IGNORE_END = "ai-smell:ignore-end"
 
 HANGUL = re.compile(r"[가-힣]")
 LATIN = re.compile(r"[A-Za-z]")
-WORDISH = re.compile(r"[A-Za-z0-9가-힣]")
+WORDISH = re.compile(r"[^\W_]")                     # 어느 문자든 글자나 숫자(보호 구간의 \x00은 제외)
+CJK = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]")  # 어절 구분이 없는 일본어·중국어
 EMOJI_CLASS = ("[\U0001F300-\U0001FAFF\U0001F000-\U0001F2FF☀-➿⭐⬆⬅⬇"
                "✅❌✨❗❓❤‼⁉]️?")
 EMOJI = re.compile(EMOJI_CLASS)
@@ -24,7 +25,7 @@ _PROTECT = [
     re.compile(r"`[^`\n]+`"),
     re.compile(r"https?://[^\s<>\"')\]]+"),
     re.compile(r"(?<=\]\()[^)\s]+(?=\))"),
-    re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+"),
+    re.compile(r"(?<![\w.+-])[\w.+-]{1,64}@[\w-]{1,63}(?:\.[\w-]{1,63})+"),   # 길이를 묶고 낱말 중간에서 시작하지 않는다(긴 글자 줄에서 제곱으로 느려졌다)
     re.compile(r"<[A-Za-z/][^>\n]*>"),
     re.compile(r"\$\$.*?\$\$", re.S),
     re.compile(r"^>.*$", re.M),                                        # 인용 블록
@@ -155,6 +156,8 @@ def paragraph_spans(masked: str) -> List[Tuple[int, int]]:
 def _is_boundary(masked: str, term_start: int, after: int) -> bool:
     if after >= len(masked):
         return True
+    if masked[term_start] in "。！？":                     # 전각 종결부호는 뒤에 공백이 없어도 문장 끝이다
+        return True
     if not masked[after].isspace():
         return False
     prev = masked[max(0, term_start - 40):term_start]
@@ -200,8 +203,14 @@ def sentence_spans(masked: str) -> List[Tuple[int, int]]:
 
 
 def count_units(masked: str) -> int:
-    """공백으로 나눈 덩어리 중 글자나 숫자가 있는 것의 수. 한국어는 어절, 영어는 낱말에 가깝다."""
-    return sum(1 for t in masked.split() if WORDISH.search(t))
+    """공백으로 나눈 덩어리 중 글자나 숫자가 있는 것의 수. 한국어는 어절, 영어는 낱말에 가깝다.
+    공백 없이 이어 쓰는 일본어·중국어는 글자 둘을 한 단위로 센다(낱말 하나가 대개 두 글자)."""
+    n = 0
+    for t in masked.split():
+        if WORDISH.search(t):
+            c = len(CJK.findall(t))
+            n += 1 if c == 0 else (c + 1) // 2
+    return n
 
 
 def locate(starts: Sequence[int], pos: int) -> Tuple[int, int]:

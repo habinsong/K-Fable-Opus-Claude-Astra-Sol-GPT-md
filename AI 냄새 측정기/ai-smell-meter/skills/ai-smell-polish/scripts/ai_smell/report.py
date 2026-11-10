@@ -4,6 +4,7 @@ from __future__ import annotations
 import difflib
 from typing import Any, Dict, List, Sequence
 
+from . import linkers
 from .fix import PolishResult
 from .i18n import t
 from .model import CATEGORIES, Analysis, Finding, Rule
@@ -55,10 +56,18 @@ def render_analysis(a: Analysis, text: str, ui: str = "ko", top: int = 12, show_
     out: List[str] = []
     label = a.label_ko if ui == "ko" else a.label_en
     out.append(f"{t(ui, 'title')} {a.score}/100 — {label}")
-    out.append(f"  {t(ui, 'target')}: {t(ui, 'lang_' + a.lang)} · {a.units}{t(ui, 'units')} · "
+    detail = str((a.metrics.get("cohesion") or {}).get("language") or "")
+    lang_label = linkers.lang_name(detail, ui) if detail in linkers.SUPPORTED and detail not in ("ko", "en") \
+        else t(ui, "lang_" + a.lang)
+    out.append(f"  {t(ui, 'target')}: {lang_label} · {a.units}{t(ui, 'units')} · "
                f"{a.sentences}{t(ui, 'sentences')} · {a.paragraphs}{t(ui, 'paragraphs')} · "
                f"{t(ui, 'genre')} {t(ui, 'genre_' + a.genre)}")
     out.append(f"  ※ {t(ui, 'disclaimer')}")
+    cut = len([f for f in a.findings if f.category == "cohesion" and not f.shadowed and f.weight > 0])
+    if cut:
+        out.append(f"  ! {'연결 단절' if ui == 'ko' else 'Disconnected sentences'} {cut}{'곳' if ui == 'ko' else ''}: "
+                   + ("점수와 별개로 문장 사이 이음을 점검한다(쪼개거나 접속어를 지운 윤문의 흔한 부작용)."
+                      if ui == "ko" else "check the joins between sentences, a common side effect of chopping and deleting connectives."))
     for n in a.notes:
         out.append(f"  ! {n}")
     scored = [f for f in a.findings if not f.shadowed and f.weight > 0]

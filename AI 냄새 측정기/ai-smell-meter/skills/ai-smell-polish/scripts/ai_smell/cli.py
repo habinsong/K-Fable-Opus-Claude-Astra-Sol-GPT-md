@@ -1,4 +1,4 @@
-"""명령줄. analyze, polish, verify, prompt, rules, selftest, doctor, install, version."""
+"""명령줄. analyze, polish, verify, prompt, rules, linkers, voice, selftest, doctor, install, version."""
 from __future__ import annotations
 
 import argparse
@@ -7,7 +7,7 @@ import shutil
 import sys
 from typing import List, Optional
 
-from . import report
+from . import linkers, report
 from .detect import analyze
 from .fix import polish
 from .model import GENRES, VERSION
@@ -100,7 +100,8 @@ def cmd_prompt(args) -> int:
     if not args.no_polish:
         base = polish(text, tier=args.tier, genre=args.genre, lang=args.lang, ban=_ban(args)).text
     a = analyze(base, genre=args.genre, lang=args.lang, ban=_ban(args))
-    _out(build_prompt(base, a, ui=args.prompt_lang, target=args.target))
+    voice = read_input(args.voice, None) if args.voice else ""
+    _out(build_prompt(base, a, ui=args.prompt_lang, target=args.target, voice=voice))
     return 0
 
 
@@ -114,6 +115,19 @@ def cmd_rules(args) -> int:
                         ensure_ascii=False, indent=2))
     else:
         _out(report.render_rules(rules, args.ui))
+    return 0
+
+
+def cmd_voice(args) -> int:
+    from .voice import profile, render
+    p = profile(read_input(args.path, args.text))
+    _out(json.dumps(p, ensure_ascii=False, indent=2) if args.format == "json" else (render(p, args.ui) or "표본이 비었다."))
+    return 0
+
+
+def cmd_linkers(args) -> int:
+    langs = linkers.SUPPORTED if args.lang == "all" else (args.lang,)
+    _out("\n\n".join(linkers.table(k, args.ui) for k in langs))
     return 0
 
 
@@ -175,6 +189,7 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--tier", choices=("safe", "standard", "strong"), default="standard")
     r.add_argument("--target", choices=("generic", "claude", "gpt", "gemini"), default="generic")
     r.add_argument("--prompt-lang", choices=("", "ko", "en"), default="", help="프롬프트 언어(기본: 글의 언어)")
+    r.add_argument("--voice", metavar="표본파일", help="필자가 쓴 글 표본. 문체 수치를 프롬프트에 싣는다")
     r.add_argument("--no-polish", action="store_true", help="자동 교정 없이 원문 그대로 프롬프트에 싣는다")
     r.add_argument("--chat", choices=("ko", "en"), help="셸 없는 채팅 환경용 일반 프롬프트를 출력한다(입력 불필요)")
     r.set_defaults(fn=cmd_prompt)
@@ -206,6 +221,18 @@ def build_parser() -> argparse.ArgumentParser:
                    help="project 범위에서 AGENTS.md, GEMINI.md 끝에 사용 안내를 덧붙인다")
     i.add_argument("--format", choices=("text", "json"), default="text")
     i.set_defaults(fn=cmd_install)
+
+    vo = sub.add_parser("voice", help="필자의 문체 표본을 수치로 요약한다(문장 길이, 쉼표, 이음말 밀도, 말투)")
+    vo.add_argument("path", nargs="?", help="표본 파일. 생략하거나 '-'면 표준 입력")
+    vo.add_argument("--text", help="파일 대신 문자열을 직접 넘긴다")
+    vo.add_argument("--ui", choices=("ko", "en"), default="ko")
+    vo.add_argument("--format", choices=("text", "json"), default="text")
+    vo.set_defaults(fn=cmd_voice)
+
+    k = sub.add_parser("linkers", help="언어별 접속부사·접속사·지시어를 관계와 품사별로 보인다(문장을 이을 때 고르는 용도)")
+    k.add_argument("--lang", choices=("all",) + linkers.SUPPORTED, default="all")
+    k.add_argument("--ui", choices=("ko", "en"), default="ko")
+    k.set_defaults(fn=cmd_linkers)
 
     ver = sub.add_parser("version")
     ver.set_defaults(fn=cmd_version)

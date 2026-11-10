@@ -122,12 +122,14 @@ class Scoring(unittest.TestCase):
 
 
 class Analyzers(unittest.TestCase):
-    def test_em_dash_needs_three(self):
+    def test_em_dash_thresholds(self):
+        one = "That is a fun question — and I should be honest about it."
         two = "The tool — which is new — works well."
         three = "The tool — which is new — works well. It is fast — really fast."
-        self.assertNotIn("any.format.em-dash", ids(analyze(two)))
-        self.assertIn("any.format.em-dash", ids(analyze(three)))
-        self.assertIn("any.structure.em-dash-overuse", ids(analyze(three)))
+        self.assertNotIn("any.format.em-dash", ids(analyze(one)))             # 줄표 1개는 약한 신호라 세지 않는다
+        self.assertIn("any.format.em-dash", ids(analyze(two)))                # 2개부터(2025~26년 모델 답변의 14~25%, 사람 글 0.4%)
+        self.assertNotIn("any.structure.em-dash-overuse", ids(analyze(two)))
+        self.assertIn("any.structure.em-dash-overuse", ids(analyze(three)))   # 3개 이상이면 글 전체의 과다 신호
 
     def test_ko_em_dash(self):
         t = "그 결과는—예상과 완전히 달랐다."
@@ -146,8 +148,14 @@ class Analyzers(unittest.TestCase):
     def test_transition_stack(self):
         t = "Moreover, a is true. Furthermore, b is true. Additionally, c is true. Also d."
         self.assertIn("en.transition.stack", ids(analyze(t)))
+        # 지우면 두 문장을 잇는 것이 아무것도 남지 않으므로 자동 삭제하지 않는다
+        self.assertEqual(polish(t, tier="strong").text, t)
+
+    def test_transition_stack_deletes_only_when_another_link_remains(self):
+        t = ("Moreover, the cache is fast. Furthermore, it is cheap. Additionally, it is simple. Also the logs help.")
+        self.assertIn("en.transition.stack", ids(analyze(t)))
         out = polish(t, tier="strong").text
-        self.assertNotIn("Furthermore", out)
+        self.assertNotIn("Furthermore", out)               # 'it'이 앞 문장을 받으므로 지워도 이어진다
         self.assertIn("Moreover", out)
 
     def test_ko_transition_stack(self):
@@ -157,12 +165,18 @@ class Analyzers(unittest.TestCase):
     def test_triples_need_repetition(self):
         one = "We value speed, quality, and trust."
         many = "We value speed, quality, and trust. They offer reach, depth, and scale. It brings focus, clarity, and calm."
-        self.assertNotIn("en.structure.triple", ids(analyze(one)))
-        self.assertIn("en.structure.triple", ids(analyze(many)))
+        seen = lambda t: {f.rule_id for f in analyze(t).findings}  # noqa: E731
+        self.assertNotIn("en.structure.triple", seen(one))
+        self.assertIn("en.structure.triple", seen(many))           # 영어는 점수에서 뺀 참고 항목
+        ko = "속도, 품질, 신뢰가 중요하다. 범위, 깊이, 규모를 본다. 초점, 선명함, 평온을 찾는다."
+        self.assertIn("ko.structure.triple", ids(analyze(ko)))
 
     def test_same_ending_run(self):
         t = "그는 밥을 먹었다. 그는 길을 걸었다. 그는 문을 열었다. 그는 책을 읽었다. 그는 손을 씻었다."
-        self.assertIn("ko.rhythm.same-ending", ids(analyze(t)))
+        a = analyze(t)
+        same = [f for f in a.findings if f.rule_id == "ko.rhythm.same-ending"]
+        self.assertTrue(same)
+        self.assertEqual(same[0].weight, 0)       # 실측에서 사람 글(학생 한다체)에 더 흔해 점수에서 뺐다
 
     def test_emotion_pile_in_one_paragraph(self):
         t = "그날 가슴이 먹먹해졌다. 눈시울이 붉어졌고 마음이 무거웠다."
@@ -190,7 +204,12 @@ class Analyzers(unittest.TestCase):
                 "Item two has reach, depth, and scale.\n\n"
                 "Item three brings focus, clarity, and calm.\n\n"
                 "Item four offers power, ease, and value.")
-        self.assertIn("any.structure.triple-overuse", ids(analyze(text)))
+        over = [f for f in analyze(text).findings if f.rule_id == "any.structure.triple-overuse"]
+        self.assertTrue(over)
+        self.assertEqual(over[0].weight, 0)       # 영어는 실측에서 판별력이 없어 점수에서 뺐다
+        ko = ("속도, 품질, 신뢰가 중요하다.\n\n범위, 깊이, 규모를 본다.\n\n초점, 선명함, 평온을 찾는다.\n\n"
+              "힘, 편의, 가치를 더한다.")
+        self.assertIn("any.structure.triple-overuse", ids(analyze(ko)))
 
     def test_paragraph_cadence(self):
         text = ("First topic is covered here in detail. It provides core functionality.\n\n"

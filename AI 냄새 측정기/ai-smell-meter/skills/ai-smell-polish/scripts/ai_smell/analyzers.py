@@ -10,10 +10,12 @@ import math
 import re
 from typing import List, Optional, Sequence, Tuple
 
+from . import cohesion, linkers
 from .model import Edit, Finding, weigh
 
 Span = Tuple[int, int]
 
+COMMA_PER_SENT = 1.0     # 문장당 쉼표. 11월 실측: 사람 에세이 중앙 0.2, 2024년 모델 에세이 0.8, 논문 초록은 사람 0.6 대 1.1(docs/evaluation.md)
 EN_TRANS = re.compile(r"(?P<w>Moreover|Furthermore|Additionally|In addition|Consequently|Nevertheless|Nonetheless|"
                       r"Thus|Hence|Accordingly|Subsequently|Likewise|Similarly|Conversely|Meanwhile|Indeed|"
                       r"Overall|Ultimately)\b,?[ \t]*", re.I)
@@ -34,7 +36,8 @@ KO_INTENS = re.compile(r"(?<![가-힣])(?:매우|정말|굉장히|상당히|아�
 EMOTION = ("기뻤", "슬펐", "행복했", "외로웠", "두려웠", "불안했", "벅차", "벅찼", "먹먹", "울컥", "뭉클", "철렁", "눈물이 흘렀",
            "숨이 멎", "가슴이 아렸", "가슴이 미어", "감동", "설렜", "서글펐", "그리웠", "뿌듯", "애틋", "저릿", "찡했", "눈시울",
            "가슴이 뛰", "심장이 뛰", "숨이 막", "온몸이 떨", "마음이 무거웠", "슬퍼졌", "외로워졌", "행복해졌")
-DASH = re.compile(r"[—―]|(?<=\S)\s*--\s*(?=\S)|(?<=[A-Za-z가-힣])\s*[–]\s*(?=[A-Za-z가-힣])|(?<=[A-Za-z가-힣])\s+-\s+(?=[A-Za-z가-힣])")
+# 실제 줄표만 센다. 하이픈(" - "), en dash, "--"는 사람 글에 훨씬 흔하다(실측: 영어 사람 글 20%, 8%, 9% 대 AI 글 2%, 1%, 0%).
+DASH = re.compile(r"[—―]")
 
 
 def _mk(rid: str, cat: str, grade: str, start: int, end: int, w: float, genre: str, note: str, *,
@@ -67,10 +70,12 @@ def _by_para(sents: Sequence[Span], paras: Sequence[Span]) -> List[List[Span]]:
 
 
 def dashes(masked: str, sents: Sequence[Span], units: int, genre: str) -> List[Finding]:
-    """줄표(em dash) 남발을 센다. 한국어는 1개부터 번역투, 영어는 3개 이상부터 과다로 본다."""
+    """줄표(em dash) 남발을 센다. 한국어는 1개부터 번역투, 영어는 2개부터 세고 3개 이상이면 과다로 본다."""
     hits = list(DASH.finditer(masked))
     is_ko = bool(re.search(r"[가-힣]", masked))
-    if len(hits) < (1 if is_ko else 3):
+    if not is_ko and linkers.detect(masked) != "en":
+        return []                                      # 러시아어·프랑스어 등에서는 줄표가 정상 부호다(실측: 러시아어 사람 글 21%)
+    if len(hits) < (1 if is_ko else 2):        # 영어는 2개부터(2025~26년 모델 답변의 14~25%, 사람 글 0.4%: docs/evaluation.md). 1개는 약해서 세지 않는다
         return []
     out: List[Finding] = []
     per_sentence = {}
@@ -112,30 +117,39 @@ def _delete_edit(rid: str, start: int, end: int, tier: str, recap: bool, text: s
 
 def transitions(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str,
                 gmap) -> List[Finding]:
-    """문두 접속어가 문단 안에 3번 이상이면 절반(2번째, 4번째...)을 센다. 더하기 접속어만 지울 수 있다."""
+    """문두 접속어가 문단 안에 3번 이상이면 절반(2번째, 4번째...)을 센다.
+
+    접속어는 문장 사이 관계를 드러내는 말이라 많은 것보다 없는 것이 더 큰 결함일 때가 많다(cohesion.py).
+    그래서 의식적으로 얹는 더하기 접속어(또한, Moreover)만 지울 수 있고, 지워도 지시어나 되받는 말로
+    앞 문장과 여전히 이어질 때만 지운다. 대조·인과 접속어는 세기만 하고 지우지 않는다.
+    """
     out: List[Finding] = []
-    flagged: List[Tuple[Span, re.Match, str]] = []
-    doc_hits: List[Tuple[Span, re.Match, str]] = []
+    flagged: List[Tuple[Span, re.Match, str, Optional[Span]]] = []
+    doc_hits: List[Tuple[Span, re.Match, str, Optional[Span]]] = []
     for group in _by_para(sents, paras):
         hits = []
-        for sp in group:
+        for k, sp in enumerate(group):
             km = KO_TRANS.match(masked, sp[0])
             m = km or EN_TRANS.match(masked, sp[0])
             if m:
-                hits.append((sp, m, "ko" if km else "en"))
+                hits.append((sp, m, "ko" if km else "en", group[k - 1] if k else None))
         doc_hits.extend(hits)
         if len(hits) >= 3:
             flagged.extend(hits[1::2])
     if not flagged and len(doc_hits) >= 5 and len(doc_hits) / max(len(sents), 1) >= 0.3:
         flagged = doc_hits[1::2]
-    for sp, m, lang in flagged:
+    for sp, m, lang, prev in flagged:
         word = re.sub(r"\s+", " ", m.group("w").lower())
         additive = word in (EN_ADDITIVE if lang == "en" else KO_ADDITIVE)
-        edit = _delete_edit(f"{lang}.transition.stack", sp[0], m.end(), "strong", lang == "en", text) if additive else None
-        out.append(_mk(f"{lang}.transition.stack", "transition", "B", sp[0], m.end(), None, genre,
+        keeps_bridge = prev is None or cohesion.bridge_survives(masked, prev, sp, m.end())
+        edit = (_delete_edit(f"{lang}.transition.stack", sp[0], m.end(), "strong", lang == "en", text)
+                if additive and keeps_bridge else None)
+        out.append(_mk(f"{lang}.transition.stack", "transition", "C", sp[0], m.end(), None, genre,
                        "문두 접속어가 겹쳤다." if lang == "ko" else "Stacked sentence-initial transitions.",
                        gmap={"academic": 0.6}, text=m.group(0).strip(), lang=lang, edit=edit,
-                       sugg="앞 문장의 끝말을 다음 문장이 받게 해서 접속어를 줄인다."))
+                       sugg="같은 접속어만 줄이고 관계(대조·인과·순서)를 바꾸는 것은 남긴다. 지우면 문장이 끊기는 곳은 다른 접속어로 바꾸거나 앞 문장의 끝말로 받는다."
+                       if lang == "ko" else
+                       "Thin out only the repeated ones; keep a connective that changes the relation (contrast, cause, order). Where deleting would leave two sentences unlinked, swap it for a different one or pick up the previous noun."))
     return out
 
 
@@ -180,13 +194,13 @@ def triples(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span]
         for items in per_para.values():
             if len(items) >= 2:
                 chosen.extend(items[1:])
-    out = [_mk(f"{lang}.structure.triple", "structure", "B", s, e, 0.6, genre,
+    out = [_mk(f"{lang}.structure.triple", "structure", "B" if lang == "ko" else "C", s, e, 0.6 if lang == "ko" else 0.0, genre,
                "3항 나열이 반복된다." if lang == "ko" else "Repeated lists of three.",
                gmap={"academic": 0.7}, text=text[s:e][:60], lang=lang,
                sugg="뜻이 요구하는 개수만 남긴다.") for _, s, e, lang in chosen]
     if len(found) >= 4 or len(per_para) >= 3:
         is_ko = any(lang == "ko" for _, _, _, lang in found)
-        out.append(_mk("any.structure.triple-overuse", "structure", "B", 0, 0, 0.8, genre,
+        out.append(_mk("any.structure.triple-overuse", "structure", "B" if is_ko else "C", 0, 0, 0.8 if is_ko else 0.0, genre,
                        f"3항 나열이 글 전체에 걸쳐 과다하게 반복된다 (총 {len(found)}건)." if is_ko
                        else f"Lists of three are excessively repeated across the text ({len(found)} occurrences).",
                        lang="any", sugg="나열 항목을 2개로 줄이거나 서술식 문장으로 풀어 쓴다."))
@@ -209,7 +223,7 @@ def rhythm(text: str, masked: str, sents: Sequence[Span], genre: str) -> List[Fi
             while j + 1 < len(ends) and ends[j + 1] == ends[i] and ends[i]:
                 j += 1
             if j - i + 1 >= (6 if ends[i].endswith("니다") else 4):
-                out.append(_mk("ko.rhythm.same-ending", "rhythm", "C", ko[j][0], ko[j][1], 0.8, genre,
+                out.append(_mk("ko.rhythm.same-ending", "rhythm", "C", ko[j][0], ko[j][1], 0.0, genre,
                                f"같은 어미('{ends[i]}')가 {j - i + 1}문장 연속된다.", lang="ko",
                                text=masked[ko[j][0]:ko[j][1]][:40], sugg="종결 형태와 문장 구조를 바꾼다."))
             i = j + 1
@@ -221,9 +235,10 @@ def rhythm(text: str, masked: str, sents: Sequence[Span], genre: str) -> List[Fi
                            sugg="'~이다', '~였다', '~되었다' 등으로 다양하게. 억지로 바꾸지는 않는다."))
     if len(ko) >= 5:
         commas = sum(masked[a:b].count(",") + masked[a:b].count("，") for a, b in ko)
-        if commas / len(ko) >= 2.2:
-            out.append(_mk("ko.rhythm.commas", "rhythm", "B", ko[0][0], ko[0][0], 0.6, genre,
+        if commas / len(ko) >= COMMA_PER_SENT:
+            out.append(_mk("ko.rhythm.commas", "rhythm", "C", ko[0][0], ko[0][0], 0.6, genre,
                            f"문장당 쉼표가 {commas / len(ko):.1f}개이다.", lang="ko",
+                           gmap={"academic": 0.4, "literary": 0.5, "technical": 0.6},
                            sugg="숨을 고를 자리에만 쉼표를 둔다."))
         can = sum(1 for a, b in ko if re.search(r"수\s*(?:있|없)", masked[a:b]))
         if can >= 4 and can / len(ko) >= 0.3:
@@ -347,7 +362,7 @@ def register_mix(masked: str, sents: Sequence[Span], paras: Sequence[Span], genr
         have = {k for k, _ in kinds}
         if {"polite", "plain"} <= have:
             first_other = next(sp for k, sp in kinds if k != kinds[0][0] and k in ("polite", "plain"))
-            out.append(_mk("ko.register.mixed", "rhythm", "C", first_other[0], first_other[1], 0.5, genre,
+            out.append(_mk("ko.register.mixed", "rhythm", "C", first_other[0], first_other[1], 0.2, genre,
                            "한 문단 안에 존댓말과 평어가 섞였다.", lang="ko", gmap={"literary": 0.3},
                            text=masked[first_other[0]:first_other[1]][:40],
                            sugg="문단의 말투를 하나로 맞춘다. 의도한 섞임이면 그대로 둔다."))

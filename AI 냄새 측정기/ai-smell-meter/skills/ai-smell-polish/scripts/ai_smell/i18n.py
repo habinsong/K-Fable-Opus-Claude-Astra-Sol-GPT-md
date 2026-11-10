@@ -13,6 +13,7 @@ S: Dict[str, Dict[str, str]] = {
         "genre": "장르",
         "lang_ko": "한국어", "lang_en": "영어", "lang_mixed": "한영 혼합",
         "genre_general": "일반", "genre_academic": "학술", "genre_everyday": "일상", "genre_literary": "문학",
+        "genre_technical": "기술",
         "disclaimer": "이 수치는 문체 표현의 출현 빈도입니다. 'AI가 썼을 확률'이 아니며, 사람이 쓴 글이 높게, "
                       "AI가 쓴 글이 낮게 나올 수 있습니다. 저자 판정에 쓰지 마세요.",
         "categories": "범주별 (100단위당 가중치 합산)",
@@ -55,6 +56,7 @@ S: Dict[str, Dict[str, str]] = {
         "lang_ko": "Korean", "lang_en": "English", "lang_mixed": "mixed",
         "genre_general": "general", "genre_academic": "academic", "genre_everyday": "everyday",
         "genre_literary": "literary",
+        "genre_technical": "technical",
         "disclaimer": "This is the density of style signals, not the probability that an AI wrote it. Human "
                       "text can score high and AI text low. Do not use it to judge authorship.",
         "categories": "By category (weighted signals per 100 units)",
