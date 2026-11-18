@@ -15,3 +15,6 @@
 #### 쓸 때와 쓰지 않을 때
 - 쓴다: Google 안에서 가장 어려운 장시간 추론·엔지니어링, 승인된 방어 목적의 보안 점검.
 - 쓰지 않는다: 일상 작업(Hydrogen 또는 다른 계열), 사실 정확성이 결과를 좌우하는 조사, 검증 없이 쓰는 코드 생성.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- **느리다는 평이 반복된다.** 한 창작자가 이전 리뷰에서 속도를 과소평가했다고 정정했고, Google 자체 지침으로 시간 제한을 15분으로 두라는 안내가 인용된다. Every의 리뷰 제목은 "멈출 때를 모른다"(장황함)인데 본문은 유료 벽 뒤라 읽지 못했다. 이전 Gemini CLI의 429 오류·조용한 모델 강등·불투명한 쿼터 불만은 2026년 4월 글이라 Carbon에 대한 후기가 아니다. [부분] ([Every 바이브 체크](https://every.to/vibe-check/vibe-check-gemini-4-carbon-doesn-t-know-when-to-stop), [eesel.ai](https://www.eesel.ai/blog/gemini-4-carbon-review))

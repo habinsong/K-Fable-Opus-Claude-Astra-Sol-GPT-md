@@ -1,0 +1,21 @@
+# Raon-1 mini (preview) · 웹 리서치 — 조사 기록
+> 제공자: Krafton · 모델 ID: `KRAFTON/Raon-1-mini-preview` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+
+> 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
+> 컨텍스트용 지침: [`md/25-krafton/raon-1-mini/web-research.md`](../../../../md/25-krafton/raon-1-mini/web-research.md)
+> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
+
+## 2. 이 모델의 웹 리서치 작업 운용
+Raon-1 mini (preview)의 웹 리서치 작업을 직접 측정한 자료는 찾지 못했다. [미확인] 아래는 이 분야와 가까운 항목의 수치다.
+
+- BrowseComp Plus 55.7(34.8 / 32.2), BFCL v4 59.8(64.7 / 65.8), AutomationBench 29.7(공개 분할).
+- MMLU-Pro 76.5, GPQA-Diamond 84.3, AIME 2026 93.3, HMMT 84.1, IFBench 84.2, 한국어 대화(사내) 92.9, AA-Omniscience 3.5(비교 중 최고).
+
+**웹 리서치 작업에서 따로 확인할 것**
+- 검색 도구의 인용 정확도, 출처 날조 빈도, 긴 조사에서의 일관성를 같은 과제로 비교 모델과 직접 대조한다. [추정]
+
+## 4. 근거와 한계
+- [Raon-1-mini-preview README](https://github.com/krafton-ai/Raon-1-mini-preview/blob/main/README.md)
+- [MoneyToday](https://www.mt.co.kr/en/tech/2026/10/21/2026102109562241281)
+- 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 웹 리서치 작업을 직접 측정한 것이 아니다.

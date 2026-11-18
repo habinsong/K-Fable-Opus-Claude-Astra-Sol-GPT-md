@@ -18,5 +18,5 @@
 - **펌웨어 소스·로그·서명 키·양산 이미지를 API로 보내지 않는다(약관 확인 전).** 데이터 처리 조건을 찾지 못했다. [미확인] 서명 키와 디버그 인증 정보는 약관과 무관하게 보내지 않는다(§3.4).
 
 ## 4. 근거와 한계
-- 규모·접근 방식·분업 조언: [Morph: GLM-5.3 대 Claude](https://www.morphllm.com/glm-5-3-vs-claude), [EvoLink: GLM-5.3 릴리스](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분]
+- 규모·접근 방식·분업 조언: [Morph: GLM-5.3 대 Claude](https://www.morphllm.com/glm-5-3-vs-claude), [EvoLink: GLM-5.3 릴리즈](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분]
 - 한계: 임베디드·펌웨어에 대한 평가가 없다. 사용 범위 제한은 모델 규모와 비가역 작업의 위험에서 도출한 안전 권고다.

@@ -19,6 +19,10 @@ from .model import Finding, weigh
 
 Span = Tuple[int, int]
 Link = Tuple[str, str]                       # (종류, 관계)
+NIDA_RUN = 3                                 # '-니다'로 끝나는 문장이 접속부사 없이 이 수만큼 이어지면 센다
+NIDA_LEN = 9                                 # 이 어절 수를 넘는 문장은 길다고 본다. 길이가 들쭉날쭉하거나 내내 긴 글은 사람의 호흡이므로 연속에 넣지 않는다
+NIDA_SHORT = 3                               # '-니다' 문장 바로 뒤의 '-니다' 문장이 이 어절 수 이하이면 센다
+EXPLICIT = ("adv", "conj", "ord", "sub")         # 앞 문장과 잇는 말로 치는 종류. 지시어와 되받음은 여기에 넣지 않는다
 RUN_MIN = 3                                  # 끊긴 단문이 이만큼 이어지면 센다
 RUN_MIN_OTHER = 5                            # 사전이 없는 언어는 더 길 때만
 NOBRIDGE_MIN_SENTS = 5
@@ -203,8 +207,31 @@ def signals(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: st
             note = (f"짧은 문장 {n}개가 접속어·지시어·되받는 말 없이 이어져 문장 사이 관계가 드러나지 않는다"
                     + (" (모두 '-다'로 끝난다)." if same else ".")) if is_ko else \
                 f"{n} short sentences in a row with no connective, demonstrative or carried-over term between them."
-            out.append(_mk(f"{lang if lang in ('ko', 'en') else 'any'}.cohesion.choppy-run", "B" if lang == "ko" else "C", grp[i][0],
-                           grp[i][1], 1.0, genre, note, sg, lang, masked[grp[i][0]:grp[j][1]][:60]))
+            out.append(_mk(f"{lang if lang in ('ko', 'en') else 'any'}.cohesion.choppy-run", "A" if lang == "ko" else "C", grp[i][0],
+                           grp[i][1], 1.4 if lang == "ko" else 1.0, genre, note, sg, lang, masked[grp[i][0]:grp[j][1]][:60]))
+        if lang == "ko":
+            polite = [bool(re.search(r"니다$", re.sub(r"[^가-힣]+$", "", x))) for x in texts]
+            joined = [bool(lk) and lk[0] in EXPLICIT for lk in links]     # 문장 첫머리의 접속부사·접속사·순서어
+            brief = [p and n <= NIDA_LEN for p, n in zip(polite, lens)]  # 짧은 '-니다' 문장. 긴 문장이 끼면 연속이 끊긴다
+            i = 0
+            while i < len(texts):
+                if not brief[i]:
+                    i += 1
+                    continue
+                j = i
+                while j + 1 < len(texts) and brief[j + 1] and not joined[j + 1]:
+                    j += 1
+                if j - i + 1 >= NIDA_RUN:
+                    out.append(_mk("ko.cohesion.nida-run", "A", grp[i][0], grp[j][1],
+                                   min(0.8 + 0.4 * (j - i + 1 - NIDA_RUN), 2.4), genre,
+                                   f"'-니다'로 끝나는 문장 {j - i + 1}개가 접속부사 없이 짧게 이어진다. 길이가 달라지는 자리가 없다.",
+                                   sg, lang, masked[grp[i][0]:grp[j][1]][:60]))
+                i = j + 1
+            for k in range(1, len(texts)):
+                if brief[k - 1] and polite[k] and lens[k] <= NIDA_SHORT:
+                    out.append(_mk("ko.cohesion.nida-short", "A", grp[k][0], grp[k][1], 0.8, genre,
+                                   f"'-니다'로 끝난 문장 바로 뒤에 {lens[k]}어절짜리 '-니다' 문장이 온다. 짧은 문장 뒤에 또 짧은 문장이 붙었다.",
+                                   sg, lang, masked[grp[k][0]:grp[k][1]][:60]))
         n = len(texts)
         if (lang != "other" and n >= NOBRIDGE_MIN_SENTS
                 and sum(1 for lk in links[1:] if lk) <= NOBRIDGE_RATIO * (n - 1)

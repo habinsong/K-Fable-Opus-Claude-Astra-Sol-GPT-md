@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: 값싸고 빠른 반복 에이전트 작업, 초안·분류·추출 같은 가벼운 작업, 멀티모달 입력(비디오·오디오) 처리, Antigravity의 실행 모델.
 - 쓰지 않는다: 가장 어려운 장시간 추론·보안 작업(Carbon 또는 다른 계열), 사실 정확성이 결과를 좌우하는 조사, 검증 없이 쓰는 코드 생성.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- 독립 개발자 후기는 얕다. 초기 접근자는 Antigravity에서 "꽤 빠르고 꽤 좋다"(날아다니는 도시를 만들게 함)고 썼다. MindStudio는 Gemini 4 세 모델(Hydrogen, Argon, Carbon)이 코딩 에이전트 벤치마크에서 Anthropic·OpenAI에 뒤진다고 주장하되 Google은 가격과 도달 범위에서 이긴다고 봤다. 환각을 직접 시험한 후기는 없다. 지침 강화(읽기 규율)는 사용자 보고에 근거한 것이며 이 후기들이 확인해 주지는 않는다. [부분] ([MindStudio](https://www.mindstudio.ai/blog/is-google-behind-in-ai-coding-race), [pasqualepillitteri](https://pasqualepillitteri.it/en/news/33146/what-people-are-building-gemini-4-hydrogen-first-24-hours))

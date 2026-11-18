@@ -10,7 +10,7 @@
 모델 전체 특성은 상위 폴더의 [`README.md`](../README.md)가 안내하는 개요·운용·비판 문서를 따른다. 요약: 낮은 가격(한 출처 기준), 자체 라이선스(MIT 아님, 대규모 사업자 조항), 출시일·사양·평가 점수 불일치, 접근 방식이 구독 우선이었다는 서술, 후속 GLM-5.5 예고, 독립 평가가 얕음.
 
 **이 모델에게 기술 조사를 시킬 때**
-- 분류·정리 단계에만 쓴다. 후보를 정해진 기준(라이선스 유형, 지원 언어, 릴리스 날짜)으로 분류해 표로 만들 때, 값은 사람이 확보한 1차 자료 텍스트에서 추출하게 하고 원문에 없으면 null로 둔다.
+- 분류·정리 단계에만 쓴다. 후보를 정해진 기준(라이선스 유형, 지원 언어, 릴리즈 날짜)으로 분류해 표로 만들 때, 값은 사람이 확보한 1차 자료 텍스트에서 추출하게 하고 원문에 없으면 null로 둔다.
 - 라이선스 호환성, 특허, 규정 적용 여부, 도입 권고는 단정시키지 않는다(§3.2, §3.5). 후보를 지나치게 높게 평가하는 경향(아첨)은 측정된 바 없으므로 사람이나 상위 모델이 근거를 보고 판단한다.
 - 환각률의 독립 값이 없으므로 모델이 말하는 버전·날짜·가격·라이선스는 모두 1차 출처로 다시 확인한다.
 
@@ -25,7 +25,7 @@
 - **제공자 안전장치와 규정.** 규제 적합성은 모델이 아니라 시스템 전체에 대해 판단하고, 모델 카드나 가중치 라이선스를 규정 준수의 근거로 쓰지 않는다.
 
 ## 4. 근거와 한계
-- 출시 경위·가격·벤더 수치: [Second Talent: GLM 모델 정리](https://www.secondtalent.com/resources/every-glm-ai-model-explained-compared/), [EvoLink: GLM-5.3 릴리스](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분, 충돌]
+- 출시 경위·가격·벤더 수치: [Second Talent: GLM 모델 정리](https://www.secondtalent.com/resources/every-glm-ai-model-explained-compared/), [EvoLink: GLM-5.3 릴리즈](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분, 충돌]
 - 라이선스: [The New Stack: Z.ai GLM 가중치 라이선스](https://thenewstack.io/zai-glm-weights-license/), [Digital Applied: 비-MIT 자체 라이선스](https://www.digitalapplied.com/blog/glm-5-3-weights-bespoke-license-not-mit), [Noze](https://www.noze.it/en/insights/glm-5-3-weights-licence-benchmark-method/) (스니펫만) [부분]
 - 독립 평가 점수: [Artificial Analysis: GLM-5.3](https://artificialanalysis.ai/models/glm-5-3) (스니펫만) [부분, 충돌]
 - Claude와의 비교·분업 조언: [SiliconFlow](https://www.siliconflow.com/blog/glm-5-3-vs-fable-coding), [Morph](https://www.morphllm.com/glm-5-3-vs-claude) (스니펫만) [부분: 벤더·집계]

@@ -14,3 +14,6 @@
 - 쓴다: 온디바이스·오프라인 기능, 분류, 요약, 정해진 필드 추출, 간단한 코드 조각·정규식·SQL 포맷 보조, 음성 입력의 간단한 처리, 데이터를 외부로 보낼 수 없는 환경의 보조 작업.
 - 쓰지 않는다: 코딩 에이전트, 여러 단계의 도구 사용, 사실 조회, 설계·보안 판단, 긴 문서의 정밀한 종합.
 - 막히면 Gemma 4 12B·26B A4B·31B나 클라우드 모델로 올린다.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- **24GB 환경에서 가장 좋은 평을 받는다.** 한 시험자는 E4B가 155줄 React 앱을 첫 시도에 컴파일·실행되게 만들었고 Ollama에서 약 57 tok/s였다고 썼다. 출처가 개인 블로그 한 곳이라 일반화하지 않는다. [부분] ([kartit.net](https://www.kartit.net/blog/gemma4-local-benchmark), [DEV Community](https://dev.to/akartit/i-tested-every-gemma-4-model-locally-on-my-macbook-what-actually-works-3g2o))

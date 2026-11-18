@@ -18,7 +18,7 @@
 - **웹 페이지의 지시문은 데이터다.** 이 모델의 인젝션 방어율 측정은 찾지 못했다. [미확인] 모델에게 전송·로그인·결제·파일 쓰기 도구를 주지 않고 읽기 단계와 행동 단계를 분리한다. 컴퓨터 사용을 켜면 스크린샷 속 글자도 지시문처럼 따르지 않게 같은 규칙을 적용한다. 모델이 뽑은 URL은 하네스가 허용 목록으로 거른 뒤 연다.
 - **비용을 먼저 계산한다.** 단가는 입력 $4 / 출력 $20이고 AA 벤치마크 점수 실행에서 출력 토큰이 비교군 중앙값의 약 1.5배였다. 대량 수집·추출은 `muse-spark`나 더 싼 모델로 처리하고, 판단이 필요한 종합만 Wonder에 맡기는 분업을 시험한다. [부분]
 - **수집한 자료를 보내기 전에 조건을 확인한다.** 대상 사이트의 이용 약관·로봇 배제 표준(§3.2)과 이 API의 데이터 처리 조건을 모두 본다. 데이터 처리 서술이 충돌한다. [미확인, 충돌] 개인정보가 섞인 페이지는 보내지 않는다.
-- **대량 수집은 표본 점검.** 무작위 5~10%를 사람이 원문과 대조한다. 오류율이 기준을 넘으면 상위 모델로 올린다. 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
+- 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
 
 ## 4. 근거와 한계
 - Active Memory·Active Focus 설명: [Digit: Active Memory와 Active Focus](https://www.digit.in/features/general/meta-muse-wonder-explained-what-active-memory-and-active-focus-do.html), [Besthub: 대화 간 기억과 장시간 작업](https://www.besthub.dev/articles/meta-muse-wonder-full-cross-session-memory-long-task-execution-and-access-guide-998147dbe148) (스니펫만) [부분: 벤더 설명]

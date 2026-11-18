@@ -20,7 +20,7 @@
 - **전문 영역(의료, 법률, 안전) 결론에는 "전문가 검토 필요"를 붙인다.**
 
 ## 4. 근거와 한계
-- 독립 평가 점수(버전 충돌)·추정치 표기·변형: [Artificial Analysis: GLM-5.3 (max)](https://artificialanalysis.ai/models/glm-5-3), [GLM-5.3 (low)](https://artificialanalysis.ai/models/glm-5-3-low), [릴리스 목록](https://artificialanalysis.ai/models/releases/glm-5-3) (스니펫만) [부분, 충돌]
-- 벤더 수치: [OrcaRouter: GLM-5.3 릴리스](https://www.orcarouter.ai/zh-TW/blog/glm-5-3-leak) (스니펫만) [부분: 벤더 주장]
+- 독립 평가 점수(버전 충돌)·추정치 표기·변형: [Artificial Analysis: GLM-5.3 (max)](https://artificialanalysis.ai/models/glm-5-3), [GLM-5.3 (low)](https://artificialanalysis.ai/models/glm-5-3-low), [릴리즈 목록](https://artificialanalysis.ai/models/releases/glm-5-3) (스니펫만) [부분, 충돌]
+- 벤더 수치: [OrcaRouter: GLM-5.3 릴리즈](https://www.orcarouter.ai/zh-TW/blog/glm-5-3-leak) (스니펫만) [부분: 벤더 주장]
 - 참고문헌 정확도(타 모델 포함): [Biomedical Reference Generation Remains Unreliable across 26 LLMs](https://arxiv.org/pdf/2609.14988) [부분]
 - 한계: 연구 보조 정확도를 측정한 독립 자료가 없다. 공식 모델 카드를 읽지 못했다.

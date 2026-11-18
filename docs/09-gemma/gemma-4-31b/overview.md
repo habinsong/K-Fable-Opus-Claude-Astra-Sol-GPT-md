@@ -15,3 +15,11 @@
 
 ## 재확인 (2026-11-19, 웹 검색)
 - 2026-04-02의 Gemma 4 이후 Gemma 5나 새 Google 오픈 모델의 발표는 찾지 못했다. [부분: [Google 오픈소스 블로그](https://opensource.googleblog.com/2026/03/gemma-4-expanding-the-gemmaverse-with-apache-20.html)]
+
+## 재확인 (2026-11-19, 공식 모델 카드 직접 읽기)
+- [Gemma 4 모델 카드](https://gemma.ai/models/gemma-4/model-card/) 직접 읽음. 밀집 30.7B, 60층, 슬라이딩 윈도우 1,024, 컨텍스트 256K, 입력 텍스트·이미지(비전 인코더 약 5.5억, 오디오 없음). [확인]
+- 지시 모델 점수: MMLU-Pro 85.2, AIME 2026 89.2, LiveCodeBench v6 80.0, Codeforces ELO 2,150, GPQA-Diamond 84.3, τ2 평균 76.9, HLE 19.5(검색 포함 26.5), BigBench Extra Hard 74.4, MMMLU 88.4, MMMU-Pro 76.9, MATH-Vision 85.6, MedXPertQA-MM 61.3, MRCR v2 128K 66.4, OmniDocBench 0.131(가장 낮음). [확인: 벤더 보고]
+- Gemma 3 27B(비추론) 대비(계산): AIME 2026 20.8에서 89.2(4.3배), Codeforces 110에서 2,150, LiveCodeBench 29.1에서 80.0(2.7배), GPQA 42.4에서 84.3(2.0배), τ2 16.2에서 76.9(4.7배), MRCR 13.5에서 66.4(4.9배). 같은 크기 계열 안의 세대 도약이 매우 크다. [확인 / 추정]
+- 다른 자료의 같은 크기대 비교: Artificial Analysis는 Muse Glimmer(35)가 Gemma 4 31B(추론, 30)보다 높다고 읽었다. Qwen3.8-27B 카드는 같은 크기에서 SWE-bench Pro 61.7이고 Gemma 4는 이 지표를 싣지 않았다. [확인: 읽은 값]
+- 가중치 메모리(30.7B × 바이트, 계산): BF16 약 61GB, 8비트 약 31GB, 4비트 약 15.4GB. QAT 판 `31b-qat`이 LM Studio 목록에 있다(2차). [추정 / 부분]
+- 공통: 권장 샘플링 온도 1.0 / top_p 0.95 / top_k 64, 기본 지원 35개 이상 언어(사전 학습 140개 이상), Apache 2.0, 이미지당 시각 토큰 예산 70·140·280·560·1,120, 오디오 클립 최대 30초, 비디오 최대 60초(초당 1프레임 기준), 학습 데이터 기준 2025-01. 메모리 요구량과 출시일은 카드에 없다. [확인: 카드 / 미확인]

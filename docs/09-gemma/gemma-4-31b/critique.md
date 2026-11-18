@@ -14,3 +14,7 @@
 - 쓴다: 48 GB급 메모리(또는 24 GB GPU에 짧은 컨텍스트)에서 도는 로컬 코딩 보조·요약·분류·추출, 어려운 단발 추론, 개인정보나 미공개 코드를 외부로 보낼 수 없는 환경.
 - 쓰지 않는다: 지연이 중요한 대화형 서비스, 긴 컨텍스트 + 낮은 메모리 환경, 검증 없는 에이전트 자동화, 사실 조회.
 - 막히면 클라우드 상위 모델(`gemini-4-argon`, `02-claude/opus-5.5`, `gpt-6.1-sol`)로 올린다.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- **다국어 평이 좋다.** 독일어·아랍어·베트남어·프랑스어 사용자가 Qwen 3.5보다 비영어 작업이 낫다고 보고했다. MMMLU 88.4 대 85.9로 31B가 앞서지만 같은 글은 어느 쪽도 압도하지 않는다고 결론 냈다. [부분: 벤더 인접 필자의 정리] ([DEV Community](https://dev.to/dentity007/-gemma-4-after-24-hours-what-the-community-found-vs-what-google-promised-3a2f))
+- **코딩은 엇갈린다.** LiveCodeBench v6는 비슷하고 Codeforces ELO는 Gemma가 앞선다. Hacker News 댓글 한 건은 "작은 모델 코딩의 대장"이라 했으나 밀집이라 전체 컨텍스트에 통합 메모리 약 48GB가 든다고 덧붙였고, 다른 댓글은 Qwen3.6 27B와 비교해 의견이 갈린다고 썼다. 영어 전용·속도 중시 배포는 Qwen 3.5가 낫다는 평. [부분] ([Hacker News](https://hn.svelte.dev/item/48385906))

@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: GitHub Copilot 안에서 일상 코딩·디버깅의 저가 대안을 비교할 때(프로모션 기간 동안 특히).
 - 쓰지 않는다: 가장 어려운 문제(Fable 5.2, Opus 5.5, GPT-6.2 Astra), 코딩이 아닌 작업, 외부 전송이 금지된 코드.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- 독립된 사용자 후기를 찾지 못했다. 검색에 나온 것은 제조사 발표·출시 보도·판매 사이트 정리뿐이다. [확인: 부재] 한 비교 글은 Copilot 모델 카탈로그에 MAI-Code-1.1-Flash가 있고 Nadella가 MAI Code Flash의 지난달 GitHub Copilot 사용자가 300만 명이라 말했다고 전하지만 만족도 자료는 없다. Copilot 대 Claude Code 일반 비교는 "Copilot은 GitHub 중심 팀에, Claude Code는 더 깊은 터미널 에이전트"라는 평이 많다(MAI 모델 평가가 아님). [부분] ([fourweekmba](https://fourweekmba.com/ai-copilot-rivals-claude-code-while-offering-11-claude-models/))

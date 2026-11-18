@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: 값싼 에이전트·컴퓨터 사용 실험, 보안 취약점 점검 보조, Tencent 생태계(WorkBuddy, CodeBuddy) 안에서의 작업.
 - 쓰지 않는다: 큰 저장소 대규모 변경, 고난도 수학, 외부 전송이 금지된 코드·데이터, 한국어 윤문.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- 실사용 후기는 얕다. 한 실무 글(wavect)은 긴 컨텍스트·다단계 도구 사용·반복 저장소 검색이 병목이면 통제된 코딩 에이전트 시범은 할 만하지만 모든 상용 워크플로의 안전한 기본값은 아니라고 평했다(날짜가 11월 출시 보도와 맞지 않는 미리보기 기준 글). Tencent가 감사받은 독립 벤치마크를 공개하지 않았다는 보도, 수요 폭주로 추론 클러스터를 10배로 늘렸다는 서술이 있다. [부분] ([wavect](https://wavect.io/blog/tencent-hy4-preview-coding-agent-review/), [SCMP](https://www.scmp.com/tech/big-tech/article/3366068/tencents-hy4-model-gains-open-source-ai-rankings-after-ecosystem-driven-training))

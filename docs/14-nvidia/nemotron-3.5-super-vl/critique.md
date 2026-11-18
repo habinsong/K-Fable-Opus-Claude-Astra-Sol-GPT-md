@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: 서버급 GPU가 있는 환경의 문서·이미지·화면 이해(에이전트 작업), 후학습 데이터를 가진 특화 과제, 오픈 데이터·레시피가 필요한 연구.
 - 쓰지 않는다: 개인 장비 실행(Bolt 계열 대상), 한국어 윤문, 비디오 이해 중심 작업.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- Artificial Analysis 지능 지수 26.5로 40B~150B 오픈 가중치 67개 중 1위라는 보도. 개인 사용자 후기는 찾지 못했다. 이전 모델 Nemotron 3 Super를 DGX Spark로 쓴 개발자 포럼 글은 Qwen3.5-122B 대비 뚜렷한 이점을 찾기 어렵고 비전이 없다고 했다. 120B 모델은 노트북 작업 부하가 아니다. [부분] ([The Neuron](https://www.theneuron.ai/news/nvidia-nemotron-3-5-bolt-super-vl-review/), [NVIDIA 포럼](https://forums.developer.nvidia.com/t/nvidia-nemotron-3-super-120b-a12b-nvfp4/363175?page=2))

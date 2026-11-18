@@ -24,7 +24,7 @@
 - 스토어 규정은 기억으로 답하지 않고 공식 문서로 확인한다(§3.2). 서명 키, 프로파일, 스토어 제출·배포는 승인 후에만 한다.
 
 ## 4. 근거와 한계
-- 접근 방식·가격: [Morph: GLM-5.3 대 Claude](https://www.morphllm.com/glm-5-3-vs-claude), [EvoLink: GLM-5.3 릴리스](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분]
+- 접근 방식·가격: [Morph: GLM-5.3 대 Claude](https://www.morphllm.com/glm-5-3-vs-claude), [EvoLink: GLM-5.3 릴리즈](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분]
 - 라이선스: [The New Stack: Z.ai GLM 가중치 라이선스](https://thenewstack.io/zai-glm-weights-license/) (스니펫만) [부분]
 - SWE Multilingual 상태: [BenchLM: GLM-5 대 GLM-5.3](https://benchlm.ai/md/compare/glm-5-vs-glm-5-3.md) [부분: 집계 사이트]
 - 한계: 모바일 개발과 서버 데이터 정책에 대한 1차 자료를 읽지 못했다. 약관의 최종 조건은 원문으로 확인한다.

@@ -15,3 +15,7 @@
 - 쓴다: 24 GB 안팎 GPU에서 4비트로 도는 로컬 코딩 보조(단발 질문, 함수 초안, 리팩터링 제안), 요약, 분류, 정해진 필드 추출, 개인정보나 미공개 코드를 외부로 보낼 수 없는 환경.
 - 쓰지 않는다: 장시간 자율 코딩 에이전트, 큰 컨텍스트를 요구하는 작업, 여러 단계의 도구 사용을 신뢰해야 하는 작업, 사실 조회.
 - 막히면 Gemma 4 31B나 클라우드 모델로 올린다.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- **속도 불만이 하드웨어별로 크게 갈린다.** 16GB RTX 5060 Ti에서 약 11 tok/s(같은 카드에서 Qwen 3.5 35B-A3B는 60 이상, 글쓴이는 이질적 어텐션 헤드 차원이 느린 커널로 떨어뜨린 탓이라 추측했으나 단일 글의 가설), 24GB MacBook M4 Pro에서 약 2 tok/s로 "쓸 수 없음", NVIDIA GB10에서 31.5 tok/s. 반면 RTX 5090 Q4 4K 컨텍스트에서 약 180 tok/s, RTX 3090 Q4_K_M에서 119 tok/s. 하드웨어·런타임·양자화가 달라 직접 비교할 수 없다. [부분: 개인 보고] ([DEV Community 24시간 후](https://dev.to/dentity007/-gemma-4-after-24-hours-what-the-community-found-vs-what-google-promised-3a2f), [openclaweco](https://openclaweco-website-build.pages.dev/news/gemma-4-community-review-speed-vram-findings/))
+- 품질 평은 낫다: 한 MacBook 시험자는 26B가 근소하게 낫지만 기다릴 값어치는 아니라 했고, 다른 사용자는 에이전트 코딩에서 토큰 속도보다 품질이 중요하다고 썼다. [부분]

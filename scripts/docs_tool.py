@@ -36,7 +36,9 @@ DOCS = ROOT / "docs"
 # 계열 폴더는 번호를 앞에 붙인다(인지도 순). 번호 규칙은 README.md의 "디렉터리 구조"에 있다.
 FAMILIES = ["01-gpt", "02-claude", "03-gemini", "04-grok", "05-deepseek", "06-qwen",
             "07-kimi", "08-glm", "09-gemma", "10-muse", "11-minimax",
-            "12-mistral", "13-microsoft", "14-nvidia", "15-tencent", "16-baidu", "17-thinking-machines"]
+            "12-mistral", "13-microsoft", "14-nvidia", "15-tencent", "16-baidu", "17-thinking-machines",
+            "18-lg", "19-sk-telecom", "20-upstage", "21-motif", "22-naver", "23-kakao", "24-kt",
+            "25-krafton", "26-xiaomi"]
 DOMAINS = ["general", "web", "app", "native", "hardware", "firmware",
            "web-research", "research", "tech-research"]
 KO_DOMAINS = ["ko-academic", "ko-everyday", "ko-literary"]

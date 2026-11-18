@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: 이미지·차트·문서 이해, 금융·정량 분석, 서버급 장비에서 Apache 2.0 가중치를 미세조정할 때.
 - 쓰지 않는다: 터미널 코딩 에이전트의 기본 모델, 개인 장비 로컬 실행, 간결한 채팅.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- 상업적 이해가 있는 리뷰(eesel.ai, 에이전트 도구 회사) 한 편이 있다: 장시간 에이전트 작업에는 비용이 합리적이고 환각이 이전보다 줄었으나 0은 아니며 SWE-bench Verified는 Inkling-Small 80.2에서 82.2로 2점 상승에 그친다고 썼다. 이 수치는 우리가 읽은 공식 블로그 표(SWE-bench Pro v2 등)와 다른 지표다. 제목에 "여전히 비공개"라고 있어 가중치 공개(11-12) 이전에 쓴 것으로 보인다. SourceForge의 5점 후기는 1세대 모델에 대한 것이다. [부분] ([eesel.ai](https://www.eesel.ai/blog/inkling-2-small-review), [SourceForge](https://sourceforge.net/software/product/Inkling-Small/))

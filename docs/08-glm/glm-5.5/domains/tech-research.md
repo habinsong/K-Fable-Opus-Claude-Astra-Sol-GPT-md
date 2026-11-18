@@ -26,7 +26,7 @@
 - 출시 전 기술 선정은 GLM-5.3 계열과 다른 후보로 진행한다. 공식 발표와 독립 측정이 나오기 전에는 5.5를 도입 후보로 확정하지 않는다.
 
 ## 4. 근거와 한계
-- 시기 전망·릴리스 로그 상태: [Emergent: GLM-5.5 release date](https://emergent.sh/news/glm-5-5-release-date), [TokenMix: 출시일 루머](https://tokenmix.ai/blog/glm-5-5-release-date-rumors-2026) (스니펫만) [부분: 2차]
+- 시기 전망·릴리즈 로그 상태: [Emergent: GLM-5.5 release date](https://emergent.sh/news/glm-5-5-release-date), [TokenMix: 출시일 루머](https://tokenmix.ai/blog/glm-5-5-release-date-rumors-2026) (스니펫만) [부분: 2차]
 - 크기 추측: [CometAPI: GLM-5.5 leak](https://www.cometapi.com/it/glm-5-5-leak-3-5t-parameters/), [DEV: GLM-5.5 주장 9건 추적](https://dev.to/tokenmixai/i-traced-9-glm-55-claims-august-looks-real-the-1t-spec-sheet-doesnt-p65) (스니펫만) [미확인: 유출]
 - 라이선스·가격·평가 사례(GLM-5.3): `08-glm/glm-5.3/tech-research.md`의 출처.
 - 한계: 공식 발표 전이라 모든 모델별 항목이 [미확인]이다. 출시 후 갱신한다.

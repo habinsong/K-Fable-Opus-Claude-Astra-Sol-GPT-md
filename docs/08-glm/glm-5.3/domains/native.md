@@ -23,7 +23,7 @@
 - **오프라인 요구가 있으면 이 모델은 맞지 않는다.** 소형 로컬 모델 문서(`gemma-4-e4b`, `qwen3.6-27b` 등)를 본다. 자체 호스팅하려면 라이선스(자체 라이선스, 대규모 사업자 조항)를 원문으로 확인한다(README.md가 안내하는 개요·운용 문서.3).
 
 ## 4. 근거와 한계
-- 벤더 수치(카드를 옮긴 보도): [OrcaRouter: GLM-5.3 릴리스](https://www.orcarouter.ai/zh-TW/blog/glm-5-3-leak), [EvoLink: GLM-5.3 릴리스](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분: 벤더 주장]
-- 독립 평가 점수(버전 충돌): [Artificial Analysis: GLM-5.3 (max)](https://artificialanalysis.ai/models/glm-5-3), [릴리스 목록](https://artificialanalysis.ai/models/releases/glm-5-3) (스니펫만) [부분, 충돌]
+- 벤더 수치(카드를 옮긴 보도): [OrcaRouter: GLM-5.3 릴리즈](https://www.orcarouter.ai/zh-TW/blog/glm-5-3-leak), [EvoLink: GLM-5.3 릴리즈](https://evolink.ai/blog/glm-5-3-release) (스니펫만) [부분: 벤더 주장]
+- 독립 평가 점수(버전 충돌): [Artificial Analysis: GLM-5.3 (max)](https://artificialanalysis.ai/models/glm-5-3), [릴리즈 목록](https://artificialanalysis.ai/models/releases/glm-5-3) (스니펫만) [부분, 충돌]
 - SWE Multilingual 상태: [BenchLM: GLM-5 대 GLM-5.3](https://benchlm.ai/md/compare/glm-5-vs-glm-5-3.md) [부분: 집계 사이트]
 - 한계: 언어별 시스템 코드 평가와 환각·도구 호출 오류율의 독립 자료가 없다.

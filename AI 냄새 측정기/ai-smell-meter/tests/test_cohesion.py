@@ -14,7 +14,7 @@ from ai_smell.verify import verify
 KO_STACCATO = ("이 노트북을 사도 되는지 봐 달라고 하셨습니다. 직접 써 보지는 못했습니다. 리뷰 두 건과 사용자 글을 본 판단입니다. "
                "배터리 시간은 짧은 편입니다. 화면은 밝고 선명합니다. 팬 소리는 거의 없습니다. 무게는 1.2kg입니다.")
 KO_CONNECTED = ("이 노트북을 사도 되는지 봐 달라고 하셨는데, 직접 써 보지는 못했고 리뷰 두 건과 사용자 글을 본 판단입니다. "
-                "배터리 시간은 짧은 편이지만 화면이 밝고 선명하며, 그래서 실내 작업에는 무리가 없습니다. 게다가 팬 소리는 "
+                "다만 배터리 시간은 짧은 편이지만 화면이 밝고 선명하며, 그래서 실내 작업에는 무리가 없습니다. 게다가 팬 소리는 "
                 "거의 없고 무게도 1.2kg이라 들고 다니기 좋습니다.")
 
 
@@ -33,6 +33,46 @@ class UserReport(unittest.TestCase):
         a = analyze(KO_STACCATO)
         self.assertIn("ko.cohesion.choppy-run", {f.rule_id for f in a.findings})
         self.assertGreaterEqual(a.score, 15)
+
+    def test_polite_endings_without_a_connective_are_flagged(self):
+        text = "배포는 월요일에 진행합니다. 점검은 30분이 걸립니다. 문제가 생기면 되돌리고 알려 드립니다."
+        hit = [f for f in analyze(text).findings if f.rule_id == "ko.cohesion.nida-run"]
+        self.assertEqual(len(hit), 1)
+        self.assertIn("3개", hit[0].note)
+
+    def test_a_connective_adverb_breaks_the_run(self):
+        text = ("배포는 월요일에 진행합니다. 그래서 점검은 30분이 걸립니다. 문제가 생기면 되돌리고 알려 드립니다. "
+                "또한 결과는 메일로 보냅니다.")
+        self.assertFalse([f for f in analyze(text).findings if f.rule_id == "ko.cohesion.nida-run"])
+
+    def test_the_connective_counts_with_or_without_a_comma(self):
+        for adv in ("그래서", "그래서,", "또한", "또한,", "다만", "다만,"):
+            text = (f"배포는 월요일에 진행합니다. {adv} 점검은 30분이 걸립니다. 문제가 생기면 되돌리고 알려 드립니다. "
+                    "결과는 메일로 보냅니다.")
+            runs = [f.note for f in analyze(text).findings if f.rule_id == "ko.cohesion.nida-run"]
+            self.assertEqual(len(runs), 1, adv)
+            self.assertIn("3개", runs[0], adv)             # 앞 한 문장이 떨어져 나가고 뒤 세 문장이 남는다
+
+    def test_long_polite_sentences_are_human_breathing(self):
+        long = ("이번 배포는 월요일 오전에 운영팀이 직접 진행하고 결과는 같은 날 저녁까지 공유하기로 했습니다. "
+                "점검은 배포가 끝난 뒤에 서른 분 동안 이어지며 그 사이에는 새 요청을 받지 않기로 정리했습니다. "
+                "문제가 생기면 직전 버전으로 되돌린 다음 원인을 확인하고 다시 일정을 잡아 알리겠습니다.")
+        self.assertFalse([f for f in analyze(long).findings if f.rule_id.startswith("ko.cohesion.nida")])
+
+    def test_a_long_sentence_between_short_ones_breaks_the_run(self):
+        mixed = ("배포는 월요일입니다. 점검은 배포가 끝난 뒤에 서른 분 동안 이어지며 그 사이에는 새 요청을 받지 않기로 했습니다. "
+                 "되돌릴 수 있습니다. 알림은 메일로 갑니다.")
+        self.assertFalse([f for f in analyze(mixed).findings if f.rule_id == "ko.cohesion.nida-run"])
+
+    def test_two_polite_sentences_are_fine(self):
+        text = "배포는 월요일에 진행합니다. 점검은 30분이 걸립니다."
+        self.assertFalse([f for f in analyze(text).findings if f.rule_id == "ko.cohesion.nida-run"])
+
+    def test_a_very_short_polite_sentence_after_a_polite_one_is_flagged(self):
+        text = "배포는 월요일에 진행하기로 했습니다. 가능합니다."
+        self.assertTrue([f for f in analyze(text).findings if f.rule_id == "ko.cohesion.nida-short"])
+        ok = "배포는 월요일에 진행하기로 했습니다. 점검은 30분이 걸린다고 합니다."
+        self.assertFalse([f for f in analyze(ok).findings if f.rule_id == "ko.cohesion.nida-short"])
 
     def test_connected_version_is_not_flagged(self):
         self.assertEqual(cut(KO_CONNECTED), [])

@@ -15,3 +15,6 @@
 #### 2.5 쓸 때와 쓰지 않을 때
 - 쓴다: 대량·저지연 하위 작업(파일 읽기, 분류·추출, 도구 호출 반복), 상위 모델이 쪼갠 국소 수정.
 - 쓰지 않는다: 설계·계획·어려운 디버깅, 사실 정확성이 결과를 좌우하는 조사.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- Ember 전용 개발자 후기는 찾지 못했다. Ember를 쓰는 Muse Code는 베타이고 Claude Code·Codex와의 격차를 아직 못 줄였다는 평, Meta가 장시간 작업 성공 주장의 분모를 공개하지 않았다는 분석이 있다. 출시일이 11-09와 11-11로 갈린다. [부분] ([eesel.ai Muse Code 리뷰](https://www.eesel.ai/blog/meta-muse-code-review), [myclaw](https://myclaw.ai/blog/muse-ember-review), [nxcode](https://www.nxcode.io/resources/news/meta-muse-code-recoverable-coding-agent-2026))

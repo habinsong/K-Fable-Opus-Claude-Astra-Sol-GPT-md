@@ -18,3 +18,6 @@
 - 쓴다: 일상적인 구현·수정·리뷰·디버깅의 기본 모델, 반복 루프가 많은 에이전트 작업, 비용에 민감한 장시간 작업.
 - 올린다: 같은 문제에서 두 번 이상 막히면 Astra로 올린다. 시작은 `medium`, 어려우면 `high`.
 - 쓰지 않는다: 가장 어려운 연구·보안 분석(Astra), 대량·저지연 단순 작업(Luna·Terra), 창작 글쓰기.
+
+## 재확인 (2026-11-19, 웹 검색, 사용자·후기 글)
+- **6.2 Sol 전용 후기는 없다.** 인접 모델 후기: GPT-6 Sol과 Claude Opus 5.5를 비교한 글은 Claude Code + Opus가 Codex CLI + Sol보다 낫다고 했고, 하네스 차이가 크다고 단서를 달았다. LinkedIn 한 건은 Sol Ultra가 Fable보다 3.5배 싸고 두 배 넘게 빠르지만 품질은 Fable이 앞선다(143개 테스트 중 142 대 135 통과)고 썼다. Terminal-Bench 4.0에서 Opus 5.5 57% 대 Sol(`high`) 26%라는 정리도 있다. 개발자 일반 평은 "Codex는 코드 리뷰, Claude는 빠른 단순 작업"이다. [부분: 6 Sol 인접 후기] ([TechRepublic](https://www.techrepublic.com/article/news-gpt-6-sol-vs-claude-opus-5-5/), [The New Stack](https://thenewstack.io/gpt-6-sol-vs-opus-5-5/))

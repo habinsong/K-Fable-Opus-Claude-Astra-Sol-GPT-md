@@ -227,6 +227,96 @@
 | `ko.vocab.ssang` | ko | 과다 어휘 | B | 0.6 | standard | '쌍을 이루다': 둘의 병렬·대응을 상투적으로 표현한 어구. |
 | `ko.vocab.sinho` | ko | 과다 어휘 | B | 0.6 | standard | '신호': 징후·단서·특징을 '신호(signal)'로 직역한 번역투. |
 | `ko.vocab.bakda` | ko | 과다 어휘 | B | 0.6 | standard | '박다/박아 넣다': 거칠거나 비격식적인 삽입·하드코딩 표현 상투구. |
+| `ko.figure.lens` | ko | 과다 어휘 | C | 0.4 | - | '렌즈'로 관점을 가리킨다. |
+| `ko.figure.axis` | ko | 과다 어휘 | C | 0.35 | - | '축'으로 갈래를 셈한다. |
+| `ko.figure.layer` | ko | 과다 어휘 | C | 0.35 | - | '겹', '층위'로 의미를 쌓아 놓는다. |
+| `ko.figure.weight` | ko | 과다 어휘 | C | 0.4 | - | '~의 무게'로 중요함이나 부담을 가리킨다. |
+| `ko.figure.temperature` | ko | 과다 어휘 | C | 0.35 | - | '온도'로 분위기를 가리킨다. |
+| `ko.figure.landscape` | ko | 과다 어휘 | C | 0.35 | - | '풍경', '지형'으로 상황 전체를 가리킨다. |
+| `ko.figure.guide` | ko | 과다 어휘 | C | 0.4 | - | 길잡이 도구에 빗댄다. |
+| `ko.figure.journey` | ko | 과다 어휘 | C | 0.35 | - | '여정', '궤적'으로 과정을 가리킨다. |
+| `ko.figure.pillar` | ko | 과다 어휘 | C | 0.4 | - | 구조물에 빗댄 말. |
+| `ko.figure.weave` | ko | 과다 어휘 | B | 0.6 | - | 직물에 빗댄 말. |
+| `ko.figure.joint` | ko | 과다 어휘 | C | 0.35 | - | 이음매, 천장, 모서리 같은 건축 용어로 추상을 가리킨다. |
+| `ko.figure.resonance` | ko | 과다 어휘 | B | 0.5 | - | 공명, 숨결, 여백을 글 바깥의 감각에 빗대어 쓴다. |
+| `ko.figure.hold` | ko | 과다 어휘 | C | 0.3 | - | 쥐다, 붙들다, 떠받치다, 얹다를 추상에 쓴다. |
+| `ko.figure.draw` | ko | 과다 어휘 | B | 0.55 | - | 시적인 동사를 설명문에 쓴다. |
+| `ko.figure.grammar-of` | ko | 과다 어휘 | C | 0.35 | - | 문법, 역학, 서사로 흐름을 추상화한다. |
+| `ko.figure.unlock` | ko | 과다 어휘 | B | 0.55 | - | 잠금 해제, 살아 숨 쉬는, 온기 같은 말을 데이터나 능력에 붙인다. |
+| `ko.figure.felt-fact` | ko | 과다 어휘 | C | 0.4 | - | 수치나 분석에 체감 형용사를 붙인다. |
+| `ko.figure.hedge-verb` | ko | 과다 어휘 | C | 0.35 | - | 탐구하다, 형성하다 같은 거창한 동사. |
+| `ko.collocate.build` | ko | 과다 어휘 | B | 0.45 | - | '구축'은 시설이나 체계에 어울리는 말이다. |
+| `ko.collocate.generate` | ko | 과다 어휘 | B | 0.45 | - | '생성'은 데이터나 산출물에 어울리는 말이다. |
+| `ko.collocate.deliver` | ko | 과다 어휘 | C | 0.35 | - | '가치를 전달', '성공을 달성'처럼 겹말에 가까운 서술. |
+| `ko.collocate.formal-verb` | ko | 과다 어휘 | B | 0.55 | - | 마음 상태에 정책 문서의 동사를 붙였다. |
+| `ko.collocate.enjoy` | ko | 과다 어휘 | C | 0.4 | - | '향유', '영위'는 문어체에서 겉도는 말이다. |
+| `ko.collocate.perform` | ko | 과다 어휘 | C | 0.35 | - | 일상 행동에 '수행', '진행'을 붙였다. |
+| `ko.collocate.informed` | ko | 과다 어휘 | C | 0.45 | - | '정보에 입각한', '강력한 증거'처럼 영어 구절을 옮긴 짝. |
+| `ko.collocate.nuance` | ko | 과다 어휘 | C | 0.4 | - | '뉘앙스 있는', '사려 깊은 고려'처럼 좋은 말만 붙인 짝. |
+| `ko.collocate.success` | ko | 과다 어휘 | C | 0.4 | - | '성공적으로 ~하다', '영향을 만들다'는 번역투 짝이다. |
+| `ko.frame.in-progress` | ko | 번역투 | C | 0.2 | - | '~되고 있다' 진행 피동이 잦다. |
+| `ko.frame.evident` | ko | 의미 부풀리기 | C | 0.35 | - | 스스로 분명하다고 단언하며 근거를 대지 않는다. |
+| `ko.frame.foundation` | ko | 의미 부풀리기 | B | 0.5 | - | '발판을 마련한다'는 무엇이 달라지는지 말하지 않는다. |
+| `ko.frame.no-longer` | ko | 구조 습관 | C | 0.3 | - | '더 이상 ~이 아니다' 도입 틀. |
+| `ko.frame.either-or` | ko | 구조 습관 | B | 0.5 | - | 'A인가, B인가' 대구 질문. |
+| `ko.frame.time-to` | ko | 의미 부풀리기 | B | 0.5 | - | '~할 때입니다' 맺음. |
+| `ko.frame.from-to` | ko | 구조 습관 | C | 0.3 | - | 'X에서 Y로 전환'처럼 변화를 틀로 선언한다. |
+| `ko.frame.leads-to` | ko | 구조 습관 | C | 0.4 | - | '결국 ~로 이어진다' 결산 틀. |
+| `ko.frame.reason-close` | ko | 구조 습관 | C | 0.3 | - | '~하는 이유다' 결말. |
+| `ko.frame.horizon` | ko | 의미 부풀리기 | C | 0.2 | - | 막연한 시간 지평. |
+| `ko.frame.open-problem` | ko | 의미 부풀리기 | B | 0.45 | - | 내용 없이 남은 과제만 선언한다. |
+| `ko.frame.musing` | ko | 의미 부풀리기 | C | 0.2 | - | 성찰을 알리는 부사. |
+| `ko.frame.personified` | ko | 의미 부풀리기 | C | 0.35 | - | 무생물이 말하고 보여 주는 주어. |
+| `ko.frame.nobody-says` | ko | 출처 없는 권위 | C | 0.4 | - | 누가 그렇게 보는지 밝히지 않은 평가. |
+| `ko.frame.hedged-outlook` | ko | 군더더기·유보 | C | 0.25 | - | 완곡한 추정 맺음. |
+| `ko.frame.formal-noun` | ko | 군더더기·유보 | C | 0.2 | - | '~라는 것', '~라는 점' 명사화. |
+| `ko.frame.degree-adverb` | ko | 군더더기·유보 | C | 0.15 | - | 정도부사가 겹친다. |
+| `ko.frame.policy-verb` | ko | 과다 어휘 | C | 0.4 | - | 정책 문서식 동사를 이어 붙인다. |
+| `ko.frame.deictic-lead` | ko | 접속어 남발 | C | 0.25 | - | 문장을 '이는'으로 여는 습관. |
+| `ko.frame.numbered-inline` | ko | 서식 신호 | C | 0.3 | - | 한 문단 안의 '1) 2) 3)' 나열. |
+| `ko.frame.subtitle-heading` | ko | 서식 신호 | C | 0.25 | - | '주제: 부제' 형태의 제목. |
+| `ko.frame.quote-emphasis` | ko | 서식 신호 | C | 0.2 | - | 짧은 낱말을 따옴표로 강조한다. |
+| `ko.over.self-intro` | ko | 의미 부풀리기 | B | 0.4 | - | 문서가 자기 자신을 소개하는 문장으로 시작한다. |
+| `ko.over.purpose-narration` | ko | 의미 부풀리기 | B | 0.5 | - | 왜 그렇게 만들었는지 변명하듯 적는다('~하려고 붙였습니다'). |
+| `ko.over.because-tail` | ko | 의미 부풀리기 | C | 0.35 | - | '~때문입니다', '까닭은'으로 이유를 덧붙인다. |
+| `ko.over.gloss` | ko | 의미 부풀리기 | C | 0.35 | - | 뜻이 뻔한 말을 '~를 의미합니다', '~에 해당합니다'로 풀어 쓴다. |
+| `ko.over.recorded` | ko | 의미 부풀리기 | C | 0.4 | - | '~정리해 두었습니다'. 문서가 자기가 한 일을 보고한다. |
+| `ko.over.paren-stack` | ko | 의미 부풀리기 | C | 0.3 | - | 한 문장에 괄호 설명이 둘 이상 겹친다. |
+| `ko.over.long-list` | ko | 의미 부풀리기 | C | 0.3 | - | 한 문장에 항목을 네 개 이상 나열한다. |
+| `ko.tic.value-figurative` | ko | 과다 어휘 | B | 0.5 | - | 수치가 아닌 것에 '값'을 붙인다(값어치, 의미의 값). |
+| `ko.tic.value-bare` | ko | 과다 어휘 | C | 0.25 | - | '값'이 한 글에 자주 나온다. 변수나 측정값이 아니면 다른 낱말로 바꿀 수 있다. |
+| `ko.tic.judge` | ko | 과다 어휘 | C | 0.25 | - | '판단'이 한 글에 자주 나온다. |
+| `ko.tic.criterion-becomes` | ko | 과다 어휘 | B | 0.4 | - | '기준이 된다', '기준으로 삼는다': 무엇을 기준으로 어떻게 정하는지 말하지 않는다. |
+| `ko.tic.criterion-bare` | ko | 과다 어휘 | C | 0.2 | - | '기준'이 한 글에 자주 나온다. |
+| `ko.tic.test-heavy` | ko | 과다 어휘 | C | 0.2 | - | '시험'이 한 글에 자주 나온다. |
+| `ko.tic.test-bench` | ko | 과다 어휘 | B | 0.5 | - | '시험대'. 무엇을 어떻게 겪는지 말하지 않는다. |
+| `ko.tic.pivotal` | ko | 과다 어휘 | B | 0.5 | - | '관건'. 무엇이 걸렸는지 구체적으로 쓰지 않는다. |
+| `ko.tic.trail` | ko | 과다 어휘 | C | 0.4 | - | '따라붙다'. 딸린다, 붙는다는 말을 추상적으로 쓴다. |
+| `ko.tic.defer` | ko | 과다 어휘 | C | 0.3 | - | '미뤘다'. 일정이 아닌 판단이나 문제를 미룬다고 쓴다. |
+| `ko.tic.crossover` | ko | 과다 어휘 | C | 0.3 | - | '넘어오다/넘어가다'를 화제나 단계 전환에 쓴다. |
+| `ko.tic.continues` | ko | 과다 어휘 | C | 0.25 | - | '이어지다'가 인과와 연결을 두루 가린다. |
+| `ko.tic.draw-line` | ko | 과다 어휘 | B | 0.45 | - | '선을 긋다'. 무엇을 하지 않겠다는 뜻인지 풀어 쓰지 않는다. |
+| `ko.tic.win-lose` | ko | 과다 어휘 | C | 0.35 | - | 비교를 승부로 쓴다('이겼다', '밀렸다'). |
+| `ko.tic.stand` | ko | 과다 어휘 | B | 0.35 | - | '~에 선다/섭니다'. 위치나 입장을 몸의 자세에 빗대 말한다. |
+| `ko.tic.exceed` | ko | 과다 어휘 | C | 0.35 | - | '웃돌다'. 얼마나 넘는지 숫자 없이 방향만 말한다. |
+| `ko.tic.put-forward` | ko | 과다 어휘 | C | 0.35 | - | '내세우다'. 주장하는지 강조하는지 알 수 없다. |
+| `ko.tic.claim` | ko | 과다 어휘 | C | 0.25 | - | '주장'이 한 글에 자주 나온다. 누가 무엇을 근거로 말하는지가 흐려진다. |
+| `ko.tic.demand` | ko | 과다 어휘 | C | 0.25 | - | '요구'가 한 글에 자주 나온다. |
+| `ko.tic.widen` | ko | 과다 어휘 | C | 0.3 | - | '넓히다'. 무엇이 얼마나 커지는지 말하지 않는다. |
+| `ko.tic.apply` | ko | 과다 어휘 | C | 0.25 | - | '적용'이 한 글에 자주 나온다. |
+| `ko.tic.dress-up` | ko | 과다 어휘 | C | 0.35 | - | '꾸미다'. 설명이나 보고를 그럴듯하게 만든다는 말로 쓴다. |
+| `ko.tic.back-up` | ko | 과다 어휘 | C | 0.3 | - | '뒷받침'. 무엇이 어떤 근거로 받치는지 말하지 않는다. |
+| `ko.tic.adapt` | ko | 과다 어휘 | C | 0.25 | - | '적응'이 한 글에 자주 나온다. |
+| `ko.tic.corpus` | ko | 과다 어휘 | C | 0.3 | - | '말뭉치'가 한 글에 되풀이된다. |
+| `ko.tic.shape` | ko | 과다 어휘 | B | 0.4 | - | '~모양입니다'. 형태를 말하는 것인지 추측을 말하는 것인지 흐리게 둔다. |
+| `ko.tic.unrelated` | ko | 과다 어휘 | B | 0.4 | - | '~와는 상관이 없습니다'. 아무도 묻지 않은 오해를 먼저 지운다. |
+| `ko.tic.whole` | ko | 과다 어휘 | C | 0.25 | - | '전체'가 한 글에 자주 나온다. |
+| `ko.tic.contract-word` | ko | 과다 어휘 | B | 0.4 | - | '응답 계약' 같은 조어. 읽는 사람이 처음 보는 용어를 설명 없이 쓴다. |
+| `ko.tic.same-as` | ko | 과다 어휘 | C | 0.3 | - | '같은 순서로', '같은 구성'. 무엇이 같은지 앞뒤에서 밝히지 않는다. |
+| `ko.term.release` | ko | 과다 어휘 | A | 0.5 | safe | '릴리스'가 아니라 '릴리즈'로 쓴다. |
+| `ko.term.harness` | ko | 과다 어휘 | A | 0.5 | safe | '하네즈'가 아니라 '하네스'로 쓴다. |
+| `ko.tic.among` | ko | 과다 어휘 | C | 0.4 | - | '세 가지 중 하나'처럼 선택지를 먼저 깔아 놓는 틀. |
+| `ko.tic.empty-answer` | ko | 과다 어휘 | C | 0.35 | - | '빈 답변'. 무엇이 비었는지 밝히지 않는다. |
 | `ko.puffery.authority` | ko | 의미 부풀리기 | C | 0.35 | - | 깊이나 무게를 주장하는 말('핵심은', '본질적으로'). |
 | `ko.puffery.closer-line` | ko | 의미 부풀리기 | B | 0.6 | - | 앞 문장을 되풀이하는 한 줄 맺음. |
 | `ko.signpost.candor` | ko | 예고·안내 | C | 0.4 | - | 솔직함을 알리는 말만 있고 내용은 따로다. |

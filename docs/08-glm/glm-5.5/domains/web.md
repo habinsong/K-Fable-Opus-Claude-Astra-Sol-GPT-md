@@ -24,5 +24,5 @@
 
 ## 4. 근거와 한계
 - 이 문서는 GLM-5.5의 성능을 주장하지 않는다. 근거는 `08-glm/glm-5.3/web.md`와 [`sources.md`](../sources.md)의 출처에 있다.
-- 미출시 상태(공식 릴리스 로그에 없음): [Emergent: GLM-5.5 release date](https://emergent.sh/news/glm-5-5-release-date) (스니펫만) [부분: 2차]
+- 미출시 상태(공식 릴리즈 로그에 없음): [Emergent: GLM-5.5 release date](https://emergent.sh/news/glm-5-5-release-date) (스니펫만) [부분: 2차]
 - 한계: 공식 발표 전이라 모든 모델별 항목이 [미확인]이다. 출시 후 갱신한다.

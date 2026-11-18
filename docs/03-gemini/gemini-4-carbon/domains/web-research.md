@@ -18,7 +18,6 @@
 - **`thinking_level`.** 조사 질문의 정리는 `MEDIUM`, 여러 출처의 충돌 해소는 `HIGH`. `MINIMAL`은 400이다. [부분]
 - **자기 검증을 보고에 반영한다.** 이 모델은 되돌아가 검토하는 일이 약하다는 후기가 있다. [부분] "답하기 전에 각 주장을 뒷받침하는 출처를 다시 확인하고, 확인하지 못한 주장은 빼거나 '미확인'으로 표시하라"를 쓴다.
 - **보고 형식은 고정한다.** 결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것. 항목당 1~2문장.
-- **대량 수집은 표본 점검.** 무작위 5~10%를 사람이 원문과 대조한다.
 
 ## 4. 근거와 한계
 - 지원 도구·통합 한도: [Gemini 4 Argon API 안내](https://apidog.com/blog/gemini-4-argon-api/), [Thought signatures](https://ai.google.dev/gemini-api/docs/thought-signatures) (스니펫만) [부분]
