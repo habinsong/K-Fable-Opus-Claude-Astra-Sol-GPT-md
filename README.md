@@ -1,4 +1,4 @@
-# k-fable-opus-claude-md
+# K-Fable-Opus-Claude-Astra-Sol-GPT-md
 
 Fable 5 모델 제공 중단 전에 미리 야물딱지게 뽑아서 우리기 시작했고 지금도 우리고 깎고 있습니다.  
 대규모 언어 모델(LLM)을 코딩 및 연구 작업에 투입할 때 필요한 에이전트 지침과 조사 기록을 체계적으로 정리한 지침입니다.
