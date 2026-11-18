@@ -56,7 +56,7 @@ python3 bin/ai-smell verify 글.md 글.최종.md        # 사실 보존, 변경�
       It's not just a tool, it's a game-changer. Experts agree that organizations can leverage its robust
       capabilities to unlock their full potential. In order to get started, utilize the free tier. I hope this helps!
 
-AI 냄새 점수 95/100 — 강함  →  standard 교정 후 64/100 (엔진 교정 8건, 변경률 35%, 대조 PASS)
+AI 냄새 점수 95/100 — 핵폐기물  →  standard 교정 후 64/100 (디지털 쓰레기) (엔진 교정 8건, 변경률 35%, 대조 PASS)
 
 교정문: AI plays a crucial role in shaping how teams work. It's not just a tool, it's a turning point. Experts agree
         that organizations can use its robust capabilities to reach full potential. To get started, use the free tier.
@@ -70,7 +70,7 @@ strong 단계: ... It's a game-changer. ...   ("It's not just a tool, it's"가 "
 원문: 물론입니다! 급변하는 AI 시대에 인공지능은 단순한 도구가 아니라 패러다임의 전환을 의미한다. 이는 다양한 측면에서
       시사하는 바가 크다. 분석을 진행한 결과, 비용이 감소되어진 것으로 나타났다. 도움이 되었기를 바랍니다.
 
-AI 냄새 점수 87/100 — 강함  →  standard 교정 후 65/100 (엔진 교정 4건, 변경률 26%, 대조 PASS)
+AI 냄새 점수 87/100 — 핵폐기물  →  standard 교정 후 65/100 (디지털 쓰레기) (엔진 교정 4건, 변경률 26%, 대조 PASS)
 
 교정문: 급변하는 AI 시대에 인공지능은 단순한 도구가 아니라 패러다임의 전환을 의미한다. 이는 다양한 측면에서
         시사하는 바가 크다. 분석한 결과, 비용이 감소된 것으로 나타났다.

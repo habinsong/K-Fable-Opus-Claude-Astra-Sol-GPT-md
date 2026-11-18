@@ -49,8 +49,9 @@ CATEGORIES: Dict[str, Category] = {c.key: c for c in (
     Category("info", "참고(점수 제외)", "info (unscored)", 0.0, 0.0),
 )}
 
-LABELS = ((15, "거의 없음", "minimal"), (35, "약함", "weak"),
-          (60, "뚜렷함", "noticeable"), (101, "강함", "strong"))
+LABELS = ((8, "거의 없음", "minimal"), (10, "약함", "weak"), (20, "높음", "high"),
+          (35, "SLOP", "slop"), (55, "쓰레기", "trash"), (80, "디지털 쓰레기", "digital trash"),
+          (101, "핵폐기물", "nuclear waste"))
 
 
 @dataclass

@@ -40,7 +40,7 @@ def _scores() -> List[Check]:
         out.append((f"중간 AI풍 {lang} >= 30", s >= 30, f"지수 {s}"))
     for name, text in HUMAN.items():
         s = analyze(text).score
-        out.append((f"사람 글 {name} <= 15", s <= 15, f"지수 {s}"))
+        out.append((f"사람 글 {name} < 8", s < 8, f"지수 {s}"))
     return out
 
 

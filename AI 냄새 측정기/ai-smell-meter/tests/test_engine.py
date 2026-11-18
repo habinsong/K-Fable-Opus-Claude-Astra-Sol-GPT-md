@@ -74,7 +74,7 @@ class Scoring(unittest.TestCase):
         for lang, t in AI_MID.items():
             self.assertGreaterEqual(analyze(t).score, 30, lang)
         for name, t in HUMAN.items():
-            self.assertLessEqual(analyze(t).score, 15, name)
+            self.assertLess(analyze(t).score, 8, name)
 
     def test_more_signals_never_lower_the_score(self):
         base = "The plan is simple and the team knows the steps well enough to start on Monday."
