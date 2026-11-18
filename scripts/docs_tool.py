@@ -33,11 +33,14 @@ ROOT = Path(__file__).resolve().parent.parent
 UNIV = ROOT / "universal"
 MD = ROOT / "md"
 DOCS = ROOT / "docs"
-FAMILIES = ["gpt", "claude", "gemini", "deepseek", "glm", "muse", "grok", "kimi", "qwen", "gemma", "minimax"]
+# 계열 폴더는 번호를 앞에 붙인다(인지도 순). 번호 규칙은 README.md의 "디렉터리 구조"에 있다.
+FAMILIES = ["01-gpt", "02-claude", "03-gemini", "04-grok", "05-deepseek", "06-qwen",
+            "07-kimi", "08-glm", "09-gemma", "10-muse", "11-minimax",
+            "12-mistral", "13-microsoft", "14-nvidia", "15-tencent", "16-baidu", "17-thinking-machines"]
 DOMAINS = ["general", "web", "app", "native", "hardware", "firmware",
            "web-research", "research", "tech-research"]
 KO_DOMAINS = ["ko-academic", "ko-everyday", "ko-literary"]
-KO_FAMILIES = ["gpt", "claude", "gemini", "gemma"]
+KO_FAMILIES = ["gpt", "claude", "gemini", "gemma"]  # 번호를 뗀 계열 이름
 ALL_DOMAINS = DOMAINS + KO_DOMAINS
 KO_DOC = "korean-writing"
 MODEL_DOC_NAMES = {"README", "overview", "performance", "operations", "critique", "sources", "xcheck", KO_DOC}
@@ -99,6 +102,11 @@ def domain_part(d):
     """범용 문서에서 계약 블록 뒤의 분야 규칙 본문. ko-core 표식은 걷어 낸다."""
     part = from_marker(read(UNIV / f"{d}.md"), "## 3. 분야 규칙")
     return re.sub(r"<!-- (?:BEGIN|END):ko-core -->\n?", "", part).strip("\n")
+
+
+def fam_key(fam):
+    """'01-gpt' -> 'gpt'. 계열 폴더의 번호 접두를 뗀 이름."""
+    return re.sub(r"^\d+-", "", fam)
 
 
 def md_files():
@@ -243,7 +251,7 @@ def check_md(errors, warns, contract, skip_blocks):
         if dom not in ALL_DOMAINS:
             errors.append(f"{rel}: 허용되지 않은 분야 이름 '{dom}'")
             continue
-        if dom in KO_DOMAINS and fam not in KO_FAMILIES:
+        if dom in KO_DOMAINS and fam_key(fam) not in KO_FAMILIES:
             errors.append(f"{rel}: 한국어 윤문 분야는 {', '.join(KO_FAMILIES)} 계열에만 둔다")
             continue
         if len(lines) > HARD_LIMIT:
@@ -335,7 +343,7 @@ def check_docs(errors, warns, complete):
         fam, model, dom = parts(p)
         models.setdefault((fam, model), set()).add(dom)
     for (fam, model), have in sorted(models.items()):
-        need = DOMAINS + (KO_DOMAINS if fam in KO_FAMILIES else [])
+        need = DOMAINS + (KO_DOMAINS if fam_key(fam) in KO_FAMILIES else [])
         miss = [d for d in need if d not in have]
         if miss:
             msg = f"md/{fam}/{model}: 분야 문서 {len(miss)}개 누락 ({', '.join(miss)})"
@@ -368,8 +376,9 @@ def check_docs(errors, warns, complete):
 def check(complete, skip_blocks=False):
     errors, warns = [], []
     for fam in FAMILIES:
-        if (ROOT / fam).exists():
-            errors.append(f"{fam}/: 옛 위치다. md/{fam}/ 와 docs/{fam}/ 로 나눈다")
+        for old in (fam, fam_key(fam)):
+            if (ROOT / old).exists():
+                errors.append(f"{old}/: 옛 위치다. md/{fam}/ 와 docs/{fam}/ 로 나눈다")
     if (ROOT / "_shared").exists():
         errors.append("_shared/: 없앤 폴더다. 범용 지침은 universal/, 모델 지침은 md/에 둔다")
     contract = check_universal(errors, skip_blocks)

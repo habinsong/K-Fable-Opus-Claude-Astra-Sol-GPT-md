@@ -25,7 +25,7 @@ def write(p, text):
 
 
 def make_repo(tool, root):
-    """검사를 통과하는 최소 저장소: 계열 gpt 아래 모델 m1 하나."""
+    """검사를 통과하는 최소 저장소: 계열 01-gpt 아래 모델 m1 하나."""
     u = root / "universal"
     write(u / "contract.md", "# 범용 · 계약\n> 기준일\n\n## 0. 응답 계약\n" + " ".join(tool.CONTRACT_KEYWORDS) + "\n")
     write(u / "ko-core.md", "# 범용 · 한국어 공통\n> 기준일\n\n### 3.1 목표\n" + " ".join(tool.KO_CORE_KEYWORDS) + "\n")
@@ -39,13 +39,13 @@ def make_repo(tool, root):
         block = ""
         if d in ("general", "ko-academic"):
             block = "## 2. 이 모델에서 지킬 점\n- 지시를 지킨다.\n"
-        write(root / "md" / "gpt" / "m1" / f"{d}.md",
+        write(root / "md" / "01-gpt" / "m1" / f"{d}.md",
               f"# M1 · {d}\n> 제공자: X · 모델 ID: `m1` · 기준일: 2026-11-03\n\n"
               "<!-- BEGIN:contract -->\n<!-- END:contract -->\n\n"
               f"<!-- BEGIN:model -->\n{block}<!-- END:model -->\n\n"
               "<!-- BEGIN:domain -->\n<!-- END:domain -->\n")
     write(root / "docs" / "README.md", "# docs\n")
-    m = root / "docs" / "gpt" / "m1"
+    m = root / "docs" / "01-gpt" / "m1"
     write(m / "README.md", "# M1 색인\n")
     write(m / "sources.md", "# 출처\nhttps://example.com\n")
     write(m / "korean-writing.md", "# 한국어\nhttps://example.com\n")
@@ -122,20 +122,20 @@ class SyncCheckTest(Base):
 
     def test_sync_propagates_model_block_to_siblings(self):
         self.synced()
-        web = (self.root / "md/gpt/m1/web.md").read_text(encoding="utf-8")
+        web = (self.root / "md/01-gpt/m1/web.md").read_text(encoding="utf-8")
         self.assertIn("지시를 지킨다.", web)
-        ko = (self.root / "md/gpt/m1/ko-literary.md").read_text(encoding="utf-8")
+        ko = (self.root / "md/01-gpt/m1/ko-literary.md").read_text(encoding="utf-8")
         self.assertIn("지시를 지킨다.", ko)
 
     def test_domain_part_expands_ko_core_without_markers(self):
         self.synced()
-        text = (self.root / "md/gpt/m1/ko-everyday.md").read_text(encoding="utf-8")
+        text = (self.root / "md/01-gpt/m1/ko-everyday.md").read_text(encoding="utf-8")
         self.assertIn("### 3.1 목표", text)
         self.assertNotIn("BEGIN:ko-core", text)
 
     def test_url_in_md_is_rejected(self):
         self.synced()
-        p = self.root / "md/gpt/m1/web.md"
+        p = self.root / "md/01-gpt/m1/web.md"
         p.write_text(p.read_text(encoding="utf-8") + "\n참고 https://example.com\n", encoding="utf-8")
         code, out = self.run_tool(self.tool.check, True, False)
         self.assertEqual(code, 1)
@@ -143,7 +143,7 @@ class SyncCheckTest(Base):
 
     def test_price_and_tag_in_md_are_rejected(self):
         self.synced()
-        p = self.root / "md/gpt/m1/app.md"
+        p = self.root / "md/01-gpt/m1/app.md"
         p.write_text(p.read_text(encoding="utf-8") + "\n가격 $4 [부분]\n", encoding="utf-8")
         code, out = self.run_tool(self.tool.check, True, False)
         self.assertEqual(code, 1)
@@ -152,7 +152,7 @@ class SyncCheckTest(Base):
 
     def test_out_of_sync_block_is_rejected(self):
         self.synced()
-        p = self.root / "md/gpt/m1/web.md"
+        p = self.root / "md/01-gpt/m1/web.md"
         p.write_text(p.read_text(encoding="utf-8").replace("지시를 지킨다.", "다른 지시."), encoding="utf-8")
         code, out = self.run_tool(self.tool.check, True, False)
         self.assertEqual(code, 1)
@@ -160,25 +160,25 @@ class SyncCheckTest(Base):
 
     def test_missing_domain_doc_is_error_when_complete(self):
         self.synced()
-        (self.root / "md/gpt/m1/ko-everyday.md").unlink()
+        (self.root / "md/01-gpt/m1/ko-everyday.md").unlink()
         self.assertEqual(self.run_tool(self.tool.check, True, False)[0], 1)
         self.assertEqual(self.run_tool(self.tool.check, False, False)[0], 0)
 
     def test_missing_docs_pair_is_error_when_complete(self):
         self.synced()
-        (self.root / "docs/gpt/m1/sources.md").unlink()
+        (self.root / "docs/01-gpt/m1/sources.md").unlink()
         code, out = self.run_tool(self.tool.check, True, False)
         self.assertEqual(code, 1)
         self.assertIn("sources.md", out)
 
     def test_korean_domain_only_for_ko_families(self):
         self.synced()
-        extra = self.root / "md" / "claude" / "x"
+        extra = self.root / "md" / "02-claude" / "x"
         write(extra / "ko-academic.md",
               "# X\n> 제공자: Y · 모델 ID: `x` · 기준일: 2026-11-03\n\n"
               "<!-- BEGIN:contract -->\n<!-- END:contract -->\n<!-- BEGIN:model -->\n<!-- END:model -->\n<!-- BEGIN:domain -->\n<!-- END:domain -->\n")
         # claude는 KO_FAMILIES에 있으므로 허용, deepseek 같은 계열은 거부
-        bad = self.root / "md" / "deepseek" / "x"
+        bad = self.root / "md" / "05-deepseek" / "x"
         write(bad / "ko-academic.md", (extra / "ko-academic.md").read_text(encoding="utf-8"))
         code, out = self.run_tool(self.tool.check, False, True)
         self.assertEqual(code, 1)

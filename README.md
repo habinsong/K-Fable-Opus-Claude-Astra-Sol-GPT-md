@@ -10,27 +10,28 @@ AI가 혼자만의 헛된 망상에 빠지거나 코드를 함부로 망치지 �
 
 ---
 
-### 2026년 10월~11월 기준 추천과 비추천 LLM (high ~ Xhigh 기준)
+### 2026년 11월 기준 추천과 비추천 LLM (high ~ Xhigh 기준)
 
 - **S 티어** : `claude sonnet 5.5`
   - 저렴해진 Opus 입니다. Opus 에 비해 찐빠를 내도 어느정도 참고 쓸만합니다. 가장 무난한 모델입니다.
 
-- **A 티어** : `claude opus 5.5`
-  - 성능은 좋은데, 좀 비싸요. 그래도 좋습니다.
+- **A 티어** : `claude opus 5.5`, `GPT 6.2 Sol`
+  - Opus 5.5 는 성능은 좋은데, 좀 비싸요. 그래도 좋습니다.
+  - GPT 6.2 Sol 은 적절한 성능입니다. 6.1Sol 보다 많이 빨라졌습니다.
 
 - **B 티어** : `GPT 6.1 Sol`
   - 너무 느리고 느려요. 좀 비싸고 멍청할때도 있습니다. 그리고 쓸때없는 검증('닭이 먼저냐 달걀이 먼저냐' 같은 바보같은 검증)을 많이합니다.
 
-- **C 티어** : `GPT 6 Astra`, `Fable 5.1`
-  - 너무 비쌉니다. 성능대비 가격이 비싸고 그돈이면 Opus + Sonnet 조합으로 티키타카 검증하는게 좋습니다.
+- **C 티어** : `GPT 6.2 Astra`, `GPT 6 Astra`, `Fable 5.2`, `Fable 5.1`
+  - 너무 비쌉니다. 성능대비 가격이 비싸고 그돈이면 Opus + Sonnet 조합으로 티키타카 검증하는게 좋습니다. GPT 6.2 Sol 를 멀티(x2) 로 쓰는것도 좋은 대안입니다.
 
-- **D 티어** : `GPT 6.1 Terra`, `GPT 6 Luna`, `Gemini 4 Argon`
+- **D 티어** : `GPT 6.1 Terra`, `GPT 6 Luna`, `Gemini 4 Carbon`
   - 여기서부터 돈주고 쓰기 싫은 모델입니다. 저렴하던 비싸던 개구립니다.
 
-- **F 티어** : `Deepseek V4.1 flash 1017` 및 Deepseek 전체 모델, muse 전체 모델, Qwen 전체 모델, Grok 전체 모델, GLM 전체 모델, MiniMax 전체 모델, Kimi 전체 모델
+- **F 티어** : `Gemini 4 Argon`, `Deepseek V4.1 flash 1017` 및 Deepseek 전체 모델, muse 전체 모델, Qwen 전체 모델, Grok 전체 모델, GLM 전체 모델, MiniMax 전체 모델, Kimi 전체 모델
   - 머리는 나쁜데, 똑똑한 모델을 나름 베끼려고 노력을 많이 했습니다. 증류를 많이 했지만, 무식해서 써먹지를 못합니다. 벤치마크도 치팅을 하더라구요.
 
-- **폐기물 (AI SLOP)** : `Gemini 3.8/3.7/3.6 flash`, `3.1 Pro` 등 이하 구글 제미나이 전 모델
+- **폐기물 (AI SLOP)** : `Gemini 4 Hydrogen`, `Gemini 3.8/3.7/3.6 flash`, `3.1 Pro` 등 이하 구글 제미나이 전 모델
   - 구글은 AI(LLM) 사업을 접길 바랍니다. 진심으로요. gemini 그리고 pixel 은 도대체 왜 이렇게 개판인건가요? 집안 사정과 문제도 심각한걸로 알고 있는데, 지금이라도 손실을 적게할 수 있는 좋은 시점일겁니다. 이미 늦었지만요.
 
 ---
@@ -153,7 +154,7 @@ AI가 혼자만의 헛된 망상에 빠지거나 코드를 함부로 망치지 �
 
 ```bash
 # Claude Opus 5.5 모델 전용 일반 개발 규칙 적용
-cp md/claude/opus-5.5/general.md /path/to/your/project/CLAUDE.md
+cp md/02-claude/opus-5.5/general.md /path/to/your/project/CLAUDE.md
 
 # 범용 펌웨어 개발 규칙 적용
 cp universal/firmware.md /path/to/your/project/AGENTS.md
@@ -235,19 +236,27 @@ git switch -c 내-작업-브랜치
 
 ## 지원 계열과 모델
 
+계열 폴더 이름 앞의 번호는 인지도 순입니다. 1~4번(GPT, Claude, Gemini, Grok)을 먼저 두고 5번부터는 DeepSeek, Qwen, Kimi, GLM, Gemma, Muse, MiniMax 순이고, 그 뒤 12번 이후는 나중에 추가한 계열(Mistral, Microsoft, NVIDIA, Tencent, Baidu, Thinking Machines)을 추가한 순서로 이어 붙였습니다. 폴더가 목록에서 같은 순서로 정렬되도록 한 자리 수도 `01`처럼 0을 붙였습니다.
+
 | 폴더 | 모델 목록 |
 |---|---|
-| `gpt` | `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol`, `gpt-6.1-terra` |
-| `claude` | `fable-5.1`, `fable-5.5`(곧 출시), `haiku-5.5`, `opus-5.5`, `sonnet-5.5` |
-| `gemini` | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`(제한 공개) |
-| `gemma` | `gemma-4-12b`, `gemma-4-26b-a4b`, `gemma-4-31b`, `gemma-4-e2b`, `gemma-4-e4b` |
-| `deepseek` | `v4.1-flash-1017` |
-| `glm` | `glm-5.3`, `glm-5.3-flash`, `glm-5.5`(곧 출시) |
-| `muse` | `muse-spark`, `muse-wonder` |
-| `grok` | `grok-4.7`, `grok-4.8`(곧 출시), `grok-5`(가까운 미래에 출시) |
-| `kimi` | `kimi-k3.1` |
-| `qwen` | `qwen3.6-27b`, `qwen3.6-35b-a3b`, `qwen3.7-max`, `qwen3.8-2.4t-a95b`, `qwen3.8-27b`, `qwen3.8-max` |
-| `minimax` | `minimax-m3`, `minimax-m3.1-flash` |
+| `01-gpt` | `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol`, `gpt-6.1-terra`, `gpt-6.2-astra`, `gpt-6.2-sol` |
+| `02-claude` | `fable-5.1`, `fable-5.2`, `fable-5.5`(미출시, 이름만 보존), `haiku-5.5`, `opus-5.5`, `sonnet-5.5` |
+| `03-gemini` | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-hydrogen`, `gemini-4-neon`(미출시), `gemini-4-oxygen`(미출시, 소문), `gemini-4-krypton`(미출시, 소문) |
+| `04-grok` | `grok-4.7`, `grok-4.8`(곧 출시), `grok-5`(가까운 미래에 출시) |
+| `05-deepseek` | `v4.1-flash-1017` |
+| `06-qwen` | `qwen3.6-27b`, `qwen3.6-35b-a3b`, `qwen3.7-max`, `qwen3.8-2.4t-a95b`, `qwen3.8-27b`, `qwen3.8-max`, `qwen4-max` |
+| `07-kimi` | `kimi-k3.1` |
+| `08-glm` | `glm-5.3`, `glm-5.3-flash`, `glm-5.5`(곧 출시) |
+| `09-gemma` | `gemma-4-12b`, `gemma-4-26b-a4b`, `gemma-4-31b`, `gemma-4-e2b`, `gemma-4-e4b` |
+| `10-muse` | `muse-ember`, `muse-spark`, `muse-wonder` |
+| `11-minimax` | `minimax-m3`, `minimax-m3.1-flash` |
+| `12-mistral` | `mistral-large-4` |
+| `13-microsoft` | `mai-code-2`, `mai-code-2-flash` |
+| `14-nvidia` | `nemotron-3.5-super-vl` |
+| `15-tencent` | `hy4`, `hy4-flash` |
+| `16-baidu` | `ernie-5.5-flash-preview` |
+| `17-thinking-machines` | `inkling-2-small` |
 
 미출시 및 제한 공개 모델은 일반 사양이 완전히 확인되지 않아 직전 모델의 규칙을 잠정 적용하고 있습니다. 로컬 구동 모델(`gemma`, `qwen3.8-27b` 등)의 메모리, 양자화 방식, 런타임 환경, 가중치 라이선스 확인 규칙은 `docs/`에 따로 기술되어 있습니다.
 
@@ -305,7 +314,7 @@ python3 -I -m unittest discover -s scripts/tests
 
 ## 알려진 한계
 
-- 본 조사는 조사 시점의 최신 공개 자료를 기준으로 작성되었습니다. 미출시 모델 5종(Fable 5.5, Gemini 4 Carbon, GLM-5.5, Grok 4.8, Grok 5)과 Kimi K3.1의 상태는 재검토를 거쳤으나 최신 출처는 대체로 직전 배포 시점 기준입니다. 이후 발표된 세부 변경 사항은 반영되지 않았을 수 있습니다.
+- 본 조사는 조사 시점의 최신 공개 자료를 기준으로 작성되었습니다. 미출시 모델 7종(Fable 5.5, Gemini 4 Neon, Gemini 4 Oxygen, Gemini 4 Krypton, GLM-5.5, Grok 4.8, Grok 5)의 상태는 2026-11-19 기준으로 재검토를 거쳤으나 최신 출처는 대체로 직전 배포 시점 기준입니다. 이후 발표된 세부 변경 사항은 반영되지 않았을 수 있습니다.
 - 모델별 상세 교차 검증 결과는 `docs/계열/모델/xcheck.md`에 투명하게 기재해 두었습니다. 식별자, 단가, 컨텍스트 크기는 중요한 의사결정 전에 공식 1차 문서를 통해 한 번 더 확인하시는 것이 안전합니다.
 - 모델별 한국어 문체에 대한 대규모 독립 실측 자료는 아직 공개된 바가 적어 정량 규칙의 일부 수치는 프로젝트 저자의 자체 보고에 기초하고 있습니다.
 

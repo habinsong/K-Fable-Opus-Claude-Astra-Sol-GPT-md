@@ -40,17 +40,23 @@ docs/
 
 | 폴더 | 개발사 | 대상 모델 |
 |---|---|---|
-| `gpt/` | OpenAI | `gpt-6-astra` · `gpt-6-luna` · `gpt-6.1-sol` · `gpt-6.1-terra` |
-| `claude/` | Anthropic | `fable-5.1` · `fable-5.5` · `haiku-5.5` · `opus-5.5` · `sonnet-5.5` |
-| `gemini/` | Google | `gemini-3.8-flash` · `gemini-4-argon` · `gemini-4-carbon` |
-| `gemma/` | Google (로컬) | `gemma-4-12b` · `gemma-4-26b-a4b` · `gemma-4-31b` · `gemma-4-e2b` · `gemma-4-e4b` |
-| `deepseek/` | DeepSeek | `v4.1-flash-1017` |
-| `glm/` | Z.ai(Zhipu) | `glm-5.3` · `glm-5.3-flash` · `glm-5.5` |
-| `muse/` | Meta | `muse-spark` · `muse-wonder` |
-| `grok/` | xAI | `grok-4.7` · `grok-4.8` · `grok-5` |
-| `kimi/` | Moonshot | `kimi-k3.1` |
-| `qwen/` | Alibaba | `qwen3.6-27b` · `qwen3.6-35b-a3b` · `qwen3.7-max` · `qwen3.8-2.4t-a95b` · `qwen3.8-27b` · `qwen3.8-max` |
-| `minimax/` | MiniMax | `minimax-m3` · `minimax-m3.1-flash` |
+| `01-gpt/` | OpenAI | `gpt-6-astra` · `gpt-6-luna` · `gpt-6.1-sol` · `gpt-6.1-terra` · `gpt-6.2-astra` · `gpt-6.2-sol` |
+| `02-claude/` | Anthropic | `fable-5.1` · `fable-5.2` · `fable-5.5` · `haiku-5.5` · `opus-5.5` · `sonnet-5.5` |
+| `03-gemini/` | Google | `gemini-3.8-flash` · `gemini-4-argon` · `gemini-4-carbon` · `gemini-4-hydrogen` · `gemini-4-krypton` · `gemini-4-neon` · `gemini-4-oxygen` |
+| `04-grok/` | xAI | `grok-4.7` · `grok-4.8` · `grok-5` |
+| `05-deepseek/` | DeepSeek | `v4.1-flash-1017` |
+| `06-qwen/` | Alibaba | `qwen3.6-27b` · `qwen3.6-35b-a3b` · `qwen3.7-max` · `qwen3.8-2.4t-a95b` · `qwen3.8-27b` · `qwen3.8-max` · `qwen4-max` |
+| `07-kimi/` | Moonshot | `kimi-k3.1` |
+| `08-glm/` | Z.ai(Zhipu) | `glm-5.3` · `glm-5.3-flash` · `glm-5.5` |
+| `09-gemma/` | Google (로컬) | `gemma-4-12b` · `gemma-4-26b-a4b` · `gemma-4-31b` · `gemma-4-e2b` · `gemma-4-e4b` |
+| `10-muse/` | Meta | `muse-ember` · `muse-spark` · `muse-wonder` |
+| `11-minimax/` | MiniMax | `minimax-m3` · `minimax-m3.1-flash` |
+| `12-mistral/` | Mistral AI | `mistral-large-4` |
+| `13-microsoft/` | Microsoft AI | `mai-code-2` · `mai-code-2-flash` |
+| `14-nvidia/` | NVIDIA | `nemotron-3.5-super-vl` |
+| `15-tencent/` | Tencent | `hy4` · `hy4-flash` |
+| `16-baidu/` | Baidu | `ernie-5.5-flash-preview` |
+| `17-thinking-machines/` | Thinking Machines Lab | `inkling-2-small` |
 
 ## 근거 수준 표기 체계
 
@@ -63,6 +69,6 @@ docs/
 
 ## 한계와 주의사항
 
-- 본 조사는 조사 시점의 최신 공개 자료를 바탕으로 작성되었습니다. 검색 및 수집 범위는 주로 2026년 9월 말부터 10월까지이며, 이후 발표된 최신 변경 사항은 온전히 반영하지 못했을 수 있습니다.
+- 본 조사는 조사 시점의 최신 공개 자료를 바탕으로 작성되었습니다. 검색 및 수집 범위는 주로 2026년 9월 말부터 11월 중순까지이며(신규·갱신 모델은 2026-11-19 기준), 이후 발표된 최신 변경 사항은 온전히 반영하지 못했을 수 있습니다.
 - 조사 당시 일부 공식 기술 웹사이트에 직접 접근하기 어려워 다수의 항목이 `[부분]` 수준에 머물러 있습니다. 본 폴더의 사실을 의사결정의 근거로 삼으실 때는 공식 1차 출처를 직접 한 번 더 확인해 주시기 바랍니다.
 - 문서 형식과 정합성은 `scripts/docs_tool.py`를 통해 기계적으로 검사하지만, 기재된 사실 관계의 정확성까지 스스로 보증하지는 않습니다.

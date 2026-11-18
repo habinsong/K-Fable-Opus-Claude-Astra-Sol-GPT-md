@@ -1,0 +1,22 @@
+# Nemotron 3.5 Super VL · 하드웨어 — 조사 기록
+> 제공자: NVIDIA · 모델 ID: `nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16`(Hugging Face), `nvidia/nemotron-3.5-super-vl`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+
+> 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
+> 컨텍스트용 지침: [`md/14-nvidia/nemotron-3.5-super-vl/hardware.md`](../../../../md/14-nvidia/nemotron-3.5-super-vl/hardware.md)
+> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/hardware.md`](../../../_common/domain-rules/hardware.md)
+
+## 2. 이 모델의 하드웨어 작업 운용
+Nemotron 3.5 Super VL 전용 하드웨어 작업 측정은 찾지 못했다. [미확인] 아래는 이 분야와 관련된 이 모델의 수치와 운용 메모다. 모델 전체 사양은 상위 폴더의 [`overview.md`](../overview.md), 운용은 [`operations.md`](../operations.md)를 따른다.
+
+- 120B 총, 12B 활성, 컨텍스트 최대 1M, 입력은 텍스트·이미지·비디오(2분). 배포는 H100 4장 또는 GB200 2장.
+- NVIDIA 보고: LiveCodeBench v6 88.22, SWE-bench Verified 71.10, SWE-bench Pro 51.78, Terminal-Bench 2.1 60.67, OSWorld-Verified 51.14. 일부는 내부 스캐폴딩이다. [확인: 읽은 값, 벤더 보고]
+- 라이선스 OpenMDW-1.1. 가중치·데이터셋·레시피를 공개한다. [확인]
+
+**하드웨어 작업에서 따로 확인할 것**
+- 데이터시트·회로도 입력의 정확도, HDL 시뮬레이션 루프, 수치·단위 환각 빈도를 같은 과제로 비교 모델과 직접 대조한다. 이 문서의 수치를 하드웨어 작업 성능으로 읽지 않는다. [추정]
+
+## 4. 근거와 한계
+- [Hugging Face: NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16)
+- [NVIDIA 블로그: Nemotron 3.5 Super VL](https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/)
+- 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 하드웨어 작업을 직접 측정한 것이 아니다. 분야 규칙은 모델과 무관한 공통 근거를 따른다.
