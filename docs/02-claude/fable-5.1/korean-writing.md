@@ -1,5 +1,5 @@
 # Claude Fable 5.1 · 한국어 윤문 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-fable-5-1` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-fable-5-1` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`ko-academic`](../../../md/02-claude/fable-5.1/ko-academic.md) · [`ko-everyday`](../../../md/02-claude/fable-5.1/ko-everyday.md) · [`ko-literary`](../../../md/02-claude/fable-5.1/ko-literary.md)

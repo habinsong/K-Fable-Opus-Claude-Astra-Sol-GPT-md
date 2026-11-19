@@ -1,9 +1,9 @@
 # GPT-6 Luna · 네이티브 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6-luna` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6-luna` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6-luna/native.md`](../../../../md/01-gpt/gpt-6-luna/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -15,7 +15,9 @@
 - **분석 결과로 설정을 바꾸지 않는다.** 모델이 "이 sanitizer 경고는 무시해도 된다"고 말해도 억제 지시문을 추가하지 않는다.
 - **테스트·경고·sanitizer 설정을 바꿔 통과시키지 않았는지 `git diff`로 확인한다.** 코딩 기만 비율 2.8%라는 시스템 카드 수치가 보도됐다(2차 인용). [부분/미확인]
 - **시스템 경로, 레지스트리, 드라이버, 부트 설정, 서명 키는 승인 없이 건드리지 않는다.**
+- **터미널·환경 설정 작업과 코드 설명에는 맡기지 않는다.** 코딩 에이전트 지수가 26으로 최하위권이고 터미널 항목이 특히 낮다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
 
 ## 4. 근거와 한계
 - 코딩 지수·환각률·불완전한 코드: [Artificial Analysis](https://artificialanalysis.ai/articles/gpt-6-sol-and-luna-push-the-cost-efficiency-frontier), [Hokai 리뷰](https://hokai.io/hub/models/gpt-6-luna) [부분]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis Coding Agent Index v2.1 표(2차 정리)](https://freakyjolly.com/coding-agent-index-v2-1-explained/)
 - 한계: 시스템 프로그래밍에 대한 Luna 전용 평가가 없다. 사용 범위 제한은 일반 지표에서 도출한 보수적 권고다.

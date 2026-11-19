@@ -1,9 +1,9 @@
 # Gemini 4 Hydrogen · 네이티브 — 조사 기록
-> 제공자: Google · 모델 ID: `gemini-4-hydrogen` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `gemini-4-hydrogen` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-hydrogen/native.md`](../../../../md/03-gemini/gemini-4-hydrogen/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 > **승계 문서.** Gemini 4 Hydrogen 전용 분야 측정은 아직 없다. 아래 평가·수치·가격은 직전 모델 Gemini 4 Argon을 조사한 것이며 Gemini 4 Hydrogen에는 [추정]으로만 옮겨 쓴다. Gemini 4 Hydrogen의 확인된 사양은 [`overview.md`](../overview.md)를 따른다.
@@ -19,9 +19,11 @@
 - **`thinking_level`을 명시한다.** 미정의 동작이 얽힌 디버깅은 `HIGH`, 컴파일 오류 분류는 `LOW`. `MINIMAL`은 400이다. 생각 토큰도 입출력 통합 한도를 쓴다. [부분]
 - **테스트·경고·sanitizer 설정을 바꿔 통과시키지 않았는지 `git diff`로 확인한다.** 공개 헤더·ABI 변경은 호출자 영향부터 확인한다.
 - **시스템 경로, 레지스트리, 드라이버, 부트 설정, 서명 키는 승인 없이 건드리지 않는다.**
+- **출력이 길므로 토큰 상한을 둔다.** `xhigh`는 `high`보다 토큰이 약 3배 들고 독립 지수는 3점 오른다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - Terminal-Bench 비교·자기 검증: [Layer3 Labs 리뷰](https://www.layer3labs.io/guides/gemini-4-argon-review), [eesel.ai 리뷰](https://www.eesel.ai/blog/gemini-4-argon-review) [부분]
 - 사이버 능력·Fairwind: [Fairwind Program](https://deepmind.google/fairwind-program/), [모델 카드](https://deepmind.google/models/model-cards/gemini-4-argon/) (스니펫만) [부분]
 - Gemini CLI: [google-gemini/gemini-cli README](https://github.com/google-gemini/gemini-cli) [확인]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gemini-4-hydrogen 모델 페이지](https://artificialanalysis.ai/models/gemini-4-hydrogen)
 - 한계: C·C++·Rust 시스템 코드에 대한 Argon 전용 독립 평가는 찾지 못했다.

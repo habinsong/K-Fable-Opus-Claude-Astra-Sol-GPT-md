@@ -1,9 +1,9 @@
 # Claude Sonnet 5.5 · 웹 리서치 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-sonnet-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-sonnet-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/sonnet-5.5/web-research.md`](../../../../md/02-claude/sonnet-5.5/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -17,8 +17,10 @@
 - **작업 중 사용자가 보낸 메시지를 주입으로 오해할 수 있다.** 사용자 글을 `tool_result` 안에 넣지 말고 같은 사용자 메시지의 텍스트 블록으로 보내며, 하네스 알림은 별도의 시스템 메시지로 둔다. [확인]
 - **진행 상황을 요구한다.** 긴 조사 턴이 조용해지면 하네스가 "사용자가 한동안 소식을 듣지 못했다. 몇 마디로 무엇을 하고 있는지 말하고 계속하라"를 보내도록 한다(연속 5번의 도구 호출 뒤, 두세 번까지). 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다. [확인]
 - **effort.** 조사는 `high`로 시작한다. 낮은 effort에서는 검증을 줄인다. `max`는 비싸고 점수가 떨어진 사례가 있어 쓰지 않는다. [확인/부분]
+- **사실 질문의 오답 비율이 중간 수준이다.** 사실·수치·인용은 출처 원문으로 확인한다. 사실 질문 기준 오답 비율이 43.3%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 검색 지침·JSON 파싱·적응형 추론·mid-turn 메시지·진행 알림: [Prompting Claude Sonnet 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5) [확인]
 - 지식 평가·오답 가능성: [eesel.ai 리뷰](https://www.eesel.ai/blog/claude-sonnet-5-5-review) [부분]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: Sonnet 5.5의 검색 기반 조사 정확도와 인젝션 방어율에 대한 독립 측정은 찾지 못했다.

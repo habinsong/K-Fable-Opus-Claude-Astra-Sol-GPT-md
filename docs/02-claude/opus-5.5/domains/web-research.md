@@ -1,9 +1,9 @@
 # Claude Opus 5.5 · 웹 리서치 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-opus-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-opus-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/opus-5.5/web-research.md`](../../../../md/02-claude/opus-5.5/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -16,8 +16,10 @@
 - **시간 압박을 주면 검증이 줄 수 있다.** 멀티 에이전트 조사에 시간 예산을 주면 품질을 비슷하게 유지하며 더 빨리 끝났지만, 시간 압박에서 모델이 검색과 검증을 조금 덜 할 수 있다고 한다. 조사 품질이 중요하면 예산을 넉넉히 둔다. [확인]
 - **보고 형식은 고정한다.** 결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것. 이 모델은 보고에서 한 일, 찾은 것, 필요한 것을 분명히 쓰는 편이다. 한정어를 빼지 않게 지시한다.
 - **생물학 질문.** 일상적인 건강·교육 질문은 영향받지 않는다. 정당한 생명과학 조사가 막히면 Life Sciences Verification Program을 확인한다. [확인]
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 제작사는 틀린 수치를 덜 낸다고 설명하지만 독립 측정과 다르다. 사실 질문 기준 오답 비율이 50.3%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 지식 작업 설명·폭넓은 탐색·시간 신호·붙여 넣은 글 표시: [Prompting Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) [확인: 벤더 서술]
 - 붙여 넣은 글 지시에 대한 지적: [KDnuggets](https://www.kdnuggets.com/everything-claude-opus-5-5-actually-ships-with) [부분]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: Opus 5.5의 검색 기반 조사 정확도와 인젝션 방어율에 대한 독립 측정은 찾지 못했다.

@@ -1,9 +1,9 @@
 # Qwen3.8-27B · 웹 리서치 (로컬) — 조사 기록
-> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-27B`(검색 결과의 Hugging Face 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-27B`(검색 결과의 Hugging Face 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/06-qwen/qwen3.8-27b/web-research.md`](../../../../md/06-qwen/qwen3.8-27b/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -16,11 +16,13 @@
 - **긴 입력의 메모리 비용을 확인한다.** 네이티브 262,144 토큰(확장 시 약 100만)이고 선형 어텐션으로 비용을 줄였다는 서술이 있으나, 긴 컨텍스트의 KV 캐시와 이미지는 메모리를 더 쓴다. 실효 길이는 우리 자료로 측정하고 페이지 하나씩 필요한 구간만 넣는다. [부분]
 - **추론이 기본으로 켜져 있다.** 필드 추출 같은 반복 작업에는 지연과 토큰이 과하다. 독립 평가에서 비추론이 지수 35, `low`가 43, `xhigh`가 52였다. 단순 추출은 비추론이나 `low`로 시험하고 오류율이 기준을 넘으면 단계를 올리거나 상위 모델로 올린다. [부분]
 - **도구 호출 하네스는 런타임 버전에서 작은 시험으로 확인한다.** 이전 세대 후기에서 Qwen 3.6 계열의 도구 호출이 Gemma 4보다 낫다는 개인 후기가 많았다. 3.8-27B의 파서 지원은 확인하지 못했다. [부분: 이전 세대]
-- **수집 규칙을 지킨다.** 로봇 배제 표준과 이용 약관, 속도 제한을 지키고 로그인·유료벽을 우회하지 않는다(§3.2). 개인정보는 필요한 만큼만 다룬다. 로컬 실행이라 수집한 자료가 외부 모델 제공자로 나가지 않는다.
+- **수집 규칙을 지킨다.** 로봇 배제 표준과 이용 약관, 속도 제한을 지키고 로그인·유료벽을 우회하지 않는다(§1.2). 개인정보는 필요한 만큼만 다룬다. 로컬 실행이라 수집한 자료가 외부 모델 제공자로 나가지 않는다.
 - 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
+- **사실 질문에서 모르면 기권하는 편이다.** 기권을 오류로 취급하지 말고, 그래도 인용과 수치는 원문으로 확인한다. 사실 질문 기준 오답 비율이 28.6%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 사양·컨텍스트: [Morph: Qwen 3.8 27B](https://www.morphllm.com/qwen-3-8), [Qubrid: Qwen3.8-27B 개발자 가이드](https://www.qubrid.com/blog/qwen38-27b-api-benchmarks-pricing-and-the-complete-developer-guide) (스니펫만) [부분]
 - 독립 평가 점수(노력 단계별): [Artificial Analysis: Qwen3.8 27B](https://artificialanalysis.ai/de/models/qwen3-8-27b), [Qwen3.8 27B (non-reasoning)](https://artificialanalysis.ai/de/models/qwen3-8-27b-non-reasoning), [Qwen3.8 27B (low)](https://artificialanalysis.ai/de/models/qwen3-8-27b-low) (스니펫만) [부분, 충돌]
 - 이전 세대 도구 호출 후기: [InsiderLLM: 로컬 모델 함수 호출](https://insiderllm.com/guides/function-calling-local-llms/) (스니펫만) [부분: 개인 후기, 이전 세대]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 이 모델의 환각·인용 정확도·인젝션 방어율의 독립 자료가 없다.

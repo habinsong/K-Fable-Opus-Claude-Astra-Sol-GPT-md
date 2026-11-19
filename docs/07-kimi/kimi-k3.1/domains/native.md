@@ -1,9 +1,9 @@
 # Kimi K3.1 · 네이티브 — 조사 기록
-> 제공자: Moonshot AI · 모델 ID: API `kimi-k3.1-pro`, 고속 변형 `kimi-k3.1-pro-highspeed`(Moonshot 발표를 전한 보도의 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Moonshot AI · 모델 ID: API `kimi-k3.1-pro`, 고속 변형 `kimi-k3.1-pro-highspeed`(Moonshot 발표를 전한 보도의 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/07-kimi/kimi-k3.1/native.md`](../../../../md/07-kimi/kimi-k3.1/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -17,14 +17,22 @@
 - **에이전트 루프에 안전장치를 먼저 둔다.** Moonshot의 Kimi Code 안내(승인 기능 유지, diff 검토, 비밀 보호, 되돌릴 수 있는 Git 브랜치)를 따르고 파괴적 명령 차단(권한·훅), 작업 디렉터리 격리, 시간·토큰 한도를 설정한다. 완료 보고는 빌드·테스트·sanitizer 출력과 `git diff`로 확인하고, 테스트·경고·sanitizer 설정이 바뀌었는지도 확인한다. 억제 지시문을 넣거나 검사를 끄는 제안은 따르지 않는다. [부분]
 - **긴 컨텍스트에 기대지 않는다.** 100만 토큰이어도 관련 함수·호출부·오류 메시지·빌드 설정만 주는 편이 지연·비용에서 낫다. 컨텍스트 길이별 요금 단계가 없다는 서술이 있어 비용 문턱은 낮으나 지연은 남는다. [부분/추정]
 - **도구 호출 신뢰도 수치를 쓰지 않는다.** 한 비공식 사이트의 도구 선택 967/1,000, 에이전트 루프 199/200 통과는 방법론을 확인할 수 없다. 우리 하네스에서 호출 실패율을 측정한다. [미확인]
-- **미공개 소스를 API로 보내기 전에 약관을 확인한다.** 학습 사용·보관·처리 위치 서술이 어긋난다(README.md가 안내하는 개요·운용 문서.5). [부분, 충돌] 확인 전에는 비밀·고객 코드를 보내지 않는다(§1.6).
+- **미공개 소스를 API로 보내기 전에 약관을 확인한다.** 학습 사용·보관·처리 위치 서술이 어긋난다(README.md가 안내하는 개요·운용 문서.5). [부분, 충돌] 확인 전에는 비밀·고객 코드를 보내지 않는다(전역 지침).
 
 **애플리케이션에 내장할 때**
-- **모델은 서버 API로 호출한다.** 가중치가 공개돼도 규모가 커서 데스크톱 프로그램에 번들할 수 없다. 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§3.1).
+- **모델은 서버 API로 호출한다.** 가중치가 공개돼도 규모가 커서 데스크톱 프로그램에 번들할 수 없다. 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§1.1).
 - **오프라인·자체 호스팅이 필요하면 공개 후 라이선스를 먼저 읽는다.** 직전 K3의 자체 라이선스(MaaS 매출 기준 별도 계약, 대규모 제품의 표시 의무)가 K3.1에 적용되는지 미확인이다. 소형 로컬 모델은 `gemma-4-e4b`, `qwen3.6-27b` 문서를 본다. [부분/미확인]
+- **터미널·환경 설정 작업에 먼저 쓴다.** 터미널 항목은 최상위인데 저장소 변경 항목은 낮다. 변경은 테스트로 확인하고 어려운 변경은 상위 모델로 교차한다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
+- **대화형 작업에는 맞지 않는다.** 출력이 초당 31토큰으로 느리다. 에이전트 배치 작업에 쓴다. [확인: Artificial Analysis 모델 페이지]
+- **사이버 능력이 제한돼 있다는 불만이 반복된다.** 보안 작업은 GLM 계열을 쓴다는 증언이 있다. [부분: HN 다수 증언]
+- **제작사 벤치마크 점수를 능력 근거로 읽지 않는다.** 점수가 숨은 테스트 규칙을 외운 결과라고 주장하는 감사 글이 올라왔으나 내용은 검증되지 않았다. [미확인: 제목만 확인]
 
 ## 4. 근거와 한계
 - 대표 수치·조건·자리표시: [BenchmarkList: Kimi K3.1 Pro](https://benchmarklist.com/models/moonshotai-kimi-k3.1-pro/), [OrcaRouter: K3.1 Pro 벤치마크](https://www.orcarouter.ai/blog/kimi-k3-1-pro-benchmark), [DataLearner: K3.1 대 K3](https://www.datalearner.com/ai-models/compare/kimi-k3-1/vs/kimi-k3) (스니펫만) [부분: 벤더 주장]
 - 사이버 능력 축소: [VKTR: K3.1 Pro와 사이버 능력 제한](https://www.vktr.com/ai-platforms/kimi-k31-pro-nears-top-proprietary-models-as-moonshot-limits-its-cyber-skills/), [WinZheng: 사이버 능력 약화](https://www.winzheng.com/en/article/kimi-k31-pro-open-weights-cyber-capability-weakening) (스니펫만) [부분: 벤더 주장 포함]
 - Kimi Code 안내·도구 호출 수치(비공식): [DEV: Kimi K3와 Kimi Code](https://dev.to/hassann/how-to-use-kimi-k3-for-coding-with-kimi-code-3d7a), [kimi-ai.chat(비공식)](https://kimi-ai.chat/guide/kimi-code/) (스니펫만) [부분/미확인]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis Coding Agent Index v2.1 표(2차 정리)](https://freakyjolly.com/coding-agent-index-v2-1-explained/)
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: kimi-k3-1-pro 모델 페이지](https://artificialanalysis.ai/models/kimi-k3-1-pro)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Kimi K3.1 Pro 스레드](https://news.ycombinator.com/item?id=50212065)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Kimi K3.1 Pro 벤치마크 감사 글](https://news.ycombinator.com/item?id=50373580)
 - 한계: 언어별 시스템 코드 평가와 도구 호출 오류율의 독립 자료가 없다.

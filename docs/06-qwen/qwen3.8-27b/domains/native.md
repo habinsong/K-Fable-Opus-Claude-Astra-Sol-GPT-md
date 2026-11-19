@@ -1,9 +1,9 @@
 # Qwen3.8-27B · 네이티브 (로컬) — 조사 기록
-> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-27B`(검색 결과의 Hugging Face 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-27B`(검색 결과의 Hugging Face 표기, 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/06-qwen/qwen3.8-27b/native.md`](../../../../md/06-qwen/qwen3.8-27b/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -19,10 +19,14 @@
 
 **애플리케이션에 내장할 때**
 - 로컬 런타임(llama.cpp, vLLM 등)을 링크하면 런타임과 가중치 라이선스를 각각 확인한다. 가중치는 Apache 2.0이라는 서술이 소수 출처에 있으므로 LICENSE 원문으로 확인한 뒤에만 번들한다(README.md가 안내하는 개요·운용 문서.1). [부분, 충돌]
-- **모델 출력은 신뢰하지 않는 입력이다.** 모델이 만든 경로·명령·코드를 그대로 실행하지 않고 모델 호출은 별도 프로세스와 최소 권한으로 격리한다. 파서·역직렬화 코드는 퍼징 대상으로 본다(§3.1). 시스템 경로, 레지스트리, 드라이버, 부트 설정, 서명 키는 승인 없이 건드리지 않는다.
+- **모델 출력은 신뢰하지 않는 입력이다.** 모델이 만든 경로·명령·코드를 그대로 실행하지 않고 모델 호출은 별도 프로세스와 최소 권한으로 격리한다. 파서·역직렬화 코드는 퍼징 대상으로 본다(§1.1). 시스템 경로, 레지스트리, 드라이버, 부트 설정, 서명 키는 승인 없이 건드리지 않는다.
+- **에이전트 코딩에 쓰지 않는다.** 터미널 작업이 최하위다. 구조화 추출과 단일 GPU 구동에 쓴다. [부분: 2차 비교 글]
+- **추론 중 스스로 자주 의심한다.** 생각 토큰 상한을 둔다. [부분: HN 단일 증언]
 
 ## 4. 근거와 한계
 - 벤더 수치·각주: [Morph: Qwen 3.8 27B](https://www.morphllm.com/qwen-3-8), [Qubrid: Qwen3.8-27B 개발자 가이드](https://www.qubrid.com/blog/qwen38-27b-api-benchmarks-pricing-and-the-complete-developer-guide), [OrcaRouter: Qwen 3.8 27B 코딩](https://www.orcarouter.ai/blog/qwen-3-8-27b-for-coding) (스니펫만) [부분: 벤더 주장]
 - 독립 평가 점수·속도: [Artificial Analysis: Qwen3.8 27B](https://artificialanalysis.ai/de/models/qwen3-8-27b) (스니펫만) [부분]
 - 이전 세대 도구 호출 후기: [InsiderLLM: 로컬 모델 함수 호출](https://insiderllm.com/guides/function-calling-local-llms/) (스니펫만) [부분: 개인 후기, 이전 세대]
+- 추가 확인(2026-11-19 웹 검색): [Regolo: Kimi·DeepSeek·GLM·Qwen 비교(공급사 글)](https://regolo.ai/kimi-k3-1-pro-vs-deepseek-1017-vs-glm-5-3-qwen3-8-27b-benchmarks/)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Qwen4-Max 스레드](https://news.ycombinator.com/item?id=50513215)
 - 한계: 언어별 시스템 코드 평가와 독립 후기가 없다.

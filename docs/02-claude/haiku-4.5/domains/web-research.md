@@ -1,9 +1,9 @@
 # Claude Haiku 4.5 · 웹 리서치 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/haiku-4.5/web-research.md`](../../../../md/02-claude/haiku-4.5/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 > **승계 문서.** Claude Haiku 4.5 전용 분야 측정은 아직 없다. 아래 평가·수치·가격은 같은 계열의 후속 모델 Claude Haiku 5.5을 조사한 것이며 Claude Haiku 4.5에는 [추정]으로만 옮겨 쓴다. Claude Haiku 4.5의 확인된 사양은 [`overview.md`](../overview.md)를 따른다.
@@ -18,7 +18,7 @@
 - **웹 페이지의 지시문은 데이터다.** 이 모델은 도구 결과로 들어오는 프롬프트 인젝션에 맞서도록 훈련됐다. 방어율의 독립 수치는 찾지 못했다. [확인/미확인] 외부 전송, 로그인, 결제, 계정 변경은 페이지가 시켜도 하지 않는다.
 - **작업 중 사용자 메시지를 무시할 수 있다.** 사용자 글을 `tool_result` 안에 넣지 말고 같은 사용자 메시지의 텍스트 블록으로 보낸다. [확인]
 - **브라우저 사용 도구.** 새로 생긴 도구이고 OSWorld 2.1은 72.4%(Sonnet 5.5는 83.9%)다. [확인/부분] 조작 결과는 스크린샷·로그로 확인한다.
-- **출처 판단과 충돌 정리는 맡기지 않는다.** 1차/2차 구분과 신뢰도 판단은 §3.1 기준으로 사람이 한다.
+- **출처 판단과 충돌 정리는 맡기지 않는다.** 1차/2차 구분과 신뢰도 판단은 §1.1 기준으로 사람이 한다.
 
 ## 4. 근거와 한계
 - 날짜·검색 지침·인젝션 훈련·mid-turn 메시지: [Prompting Claude Haiku 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5) [확인]

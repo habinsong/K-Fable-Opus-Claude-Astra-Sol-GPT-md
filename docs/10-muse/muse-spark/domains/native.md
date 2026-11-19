@@ -1,9 +1,9 @@
 # Muse Spark · 네이티브 — 조사 기록
-> 제공자: Meta(Meta Superintelligence Labs) · 모델 ID: 최신 버전 1.3의 API ID는 확인 필요(`muse-spark-1.3` 형태로 보이나 미확인), 오픈 가중치 변형은 "Muse Spark Open" · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Meta(Meta Superintelligence Labs) · 모델 ID: 최신 버전 1.3의 API ID는 확인 필요(`muse-spark-1.3` 형태로 보이나 미확인), 오픈 가중치 변형은 "Muse Spark Open" · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/10-muse/muse-spark/native.md`](../../../../md/10-muse/muse-spark/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -16,13 +16,15 @@
 - **Muse Code(터미널 코딩 에이전트)를 쓰려면 안전장치를 먼저 둔다.** 파괴적 명령 차단(권한·훅), 작업 디렉터리 격리, 시간·토큰 한도를 설정하고, 완료 보고는 빌드·테스트·sanitizer 출력과 `git diff`로 확인한다. 테스트·경고·sanitizer 설정이 바뀌었는지도 확인한다. 억제 지시문을 넣거나 검사를 끄는 제안은 따르지 않는다. 베타(8월 초 시작)이므로 동작이 바뀔 수 있다. [부분]
 - **긴 컨텍스트 주장을 시험해서 쓴다.** MRCR(512K~1M) 98.1%는 `max` 단계의 벤더 수치이고 컨텍스트가 100만 토큰이어도 관련 함수·호출부·오류 메시지·빌드 설정만 주는 편이 지연·비용에서 낫다. [부분: 벤더 주장]
 - **버전을 고정한다.** 한두 달 간격으로 갱신되므로 같은 빌드 과제로 회귀 시험을 돌린다.
-- **미공개 소스를 보내기 전에 약관을 확인한다.** 데이터 처리 서술이 충돌한다(README.md가 안내하는 개요·운용 문서.4). [미확인] 확인 전에는 비밀·고객 코드를 보내지 않는다(§1.6).
+- **미공개 소스를 보내기 전에 약관을 확인한다.** 데이터 처리 서술이 충돌한다(README.md가 안내하는 개요·운용 문서.4). [미확인] 확인 전에는 비밀·고객 코드를 보내지 않는다(전역 지침).
 
 **애플리케이션에 내장할 때**
-- **폐쇄형 Spark는 서버 API로 호출한다.** 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§3.1).
-- **오프라인·자체 호스팅이 필요하면 Spark Open을 검토하되 라이선스를 먼저 읽는다.** 자체 "Muse Model License"(상업 이용 제한, 재판매 승인, "Built with Muse Spark Open" 표시 의무 서술)는 소프트웨어 배포 형태에 따라 의무가 달라진다. 원문으로 확인하고, 공식 저장소에서만 가중치를 받는다(§1.5). 소형 로컬 모델은 `gemma-4-e4b`, `qwen3.6-27b` 문서를 본다. [부분/미확인]
+- **폐쇄형 Spark는 서버 API로 호출한다.** 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§1.1).
+- **오프라인·자체 호스팅이 필요하면 Spark Open을 검토하되 라이선스를 먼저 읽는다.** 자체 "Muse Model License"(상업 이용 제한, 재판매 승인, "Built with Muse Spark Open" 표시 의무 서술)는 소프트웨어 배포 형태에 따라 의무가 달라진다. 원문으로 확인하고, 공식 저장소에서만 가중치를 받는다(전역 지침). 소형 로컬 모델은 `gemma-4-e4b`, `qwen3.6-27b` 문서를 본다. [부분/미확인]
+- **터미널 에이전트로 쓰지 않는다.** 코딩 에이전트 지수의 터미널 항목이 30으로 낮다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
 
 ## 4. 근거와 한계
 - 대표 수치의 조건·AA 보고: [The New Stack: Muse Spark 1.3 대 Gemini](https://thenewstack.io/muse-spark-1-3-gemini/), [ProPakistani: 1.3 출시](https://propakistani.pk/2026/09/03/meta-launches-muse-spark-1-3-with-faster-coding-and-smarter-agents/) (스니펫만) [부분, 충돌]
 - 1.3 변화: [DataNorth: 1.3 출시](https://datanorth.ai/news/meta-launches-muse-spark-1-3), [Codersera: Muse Spark 가이드](https://codersera.com/blog/muse-spark-complete-guide-2026) (스니펫만) [부분]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis Coding Agent Index v2.1 표(2차 정리)](https://freakyjolly.com/coding-agent-index-v2-1-explained/)
 - 한계: 언어별 시스템 코드 평가와 환각·도구 호출 오류율의 독립 자료가 없다.

@@ -1,9 +1,9 @@
 # Claude Haiku 4.5 · 네이티브 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/haiku-4.5/native.md`](../../../../md/02-claude/haiku-4.5/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 > **승계 문서.** Claude Haiku 4.5 전용 분야 측정은 아직 없다. 아래 평가·수치·가격은 같은 계열의 후속 모델 Claude Haiku 5.5을 조사한 것이며 Claude Haiku 4.5에는 [추정]으로만 옮겨 쓴다. Claude Haiku 4.5의 확인된 사양은 [`overview.md`](../overview.md)를 따른다.

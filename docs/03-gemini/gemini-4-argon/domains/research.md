@@ -1,9 +1,9 @@
 # Gemini 4 Argon · 연구 — 조사 기록
-> 제공자: Google · 모델 ID: `gemini-4-argon` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `gemini-4-argon` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-argon/research.md`](../../../../md/03-gemini/gemini-4-argon/research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/research.md`](../../../_common/domain-rules/research.md)
 
 ## 2. 이 모델의 연구 작업 운용
@@ -17,8 +17,10 @@
 - **열린 추론은 상위 후보와 비교한다.** 독립 평가 점수에서 Argon 50, Opus 5.5 58로 정리한 2차 보도가 있다. [부분] 새 가설·증명·실험 설계는 모델 단독으로 끝내지 않고 전문가 검토를 거친다. 의료·법률·안전 결론에는 "전문가 검토 필요"를 붙인다.
 - **`thinking_level`.** 통계 해석과 증명은 `HIGH`, 서식 변환은 `LOW`. `MINIMAL`은 400이다. [부분]
 - **비용.** 2026-11-30 이후 입력 $4 / 출력 $20이다. 서지 서식 변환 같은 단순 작업은 더 싼 모델을 쓴다. [부분]
+- **사실 질문에서 모르면 기권하는 편이다.** 기권을 오류로 취급하지 말고, 그래도 인용과 수치는 원문으로 확인한다. 사실 질문 기준 오답 비율이 4.3%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 참고문헌 정확도(타 모델 포함): [Biomedical Reference Generation Remains Unreliable across 26 LLMs](https://arxiv.org/pdf/2609.14988) [부분]
 - 환각 인정·벤치마크 점수: [Gemini 4 Argon 모델 카드](https://deepmind.google/models/model-cards/gemini-4-argon/), [Layer3 Labs 리뷰](https://www.layer3labs.io/guides/gemini-4-argon-review) [부분]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: Argon의 연구 보조 정확도를 통제된 조건에서 측정한 독립 자료는 찾지 못했다.

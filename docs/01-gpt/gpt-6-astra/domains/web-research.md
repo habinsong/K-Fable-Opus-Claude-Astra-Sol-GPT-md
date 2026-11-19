@@ -1,9 +1,9 @@
 # GPT-6 Astra · 웹 리서치 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6-astra/web-research.md`](../../../../md/01-gpt/gpt-6-astra/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -15,8 +15,10 @@
 - **보고 형식을 고정한다.** 상세하고 서식이 많은 답을 내는 경향이 있으므로, 조사 결과는 "결론 → 근거(출처, 수준) → 충돌·불확실 → 모르는 것" 네 덩어리로 쓰고 항목당 1~2문장으로 제한한다. 같은 상투구를 반복하지 않는다.
 - **긴 페이지를 통째로 읽지 않는다.** 입력이 272K 토큰을 넘으면 요청 전체가 장문 요금으로 계산된다는 집계가 있다. [부분] 필요한 구간을 발췌해서 읽고, 중요한 수치는 원문에서 다시 확인한다.
 - **자기 평가를 쓰지 않는다.** "충분히 확인했다", "출처가 일치한다"는 모델의 판단이 아니라 실제로 연 URL 목록과 대조 결과로 보고한다.
+- **사실 질문의 오답 비율이 중간 수준이다.** 사실·수치·인용은 출처 원문으로 확인한다. 사실 질문 기준 오답 비율이 49.8%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 인젝션·컴퓨터 사용: [GPT-6 Astra: Faster Agents, Critical Cyber Controls](https://developer.tenten.co/gpt-6-astra-computer-use-cyber-deployment), [OpenAI 발표](https://openai.com/index/gpt-6-astra/) 스니펫 [부분]
 - 인용 환각: [GPT-6 Astra Hallucination Rate, Measured](https://truestandard.ai/releases/gpt-6-astra), [Detecting and Correcting Reference Hallucinations in Commercial LLMs and Deep Research Agents](https://arxiv.org/pdf/2604.03173) [부분: 단일 비독립 측정 + 일반 연구]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: Astra 전용 웹 리서치 정확도 평가는 찾지 못했다. 위 수치들은 모두 조건(검색 유무, 하네스)이 달라서 서로 비교하지 않는다.

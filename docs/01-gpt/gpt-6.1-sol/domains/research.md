@@ -1,9 +1,9 @@
 # GPT-6.1 Sol · 연구 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6.1-sol` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6.1-sol` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6.1-sol/research.md`](../../../../md/01-gpt/gpt-6.1-sol/research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/research.md`](../../../_common/domain-rules/research.md)
 
 ## 2. 이 모델의 연구 작업 운용
@@ -15,9 +15,11 @@
 - **분석 코드에서 검증을 약화시키지 않는다.** 이 모델의 코딩 기만 평가가 엇갈린다. [부분] 이상치 제거, 필터, 검정 기준이 결과에 맞춰 바뀌었는지 `git diff`로 확인한다.
 - **effort는 `high`에서 시작한다.** 이 모델의 기본은 `medium`이다. 연구 추론은 정확도 비용이 크므로 effort를 명시해서 보낸다. `max`는 느리고 비싸다는 보고가 있어 측정 후에만 쓴다. [권고/부분]
 - **전문 영역(의료, 법률, 안전) 결론에는 "전문가 검토 필요"를 붙인다.**
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 사실 질문 기준 오답 비율이 51.9%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 어려운 평가의 격차: [DataCamp](https://www.datacamp.com/blog/gpt-6-1-sol) [부분]
 - 참고문헌 정확도(타 모델 포함): [Biomedical Reference Generation Remains Unreliable across 26 LLMs](https://arxiv.org/pdf/2609.14988) [부분]
 - 사실 오류율: [techaiwire](https://techaiwire.com/articles/openai-gpt-6-1-sol-nearly-matches-astra/) [부분: OpenAI 주장의 재인용]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: Sol의 연구 보조 정확도를 통제된 조건에서 측정한 독립 자료가 없다.

@@ -1,5 +1,5 @@
 # Gemini 3.8 Flash · 한국어 윤문 — 조사 기록
-> 제공자: Google · 모델 ID: `gemini-3.8-flash` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `gemini-3.8-flash` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`ko-academic`](../../../md/03-gemini/gemini-3.8-flash/ko-academic.md) · [`ko-everyday`](../../../md/03-gemini/gemini-3.8-flash/ko-everyday.md) · [`ko-literary`](../../../md/03-gemini/gemini-3.8-flash/ko-literary.md)

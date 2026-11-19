@@ -1,8 +1,8 @@
 # HyperCLOVA X SEED 32B Think — 개요·사양·라이선스
-> 제공자: Naver Cloud · 모델 ID: `naver-hyperclovax/HyperCLOVAX-SEED-Think-32B` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Naver Cloud · 모델 ID: `naver-hyperclovax/HyperCLOVAX-SEED-Think-32B` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/22-naver/hyperclova-x-seed-32b-think/general.md`](../../../md/22-naver/hyperclova-x-seed-32b-think/general.md)
+> 컨텍스트용 지침: [`md/22-naver/hyperclova-x-seed-32b-think/AGENTS.md`](../../../md/22-naver/hyperclova-x-seed-32b-think/AGENTS.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 #### 2.1 위치와 사양

@@ -124,12 +124,11 @@ AI가 혼자만의 헛된 망상에 빠지거나 코드를 함부로 망치지 �
 
 ## 분야별 지침 문서 구성
 
-저장소의 지침 문서는 작업 도메인에 따라 12개 분야로 나뉘어 있습니다.<br>
-그냥 프로젝트 폴더에 일단 다 집어넣고 알아서 꺼내드시면 됩니다.
+모델 폴더에는 전역 지침(`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` 중 하나)과 작업 도메인별 분야 문서 11개가 있습니다.<br>
+분야 문서에는 전역 지침과 겹치는 내용을 넣지 않았습니다. 전역 지침을 깔고, 하는 일에 맞는 분야 문서만 프로젝트에 더하시면 됩니다.
 
 | 분류 | 지침 파일 (`.md`) | 한 줄 설명 |
 |---|---|---|
-| **기본 개발** | `general.md` | 모델별 기본 작업 지침 및 소프트웨어 공학 일반 규칙 |
 | **소프트웨어 개발** | `web.md` | 웹 프론트엔드·백엔드 풀스택 개발 규칙 (웹 표준, 접근성, 보안) |
 | | `app.md` | 모바일(iOS·Android) 및 데스크톱 애플리케이션 개발 규칙 |
 | | `native.md` | C, C++, Rust 기반 저수준 시스템 프로그래밍 및 메모리 관리 규칙 |
@@ -148,16 +147,16 @@ AI가 혼자만의 헛된 망상에 빠지거나 코드를 함부로 망치지 �
 
 ### 1. 설정 파일 선택 및 복사
 
-모델에 구애받지 않고 범용으로 쓰실 때는 `universal/`에서 고르시고, 특정 모델에 맞추실 때는 `md/계열/모델/`에서 프로젝트 성격에 맞는 문서를 고릅니다. 기본 권장 문서는 `general.md`입니다.
+모델에 구애받지 않고 범용으로 쓰실 때는 `universal/`에서 고르시고, 특정 모델에 맞추실 때는 `md/계열/모델/`에서 프로젝트 성격에 맞는 문서를 고릅니다. 먼저 전역 지침(`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`)을 깔고, 하는 일에 맞는 분야 문서를 더합니다.
 
 사용하시는 프로젝트 루트에 복사해 주시면 됩니다.
 
 ```bash
-# Claude Opus 5.5 모델 전용 일반 개발 규칙 적용
-cp md/02-claude/opus-5.5/general.md /path/to/your/project/CLAUDE.md
+# Claude Opus 5.5 전역 지침을 모든 프로젝트에 적용
+cp md/02-claude/opus-5.5/CLAUDE.md ~/.claude/CLAUDE.md
 
-# 범용 펌웨어 개발 규칙 적용
-cp universal/firmware.md /path/to/your/project/AGENTS.md
+# 이 프로젝트에는 웹 분야 문서를 더하고, 프로젝트 CLAUDE.md에 `@web.md` 한 줄을 넣는다
+cp md/02-claude/opus-5.5/web.md /path/to/your/project/web.md
 ```
 
 `/path/to/your/project/`는 예시 경로이므로 실제 작업하시는 프로젝트 디렉터리 경로를 적어 주시면 됩니다.
@@ -170,7 +169,7 @@ cp universal/firmware.md /path/to/your/project/AGENTS.md
 | Gemini CLI | `GEMINI.md` | 공식 지원 형식입니다 |
 | Kimi Code, Qwen Code, Grok Build, DeepSeek Harness | `AGENTS.md` | 각 도구별 최신 로딩 규격을 함께 확인하시는 것을 권장합니다 |
 
-여러 분야가 복합된 프로젝트에서는 기본이 되는 `general.md`를 바탕에 두고, 필요한 분야 문서의 `## 3. 분야 규칙` 부분을 덧붙여 구성하시면 편리합니다.
+여러 분야가 복합된 프로젝트에서는 필요한 분야 문서를 모두 두고 `@파일명`으로 연결하시면 됩니다. 도구별 연결 방법은 [`universal/README.md`](universal/README.md)에 있습니다.
 
 ### 2. Claude Code 메모리 로드 확인
 
@@ -295,12 +294,12 @@ python3 "AI 냄새 측정기/ai-smell-meter/bin/ai-smell" polish 원고.md > 원
 
 | 수정 대상 | 원본 위치 |
 |---|---|
-| 전체 문서 공통 규칙 | `universal/contract.md` |
+| 공통 작업 규칙(복명복창, 보고, 검증, Git·보안, 모델별 보완) | `md/계열/모델/`의 전역 지침, 범용은 `universal/`의 전역 지침 |
 | 분야별 고유 규칙 | `universal/분야.md` (한국어 공통 원리는 `universal/ko-core.md`) |
-| 모델별 전용 지침 | `md/계열/모델/general.md`의 모델 블록 |
+| 모델별 분야 지침 | `md/계열/모델/분야.md`의 `## 2.` 절 (근거는 `docs/계열/모델/domains/분야.md`) |
 | 조사, 근거, 출처 | `docs/계열/모델/` |
 
-공통 블록은 원본 파일만 수정하신 뒤 `sync` 명령을 통해 각 문서로 일괄 반영합니다. 개별 파일에 삽입된 공통 블록을 직접 수정하지 마세요.
+분야 규칙 블록은 원본 파일만 수정하신 뒤 `sync` 명령을 통해 각 문서로 일괄 반영합니다. 개별 파일에 삽입된 분야 규칙 블록을 직접 수정하지 마세요. `## 2.` 절은 손으로 고칩니다.
 
 ```bash
 # 공통 블록 동기화

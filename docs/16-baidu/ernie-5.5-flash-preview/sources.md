@@ -1,8 +1,8 @@
 # ERNIE 5.5 Flash Preview — 출처와 한계
-> 제공자: Baidu · 모델 ID: `ernie-5.5-flash-preview`(Qianfan, 2차 표기), `baidu/ernie-5.5-flash-preview:free`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Baidu · 모델 ID: `ernie-5.5-flash-preview`(Qianfan, 2차 표기), `baidu/ernie-5.5-flash-preview:free`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/16-baidu/ernie-5.5-flash-preview/general.md`](../../../md/16-baidu/ernie-5.5-flash-preview/general.md)
+> 컨텍스트용 지침: [`md/16-baidu/ernie-5.5-flash-preview/AGENTS.md`](../../../md/16-baidu/ernie-5.5-flash-preview/AGENTS.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 ## 4. 근거와 한계

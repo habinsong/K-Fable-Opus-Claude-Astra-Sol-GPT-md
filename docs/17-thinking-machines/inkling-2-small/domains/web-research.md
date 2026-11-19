@@ -1,9 +1,9 @@
 # Inkling 2 Small · 웹 리서치 — 조사 기록
-> 제공자: Thinking Machines Lab · 모델 ID: `inkling-2-small`(Cloudflare 표기) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Thinking Machines Lab · 모델 ID: `inkling-2-small`(Cloudflare 표기) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/17-thinking-machines/inkling-2-small/web-research.md`](../../../../md/17-thinking-machines/inkling-2-small/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 작업 운용
@@ -15,8 +15,14 @@ Inkling 2 Small 전용 웹 리서치 작업 측정은 찾지 못했다. [미확�
 
 **웹 리서치 작업에서 따로 확인할 것**
 - 검색 도구의 인용 정확도, 출처 날조 빈도, 긴 조사에서의 일관성를 같은 과제로 비교 모델과 직접 대조한다. 이 문서의 수치를 웹 리서치 작업 성능으로 읽지 않는다. [추정]
+- **출력 토큰이 많이 든다.** `max_tokens`와 토큰 예산을 넉넉히 잡고 작업당 총비용으로 비교한다. [부분: 2차 보도]
+- **사실과 인용은 원문으로 대조한다.** 사실 질문의 환각률이 이전보다 낮아졌다는 측정이 있으나 제작사 쪽 수치다. [부분]
+- **사실 질문에서 모르면 기권하는 편이다.** 기권을 오류로 취급하지 말고, 그래도 인용과 수치는 원문으로 확인한다. 사실 질문 기준 오답 비율이 26.7%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - [Thinking Machines: Introducing Inkling 2 Small](https://thinkingmachines.ai/news/inkling-2-small/)
 - [Cloudflare Workers AI: inkling-2-small](https://developers.cloudflare.com/workers-ai/models/inkling-2-small/)
+- 추가 확인(2026-11-19 웹 검색): [Let's Data Science: Inkling 2 Small](https://letsdatascience.com/blog/inkling-2-small-30-cents-per-million-tokens-weights-still-locked)
+- 추가 확인(2026-11-19 웹 검색): [OfficeChai: Inkling 2 Small](https://officechai.com/ai/thinking-machines-releases-inkling-2-small-to-become-top-scoring-non-chinese-model-on-artificial-analysis-intelligence-index-once-weights-release/)
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 웹 리서치 작업을 직접 측정한 것이 아니다. 분야 규칙은 모델과 무관한 공통 근거를 따른다.

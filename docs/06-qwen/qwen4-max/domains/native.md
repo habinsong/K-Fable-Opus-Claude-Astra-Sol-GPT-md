@@ -1,9 +1,9 @@
 # Qwen4-Max · 네이티브 — 조사 기록
-> 제공자: Alibaba(Qwen) · 모델 ID: 미공개 [미확인] (보도자료 표기 `Qwen4-Max`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Alibaba(Qwen) · 모델 ID: 미공개 [미확인] (보도자료 표기 `Qwen4-Max`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/06-qwen/qwen4-max/native.md`](../../../../md/06-qwen/qwen4-max/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -15,8 +15,16 @@ Qwen4-Max 전용 네이티브 작업 측정은 찾지 못했다. [미확인] 아
 
 **네이티브 작업에서 따로 확인할 것**
 - 메모리 안전·동시성 버그 진단 정확도, 디버거·새니타이저 출력의 해석를 같은 과제로 비교 모델과 직접 대조한다. 이 문서의 수치를 네이티브 작업 성능으로 읽지 않는다. [추정]
+- **가중치가 비공개인 API 모델이다.** 미공개 코드를 보내기 전에 약관과 데이터 처리 조건을 확인한다. [부분]
+- **제작사가 내놓은 비교표만으로 판단하지 않는다.** 같은 과제로 직접 비교한다. [부분: 독립 평가 없음]
+- **제작사 발표보다 낮게 본다.** 독립 지수가 같은 급 중앙값과 같고 느리고 출력이 길다. 시간·토큰 상한을 둔다. [확인: Artificial Analysis 모델 페이지]
+- **대화형 작업에 맞지 않는다.** 출력이 초당 30토큰 안팎이라는 증언이 반복되고 제공 업체가 적다. [부분: HN 다수 증언]
 
 ## 4. 근거와 한계
 - [Alibaba 보도자료: Qwen4-Max](https://www.alibabacloud.com/press-room/alibaba-unveils-qwen4-max)
 - [Artificial Analysis: Qwen4 Max](https://artificialanalysis.ai/models/qwen4-max)
+- 추가 확인(2026-11-19 웹 검색): [Fello AI: Qwen 4 출시](https://felloai.com/qwen-4/)
+- 추가 확인(2026-11-19 웹 검색): [Cellcog: Qwen4-Max](https://cellcog.ai/blog/qwen-4-release-date/)
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: qwen4-max 모델 페이지](https://artificialanalysis.ai/models/qwen4-max)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Qwen4-Max 스레드](https://news.ycombinator.com/item?id=50513215)
 - 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 네이티브 작업을 직접 측정한 것이 아니다. 분야 규칙은 모델과 무관한 공통 근거를 따른다.

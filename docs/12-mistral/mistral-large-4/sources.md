@@ -1,8 +1,8 @@
 # Mistral Large 4 — 출처와 한계
-> 제공자: Mistral AI · 모델 ID: `mistral-large-4-0`(문서 링크 표기, 확인 필요) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Mistral AI · 모델 ID: `mistral-large-4-0`(문서 링크 표기, 확인 필요) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/12-mistral/mistral-large-4/general.md`](../../../md/12-mistral/mistral-large-4/general.md)
+> 컨텍스트용 지침: [`md/12-mistral/mistral-large-4/AGENTS.md`](../../../md/12-mistral/mistral-large-4/AGENTS.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 ## 4. 근거와 한계

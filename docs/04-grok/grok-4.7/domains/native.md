@@ -1,9 +1,9 @@
 # Grok 4.7 · 네이티브 — 조사 기록
-> 제공자: xAI(일부 자료는 회사명을 SpaceXAI로 표기하나 확인하지 못함) · 모델 ID: API `grok-4.7`(집계 사이트의 `grok-4-7` 표기, 확인 필요), 경량 변형 "Grok 4.7 Fast"는 Cursor·Grok Build 전용이라는 서술 · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: xAI(일부 자료는 회사명을 SpaceXAI로 표기하나 확인하지 못함) · 모델 ID: API `grok-4.7`(집계 사이트의 `grok-4-7` 표기, 확인 필요), 경량 변형 "Grok 4.7 Fast"는 Cursor·Grok Build 전용이라는 서술 · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/04-grok/grok-4.7/native.md`](../../../../md/04-grok/grok-4.7/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -17,15 +17,22 @@
 - **내장 도구 호출이 반복되는지 본다.** 에이전트가 필요 이상으로 검색을 반복한다는 개발자 보고가 있고 호출당 과금된다. 문서 검색이 필요한 작업에는 호출 횟수 한도를 둔다. [부분: 개인 후기]
 - **긴 컨텍스트의 요금 문턱을 확인한다.** 프롬프트가 20만 토큰에 이르면 요청 전체에 장문 요금이 적용된다는 서술이 있다. 큰 코드베이스를 통째로 넣지 말고 관련 함수·호출부·오류 메시지·빌드 설정만 준다. [부분]
 - **탈옥 우회 사례와 모델 카드 부재를 위험으로 기록한다.** 4.7의 모델 카드·시스템 카드를 확인하지 못했고 4.5 출시 직후 연구자가 안전 통제를 우회했다고 주장한 사례가 있다(개인 주장). 보안 분석처럼 위험한 주제에서는 모델의 거부 동작을 신뢰하지 말고 입력·출력 필터를 별도로 둔다. [부분: 개인 주장]
-- **미공개 소스를 보내기 전에 약관을 확인한다.** 여러 집계가 API 입력·출력을 학습에 쓰지 않는다고 하나 원문을 읽지 못했다. [부분, 충돌] 확인 전에는 비밀·고객 코드를 보내지 않는다(§1.6).
+- **미공개 소스를 보내기 전에 약관을 확인한다.** 여러 집계가 API 입력·출력을 학습에 쓰지 않는다고 하나 원문을 읽지 못했다. [부분, 충돌] 확인 전에는 비밀·고객 코드를 보내지 않는다(전역 지침).
 
 **애플리케이션에 내장할 때**
-- **모델은 서버 API로 호출한다.** 폐쇄형이라 번들할 수 없다. 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§3.1).
+- **모델은 서버 API로 호출한다.** 폐쇄형이라 번들할 수 없다. 클라이언트에 API 키를 두지 않고 자체 백엔드를 거친다. 모델 출력으로 만든 경로·명령·코드를 그대로 실행하지 않으며 파서·역직렬화 코드는 퍼징 대상으로 본다(§1.1).
 - **오프라인·자체 호스팅이 필요하면 Grok 4.7은 맞지 않는다.** 소형 로컬 모델은 `gemma-4-e4b`, `qwen3.6-27b` 문서를 본다.
+- **터미널·환경 설정은 다른 모델에 맡긴다.** 작업당 비용이 높은데 터미널 항목이 32로 낮다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
+- **시간·토큰 상한을 둔다.** 출력이 매우 길고 느리다. 독립 지수는 중앙값보다 낮다. [확인: Artificial Analysis 모델 페이지]
+- **보조 코드 리뷰어로 쓴다.** 다른 모델이 놓친 결함을 찾는다는 증언이 여러 건 있다. [부분: 이전 버전 포함 증언]
+- **끝났다고 일찍 선언한다는 증언이 있다.** 완료 보고를 산출물로 확인한다. [부분: HN 단일 증언]
 
 ## 4. 근거와 한계
 - 코딩 에이전트 지수·Grok Build: [ToolNavs: Grok 4.7 벤치마크](https://toolnavs.com/de/article/2040-grok-47-benchmark-coding-agent-breaks-into-top-four-at-81k-tokens-per-task), [How to use Grok Build](https://flaviocopes.com/grok-build/) (스니펫만) [부분/미확인]
 - 독립 평가 점수·토큰 사용량: [Artificial Analysis: Grok 4.7 (xhigh)](https://artificialanalysis.ai/models/grok-4-7), [Grok 4.7 (high)](https://artificialanalysis.ai/models/grok-4-7-high) (스니펫만) [부분]
 - 도구 과금·반복 검색 보고: [xAI 문서: 도구 개요](https://docs.x.ai/docs/tools/overview), [xAI X 검색 비용 분석](https://tanxy.typlog.io/2026/xai-x-search-skill-cost-aware-agents) (스니펫만) [부분: 개인 후기]
 - 안전 서술: [Hora de Codar: Grok 4.7 거부·탈옥](https://horadecodar.com.br/grok-4-7-jailbreak/), [Penligent 분석](https://www.penligent.ai/hackinglabs/de/?p=6348) (스니펫만) [부분: 단일 블로그·개인 주장]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis Coding Agent Index v2.1 표(2차 정리)](https://freakyjolly.com/coding-agent-index-v2-1-explained/)
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: grok-4-7 모델 페이지](https://artificialanalysis.ai/models/grok-4-7)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Grok 4.7 스레드](https://news.ycombinator.com/item?id=49788838)
 - 한계: 언어별 시스템 코드 평가와 도구 호출 오류율의 독립 자료가 없다.

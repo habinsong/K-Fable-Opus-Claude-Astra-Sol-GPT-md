@@ -1,8 +1,8 @@
 # Nemotron 3.5 Super VL — 비판적 평가·쓸 때와 쓰지 않을 때
-> 제공자: NVIDIA · 모델 ID: `nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16`(Hugging Face), `nvidia/nemotron-3.5-super-vl`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: NVIDIA · 모델 ID: `nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16`(Hugging Face), `nvidia/nemotron-3.5-super-vl`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/14-nvidia/nemotron-3.5-super-vl/general.md`](../../../md/14-nvidia/nemotron-3.5-super-vl/general.md)
+> 컨텍스트용 지침: [`md/14-nvidia/nemotron-3.5-super-vl/AGENTS.md`](../../../md/14-nvidia/nemotron-3.5-super-vl/AGENTS.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 #### 2.4 비판적 평가 (모델 카드는 벤더 수치, 독립은 지수 한 개)

@@ -1,8 +1,8 @@
 # Claude Opus 5.5 — 운용
-> 제공자: Anthropic · 모델 ID: `claude-opus-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-opus-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/02-claude/opus-5.5/general.md`](../../../md/02-claude/opus-5.5/general.md)
+> 컨텍스트용 지침: [`md/02-claude/opus-5.5/CLAUDE.md`](../../../md/02-claude/opus-5.5/CLAUDE.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 #### 2.2 API·하네스를 직접 만들 때 (Claude Code·Agent SDK 사용자는 알아서 처리됨)

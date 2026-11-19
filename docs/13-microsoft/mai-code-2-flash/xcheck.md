@@ -1,8 +1,8 @@
 # MAI Code 2 Flash — 교차 확인
-> 제공자: Microsoft AI · 모델 ID: 미공개 [미확인] (GitHub Copilot 모델 이름 `MAI Code 2 Flash`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Microsoft AI · 모델 ID: 미공개 [미확인] (GitHub Copilot 모델 이름 `MAI Code 2 Flash`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/13-microsoft/mai-code-2-flash/general.md`](../../../md/13-microsoft/mai-code-2-flash/general.md)
+> 컨텍스트용 지침: [`md/13-microsoft/mai-code-2-flash/AGENTS.md`](../../../md/13-microsoft/mai-code-2-flash/AGENTS.md)
 
 `overview.md`의 사양을 다른 출처로 다시 맞춰 본 기록이다. 2026-11-19에 InfoWorld 기사를 직접 읽고 웹 검색으로 맞췄다. 공식 1차 출처는 열지 못했다.
 

@@ -1,9 +1,9 @@
 # Claude Fable 5.2 · 웹 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-fable-5-2` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-fable-5-2` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/fable-5.2/web.md`](../../../../md/02-claude/fable-5.2/web.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web.md`](../../../_common/domain-rules/web.md)
 
 > **승계 문서.** Claude Fable 5.2 전용 분야 측정은 아직 없다. 아래 평가·수치·가격은 직전 모델 Claude Fable 5.1을 조사한 것이며 Claude Fable 5.2에는 [추정]으로만 옮겨 쓴다. Claude Fable 5.2의 확인된 사양은 [`overview.md`](../overview.md)를 따른다.
@@ -16,11 +16,17 @@
 - **작은 수정은 부분 편집으로 한다.** 이 모델은 작은 변경에도 파일 전체를 다시 쓰는 경향이 있어 출력 토큰과 시간이 늘어난다. "가능하면 파일을 통째로 다시 쓰지 말고 필요한 부분만 고쳐라"를 명시한다. [확인]
 - **범위 밖 변경을 막는다.** 근처의 기존 버그를 고치거나 테스트 파일을 늘리는 경향이 있다. 발견한 문제는 이번 변경에서 고치지 않고 후속으로 보고하게 하고, 테스트는 요청이 있거나 저장소가 이 종류의 변경에 테스트를 두는 경우에만 추가한다(이웃 테스트 파일 크기에 맞춰 한 동작당 하나). [확인]
 - **효과 설정.** 화면 하나를 만들거나 고치는 일은 `medium`도 비교해 본다. 큰 리팩터링·마이그레이션은 `high`, 측정해서 이득이 있을 때만 `xhigh`. 긴 산출물(큰 마크업 전체 재작성)을 `xhigh`·`max`로 시키면 생각 속에서 초안을 쓰고 다시 쓰므로 `max_tokens`를 넉넉히 잡거나 `high`로 돌린다. [확인]
-- **진행 상황을 직접 요구한다.** 작업 중 설명이 적으므로 시작 한 줄과 독립적으로 읽히는 마지막 요약은 §0 계약이 이미 요구한다. 화면 확인 결과(어떤 화면을 어떤 방법으로 봤는지)를 요약에 넣게 한다.
+- **진행 상황을 직접 요구한다.** 작업 중 설명이 적으므로 시작 한 줄과 독립적으로 읽히는 마지막 요약은 전역 지침 계약이 이미 요구한다. 화면 확인 결과(어떤 화면을 어떤 방법으로 봤는지)를 요약에 넣게 한다.
 - **보안·접근성은 모델의 판단이 아니라 도구 출력으로 확인한다.** 취약점 찾기는 안전장치가 허용한다. "이 코드가 컴파일되는가?" 같은 질문이 거짓 양성을 낼 수 있어 "버그가 있는가?"로 묻는다. [확인]
 - **비용을 의식한다.** 일상적인 컴포넌트 작업은 Opus 5.5나 Sonnet 5.5가 경제적이고, Fable 5.1은 Opus 5.5의 `high`·`xhigh`로도 막히는 복잡한 구조 문제에 쓴다. [확인: 위치 / 부분: 비용 비교]
+- **`high`에서 쓴다.** `xhigh`는 같은 수준의 결과에 비용이 두 배다. `max`는 결과가 더 낮고 비용이 약 6배이며 시간 초과가 늘었다. 코딩 에이전트 지수는 high와 xhigh가 58, max가 56이다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
+- **`low`는 코딩에 쓰지 않는다.** 코딩 에이전트 지수가 `high`보다 10점 낮다. [부분: 2차 글이 옮긴 코딩 에이전트 지수]
+- **보고의 진술이 Opus 5.5보다 오해를 부른다.** 가장 어려운 세션에서 오해를 부르는 진술이 4배 넘게 나왔다. 완료·원인 진술은 로그와 diff로 대조한다. [부분: 단일 시험]
+- **코딩 기본 모델은 Opus 5.5로 두고 Fable은 어려운 한 문제에만 올린다.** 비용이 약 1.5배인데 결과는 더 낫지 않았다. [부분: 단일 시험]
 
 ## 4. 근거와 한계
 - 프런트엔드 디자인·비전 지침: [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [Prompting Claude Opus 5.5 (프런트엔드 기본값)](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) [확인]
 - 부분 편집·범위 억제·`xhigh` 산출물 지침: [Prompting Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) [확인]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis Coding Agent Index v2.1 표(2차 정리)](https://freakyjolly.com/coding-agent-index-v2-1-explained/)
+- 추가 확인(2026-11-19 웹 검색): [Bito: Fable 5.2 대 Opus 5.5 비교 시험](https://bito.ai/blog/claude-fable-5-2-vs-opus-5-5-sonnet-haiku/)
 - 한계: Fable 5.1의 웹 UI 품질을 독립적으로 비교한 자료는 찾지 못했다. 위 권고는 Anthropic이 모델별로 기술한 행동 차이에서 도출했다.

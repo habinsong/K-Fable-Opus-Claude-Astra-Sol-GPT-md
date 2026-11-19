@@ -1,5 +1,5 @@
 # Gemma 4 E2B · 한국어 윤문 (로컬·온디바이스) — 조사 기록
-> 제공자: Google · 모델 ID: `google/gemma-4-E2B` (가중치 공개 모델, Hugging Face 저장소 이름 기준) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `google/gemma-4-E2B` (가중치 공개 모델, Hugging Face 저장소 이름 기준) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`ko-academic`](../../../md/09-gemma/gemma-4-e2b/ko-academic.md) · [`ko-everyday`](../../../md/09-gemma/gemma-4-e2b/ko-everyday.md) · [`ko-literary`](../../../md/09-gemma/gemma-4-e2b/ko-literary.md)

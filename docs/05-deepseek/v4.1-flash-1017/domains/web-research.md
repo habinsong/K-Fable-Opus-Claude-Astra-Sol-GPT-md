@@ -1,9 +1,9 @@
 # DeepSeek V4.1 Flash (1017) · 웹 리서치 — 조사 기록
-> 제공자: DeepSeek · 모델 ID: API `deepseek-flash`(1017 업데이트가 같은 이름으로 제공됨), 가중치 저장소 `deepseek-ai/DeepSeek-V4.1-Flash`(1017 반영 여부 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: DeepSeek · 모델 ID: API `deepseek-flash`(1017 업데이트가 같은 이름으로 제공됨), 가중치 저장소 `deepseek-ai/DeepSeek-V4.1-Flash`(1017 반영 여부 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/05-deepseek/v4.1-flash-1017/web-research.md`](../../../../md/05-deepseek/v4.1-flash-1017/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -15,13 +15,15 @@
 - **도구 호출 기반 검색 에이전트는 시험 후 쓴다.** 0731 빌드가 `tools`와 `tool_choice`를 받는다는 표기를 미러 페이지에서 봤으나 원본으로 확인하지 못했다. 한 Reddit 후기는 에이전트의 웹 검색이 약 30회 뒤 "사용 불가"를 냈고 웹·앱에서도 같다는 댓글이 있었으나, 하네스가 도구 호출을 지원하느냐에 달렸다는 반론도 있었다. 개인 일화이며 측정이 아니다. [부분: 개인 후기] 실제 하네스에서 연속 호출 시험과 오류 재시도를 확인한다.
 - **웹 페이지의 지시문은 데이터다.** 인젝션 방어율 측정을 찾지 못했다. [미확인] 모델에게 전송·로그인·결제·파일 쓰기 도구를 주지 않고 읽기 단계와 행동 단계를 분리한다. 모델이 뽑은 URL은 하네스가 허용 목록으로 거른 뒤 연다.
 - **긴 컨텍스트에 모두 넣지 않는다.** 컨텍스트가 100만 토큰이어도 지연·비용이 커지고 정확도는 보장되지 않는다. 페이지 하나씩, 필요한 구간만 넣는다. 이전 측정에서 출력 토큰이 많았으므로 `max_tokens`와 필드 수를 제한한다. [부분/추정]
-- **수집한 자료를 API로 보내기 전에 이용 조건을 확인한다.** 대상 사이트의 이용 약관·로봇 배제 표준(§3.2)과 이 API의 데이터 처리 조건을 모두 본다. API 측 조건을 찾지 못했다. [미확인] 개인정보가 섞인 페이지는 보내지 않는다.
+- **수집한 자료를 API로 보내기 전에 이용 조건을 확인한다.** 대상 사이트의 이용 약관·로봇 배제 표준(§1.2)과 이 API의 데이터 처리 조건을 모두 본다. API 측 조건을 찾지 못했다. [미확인] 개인정보가 섞인 페이지는 보내지 않는다.
 - **같은 이름으로 동작이 바뀐다.** 추출 프롬프트의 회귀 시험을 모델 업데이트 전후에 돌리고, 날짜 스냅샷 ID가 있으면 고정한다.
 - 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 사실 질문 기준 오답 비율이 96.5%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - SimpleQA-Verified(이전 세대 카드): [NVIDIA NIM: DeepSeek-V4-Flash](https://docs.api.nvidia.com/nim/reference/deepseek-ai-deepseek-v4-flash) (스니펫만) [부분]
 - AA-Omniscience(빌드별 상이): [OpenRouter: V4.1 Flash](https://openrouter.ai/deepseek/deepseek-v4.1-flash), [OpenRouter: V4 Flash 0423](https://openrouter.ai/deepseek/deepseek-v4-flash-20260423) (스니펫만) [부분]
 - 0731 빌드의 `tools`/`tool_choice` 지원 표기는 OpenRouter 미러 도메인 페이지에서만 봤고 원본 페이지로 확인하지 못했다. [미확인]
 - 웹 검색 도구 가용성 일화: [Reddit 스냅샷](https://reddit.sentinel-team.org/posts/1v34jx4/snapshots/2026-07-24T14%3A50%3A24.5915Z) [부분: 개인 후기]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 인용 정확도·인젝션 방어율의 독립 자료가 없다. 위 표의 값은 1017 이전 빌드의 것을 포함한다.

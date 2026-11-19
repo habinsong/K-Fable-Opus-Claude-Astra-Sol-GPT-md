@@ -2,28 +2,31 @@
 """LLM 컨텍스트용 지침(universal/, md/)과 사람이 읽는 조사 기록(docs/)을 관리한다.
 
 사용법:
-  python3 -I scripts/docs_tool.py sync              # 공통 블록을 universal/·md/ 문서에 주입
+  python3 -I scripts/docs_tool.py sync              # 분야 규칙 블록을 md/ 문서에 주입
   python3 -I scripts/docs_tool.py check             # 구조·분리 검사 (누락은 경고)
   python3 -I scripts/docs_tool.py check --complete  # 모델 폴더마다 분야 문서와 docs 대응을 필수로 검사
   python3 -I scripts/docs_tool.py check --skip-blocks  # 주입 전 초안: 블록 일치 비교 생략
 
 루트 폴더:
-  universal/                      모델에 상관없이 쓰는 범용 지침. 분야 문서 12개 + contract.md + ko-core.md
-  md/<계열>/<모델>/<분야>.md      모델별 지침. 범용 지침 + 모델 전용 지침(§2)
+  universal/                      모델에 상관없이 쓰는 범용 지침. 분야 문서 8개 + 한국어 윤문 3개 + ko-core.md
+  md/<계열>/<모델>/               전역 지침(AGENTS·CLAUDE·GEMINI.md 중 하나) + 분야 문서
+      <분야>.md                  분야 규칙(범용 지침과 같음) + 이 모델에서 지킬 점
   docs/<계열>/<모델>/             조사·검증·근거 기록. 컨텍스트에 넣지 않는다.
-      README.md                  이 모델의 조사 기록 색인
-      overview · performance · operations · critique .md   md의 general.md 대응 문서(주제별로 나눔)
-      sources.md                 출처와 한계
-      domains/<분야>.md           md의 나머지 분야 8개의 대응 문서
+      README · overview · performance · operations · critique · sources · xcheck .md
+      domains/<분야>.md           md의 분야 문서 8개의 대응 문서(모델×분야 운용 조사와 출처)
       korean-writing.md          한국어 윤문 3분야(ko-*)의 모델별 조사 기록
   universal/·md/ 문서에는 근거·출처·가격·벤치마크·비판을 두지 않는다. docs/에 둔다.
 
+분야 문서에는 전역 지침과 겹치는 규칙(복명복창, 5항목 보고, 작업 원칙, 모델 공통 수칙)을 두지 않는다.
+전역 지침이 이미 읽히기 때문이다. 겹치면 두 문서가 어긋날 때 모델이 임의로 하나를 고른다.
+
 원본(정본)의 위치:
-  계약            universal/contract.md          → 모든 범용·모델별 문서의 <!-- BEGIN:contract --> 블록
-  한국어 공통 원리 universal/ko-core.md           → universal/ko-*.md 의 <!-- BEGIN:ko-core --> 블록
+  한국어 공통 원리 universal/ko-core.md          → universal/ko-*.md 의 <!-- BEGIN:ko-core --> 블록
   분야 규칙       universal/<분야>.md            → md/<계열>/<모델>/<분야>.md 의 <!-- BEGIN:domain --> 블록
-  모델 전용 지침  md/<계열>/<모델>/general.md 의 <!-- BEGIN:model --> 블록 → 같은 모델의 다른 분야 문서
-                 (한국어 분야는 md/<계열>/<모델>/ko-academic.md 의 블록 → ko-everyday, ko-literary)
+  한국어 모델 지침 md/<계열>/<모델>/ko-academic.md 의 <!-- BEGIN:model --> 블록 → 같은 모델의 ko-everyday, ko-literary
+  모델×분야 지침  md/<계열>/<모델>/<분야>.md 의 '## 2.' 절 (손으로 쓴다. 근거는 docs/<계열>/<모델>/domains/<분야>.md)
+  범용 2절        universal/<분야>.md 의 <!-- BEGIN:generic --> 블록 → 모델 전용 2절이 없는 md 문서에 주입. 모델 전용 2절을 쓰면 generic 블록을 지운다.
+                 근거는 docs/_common/generic-notes.md
 """
 import re
 import sys
@@ -39,22 +42,25 @@ FAMILIES = ["01-gpt", "02-claude", "03-gemini", "04-grok", "05-deepseek", "06-qw
             "12-mistral", "13-microsoft", "14-nvidia", "15-tencent", "16-baidu", "17-thinking-machines",
             "18-lg", "19-sk-telecom", "20-upstage", "21-motif", "22-naver", "23-kakao", "24-kt",
             "25-krafton", "26-xiaomi"]
-DOMAINS = ["general", "web", "app", "native", "hardware", "firmware",
+DOMAINS = ["web", "app", "native", "hardware", "firmware",
            "web-research", "research", "tech-research"]
+GLOBAL_FILES = ["AGENTS.md", "CLAUDE.md", "GEMINI.md"]
 KO_DOMAINS = ["ko-academic", "ko-everyday", "ko-literary"]
 KO_FAMILIES = ["gpt", "claude", "gemini", "gemma"]  # 번호를 뗀 계열 이름
 ALL_DOMAINS = DOMAINS + KO_DOMAINS
 KO_DOC = "korean-writing"
 MODEL_DOC_NAMES = {"README", "overview", "performance", "operations", "critique", "sources", "xcheck", KO_DOC}
-MODEL_SOURCE = {"base": "general", "ko": "ko-academic"}
-CONTRACT_KEYWORDS = ["복명복창", "변경 요약", "수정 파일", "실행한 명령", "검증 결과",
-                     "남은 리스크", "God-object", "500줄", "한국어", "비판", "재귀",
-                     "라이선스", "저작권", "특허", "출처", "[확인]", "[미확인]",
-                     "웹 검색", "웹 페이지 가져오기"]
+KO_MODEL_SOURCE = "ko-academic"
+# 추론 강도(effort·thinking 단계) 설정은 지침 문서에 쓰지 않는다. 도구와 사용자 설정이 정한다.
+EFFORT_PATTERN = re.compile(
+    r"`(?:max|xhigh|high|medium|low|minimal|none|MINIMAL|LOW|MEDIUM|HIGH)`|(?<![A-Za-z])(?:effort|xhigh)(?![A-Za-z])|thinking_level|추론 단계|추론 강도|생각 수준|생각 단계|최고 단계|효과 설정|추론 모드|(?<![A-Za-z_])max(?![A-Za-z_]) 단계|노력 단계")
+
+# 전역 지침이 맡는 규칙이다. 분야 문서(한국어 윤문 제외)에 다시 쓰면 중복이므로 검사가 막는다.
+GLOBAL_DUP_PHRASES = ["복명복창", "5항목", "God-object", "500줄", "Co-Authored-By"]
 # 사용자가 요구한 항목이 한국어 공통 원리에서 빠지면 검사가 실패한다.
 KO_CORE_KEYWORDS = ["흐름", "호흡", "과서술", "대구", "도치", "감정", "번역투",
                     "윤문 순환", "측정", "라이선스"]
-# 컨텍스트로 들어가는 글에 있으면 안 되는 리서치 표지. 계약의 근거 수준 정의(§1.3)만 예외다.
+# 컨텍스트로 들어가는 글에 있으면 안 되는 리서치 표지.
 RESEARCH_MARKERS = [
     (re.compile(r"https?://"), "출처 URL"),
     (re.compile(r"\[(?:확인|부분|미확인|추정|권고)[^\]]*\]"), "근거 수준 태그"),
@@ -62,8 +68,8 @@ RESEARCH_MARKERS = [
     (re.compile(r"\$\s?\d"), "가격"),
     (re.compile(r"Artificial Analysis|SWE-bench|Terminal-Bench|LMArena|EQ-Bench|KatFishNet"), "벤치마크·연구 출처"),
 ]
-HARD_LIMIT = 500
-SOFT_LIMIT = 220
+HARD_LIMIT = 200  # Claude Code 공식 안내: 파일당 200줄 아래
+SOFT_LIMIT = 120
 
 
 def block_re(name):
@@ -90,10 +96,6 @@ def from_marker(text, marker):
     return text[i:].strip("\n") if i >= 0 else ""
 
 
-def contract_text():
-    return from_marker(read(UNIV / "contract.md"), "## 0.")
-
-
 def ko_core_text():
     t = read(UNIV / "ko-core.md")
     m = re.search(r"^### ", t, re.M)
@@ -101,9 +103,15 @@ def ko_core_text():
 
 
 def domain_part(d):
-    """범용 문서에서 계약 블록 뒤의 분야 규칙 본문. ko-core 표식은 걷어 낸다."""
-    part = from_marker(read(UNIV / f"{d}.md"), "## 3. 분야 규칙")
+    """범용 문서에서 분야 규칙 본문. ko-core 표식은 걷어 낸다."""
+    part = from_marker(read(UNIV / f"{d}.md"), "## 1. 분야 규칙")
+    part = part.split("<!-- BEGIN:generic -->")[0]
     return re.sub(r"<!-- (?:BEGIN|END):ko-core -->\n?", "", part).strip("\n")
+
+
+def generic_part(d):
+    """범용 문서의 '어떤 모델이든 지킬 점' 본문. 모델 전용 2절이 없는 md 문서에 들어간다."""
+    return block_of(read(UNIV / f"{d}.md"), "generic")
 
 
 def fam_key(fam):
@@ -114,6 +122,8 @@ def fam_key(fam):
 def md_files():
     for fam in FAMILIES:
         for p in sorted((MD / fam).glob("*/*.md")):
+            if p.name in GLOBAL_FILES:
+                continue
             yield p
 
 
@@ -121,13 +131,9 @@ def parts(p):
     return p.parent.parent.name, p.parent.name, p.stem
 
 
-def model_source_path(fam, model, domain):
-    kind = "ko" if domain in KO_DOMAINS else "base"
-    return MD / fam / model / f"{MODEL_SOURCE[kind]}.md"
-
-
-def model_text(fam, model, domain):
-    p = model_source_path(fam, model, domain)
+def ko_model_text(fam, model):
+    """한국어 윤문 3문서가 공유하는 모델 지침 블록의 원본."""
+    p = MD / fam / model / f"{KO_MODEL_SOURCE}.md"
     return block_of(read(p), "model") if p.exists() else None
 
 
@@ -150,23 +156,17 @@ def inject(text, name, body):
 
 
 def sync():
-    contract = contract_text()
     ko_core = ko_core_text() if (UNIV / "ko-core.md").exists() else ""
     changed = 0
-    for d in ALL_DOMAINS:
+    for d in KO_DOMAINS:
         p = UNIV / f"{d}.md"
         if not p.exists():
             continue
         text = read(p)
-        new = inject(text, "contract", contract)
+        new = inject(text, "ko-core", ko_core)
         if new is None:
-            print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:contract 마커 없음")
+            print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:ko-core 마커 없음")
             return 1
-        if d in KO_DOMAINS:
-            new = inject(new, "ko-core", ko_core)
-            if new is None:
-                print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:ko-core 마커 없음")
-                return 1
         if new != text:
             p.write_text(new, encoding="utf-8")
             changed += 1
@@ -175,16 +175,25 @@ def sync():
         if dom not in ALL_DOMAINS or not (UNIV / f"{dom}.md").exists():
             print(f"SKIP  {p.relative_to(ROOT)} (범용 지침 없음: {dom})")
             continue
-        mtext = model_text(fam, model, dom)
-        if not mtext:
-            print(f"ERROR {p.relative_to(ROOT)}: 모델 지침 원본 블록이 비어 있음 ({model_source_path(fam, model, dom).relative_to(ROOT)})")
-            return 1
         text = read(p)
-        new = text
-        for name, body in (("contract", contract), ("model", mtext), ("domain", domain_part(dom))):
-            new = inject(new, name, body)
+        new = inject(text, "domain", domain_part(dom))
+        if new is None:
+            print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:domain 마커 없음")
+            return 1
+        if dom in DOMAINS and block_re("generic").search(new):
+            gtext = generic_part(dom)
+            if not gtext:
+                print(f"ERROR universal/{dom}.md: generic 블록이 비어 있음")
+                return 1
+            new = inject(new, "generic", gtext)
+        if dom in KO_DOMAINS:
+            mtext = ko_model_text(fam, model)
+            if not mtext:
+                print(f"ERROR {p.relative_to(ROOT)}: 한국어 모델 지침 원본 블록이 비어 있음 ({KO_MODEL_SOURCE}.md)")
+                return 1
+            new = inject(new, "model", mtext)
             if new is None:
-                print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:{name} 마커 없음")
+                print(f"ERROR {p.relative_to(ROOT)}: BEGIN/END:model 마커 없음")
                 return 1
         if new != text:
             p.write_text(new, encoding="utf-8")
@@ -194,18 +203,12 @@ def sync():
 
 
 def check_universal(errors, skip_blocks):
-    for need in ["contract.md", "ko-core.md"] + [f"{d}.md" for d in ALL_DOMAINS]:
+    for need in ["ko-core.md"] + [f"{d}.md" for d in ALL_DOMAINS]:
         if not (UNIV / need).exists():
             errors.append(f"universal/{need} 없음")
-    if (UNIV / "contract.md").exists():
-        contract = contract_text()
-        for kw in CONTRACT_KEYWORDS:
-            if kw not in contract:
-                errors.append(f"universal/contract.md: 필수 키워드 누락 '{kw}'")
-        for hit in research_hits(contract, skip_tags=True):
-            errors.append(f"universal/contract.md: 리서치 표지 {hit}")
-    else:
-        contract = ""
+    for gone in ("contract.md", "general.md"):
+        if (UNIV / gone).exists():
+            errors.append(f"universal/{gone}: 없앤 문서다. 전역 지침(AGENTS·CLAUDE·GEMINI.md)과 겹친다")
     if (UNIV / "ko-core.md").exists():
         core = read(UNIV / "ko-core.md")
         for kw in KO_CORE_KEYWORDS:
@@ -226,23 +229,30 @@ def check_universal(errors, skip_blocks):
             continue
         rel = f"universal/{d}.md"
         text = read(p)
-        if "## 3. 분야 규칙" not in text:
-            errors.append(f"{rel}: '## 3. 분야 규칙' 절 없음")
+        if "## 1. 분야 규칙" not in text:
+            errors.append(f"{rel}: '## 1. 분야 규칙' 절 없음")
         if not text.startswith("# "):
             errors.append(f"{rel}: 첫 줄이 H1 제목이 아님")
-        checks = [("contract", contract)] + ([("ko-core", ko_core)] if d in KO_DOMAINS else [])
-        for name, body in checks:
-            got = block_of(text, name)
+        if d in KO_DOMAINS:
+            got = block_of(text, "ko-core")
             if got is None:
-                errors.append(f"{rel}: {name} 블록 마커 없음")
-            elif not skip_blocks and got != body:
-                errors.append(f"{rel}: {name} 블록이 원본과 다름 (sync 필요)")
-        for hit in research_hits(strip_blocks(text, ["contract"])):
+                errors.append(f"{rel}: ko-core 블록 마커 없음")
+            elif not skip_blocks and got != ko_core:
+                errors.append(f"{rel}: ko-core 블록이 원본과 다름 (sync 필요)")
+        else:
+            for phrase in GLOBAL_DUP_PHRASES:
+                if phrase in text:
+                    errors.append(f"{rel}: 전역 지침과 겹치는 표현 '{phrase}'")
+            if EFFORT_PATTERN.search(text):
+                errors.append(f"{rel}: 추론 강도 단계 언급 '{EFFORT_PATTERN.search(text).group(0)}'")
+            g = block_of(text, "generic")
+            if not g or not g.startswith("## 2. "):
+                errors.append(f"{rel}: generic 블록('## 2. 어떤 모델이든 지킬 점')이 없음")
+        for hit in research_hits(text):
             errors.append(f"{rel}: 컨텍스트 지침에 리서치 표지 {hit}")
-    return contract
 
 
-def check_md(errors, warns, contract, skip_blocks):
+def check_md(errors, warns, skip_blocks):
     count = 0
     for p in md_files():
         count += 1
@@ -251,7 +261,8 @@ def check_md(errors, warns, contract, skip_blocks):
         text = read(p)
         lines = text.splitlines()
         if dom not in ALL_DOMAINS:
-            errors.append(f"{rel}: 허용되지 않은 분야 이름 '{dom}'")
+            hint = " (general.md는 없앴다. 전역 지침이 그 역할을 한다)" if dom == "general" else ""
+            errors.append(f"{rel}: 허용되지 않은 분야 이름 '{dom}'{hint}")
             continue
         if dom in KO_DOMAINS and fam_key(fam) not in KO_FAMILIES:
             errors.append(f"{rel}: 한국어 윤문 분야는 {', '.join(KO_FAMILIES)} 계열에만 둔다")
@@ -262,26 +273,73 @@ def check_md(errors, warns, contract, skip_blocks):
             warns.append(f"{rel}: {len(lines)}줄 (권장 {SOFT_LIMIT} 이하)")
         if not lines or not lines[0].startswith("# "):
             errors.append(f"{rel}: 첫 줄이 H1 제목이 아님")
-        mtext = model_text(fam, model, dom)
-        src = model_source_path(fam, model, dom)
-        if mtext is None:
-            errors.append(f"{rel}: 모델 지침 원본 파일 없음 ({src.relative_to(ROOT)})")
-        elif not mtext.startswith("## 2. "):
-            errors.append(f"{src.relative_to(ROOT)}: 모델 지침 블록이 '## 2. '로 시작해야 함")
         domain = domain_part(dom) if (UNIV / f"{dom}.md").exists() else ""
-        for name, body in (("contract", contract), ("model", mtext), ("domain", domain)):
-            got = block_of(text, name)
+        got = block_of(text, "domain")
+        if got is None:
+            errors.append(f"{rel}: domain 블록 마커 없음")
+        elif not skip_blocks and got != domain:
+            errors.append(f"{rel}: domain 블록이 원본과 다름 (sync 필요)")
+        own = strip_blocks(text, ["domain", "model", "generic"])
+        if dom in KO_DOMAINS:
+            mtext = ko_model_text(fam, model)
+            got = block_of(text, "model")
             if got is None:
-                errors.append(f"{rel}: {name} 블록 마커 없음")
-            elif not skip_blocks and body is not None and got != body:
-                errors.append(f"{rel}: {name} 블록이 원본과 다름 (sync 필요)")
-        for hit in research_hits(strip_blocks(text, ["contract"])):
+                errors.append(f"{rel}: model 블록 마커 없음")
+            elif mtext is None:
+                errors.append(f"{rel}: 한국어 모델 지침 원본 파일 없음 ({KO_MODEL_SOURCE}.md)")
+            elif not mtext.startswith("## 2. "):
+                errors.append(f"{rel}: 한국어 모델 지침 블록이 '## 2. '로 시작해야 함")
+            elif not skip_blocks and got != mtext:
+                errors.append(f"{rel}: model 블록이 원본과 다름 (sync 필요)")
+        else:
+            if block_of(text, "model") is not None:
+                errors.append(f"{rel}: model 블록은 한국어 윤문 문서에만 둔다. 모델 지침은 '## 2.' 절에 직접 쓴다")
+            for phrase in GLOBAL_DUP_PHRASES:
+                if phrase in text:
+                    errors.append(f"{rel}: 전역 지침과 겹치는 표현 '{phrase}'")
+            if EFFORT_PATTERN.search(text):
+                errors.append(f"{rel}: 추론 강도 단계 언급 '{EFFORT_PATTERN.search(text).group(0)}'")
+            for h in re.findall(r"^## .*$", own, re.M):
+                if not h.startswith("## 2. "):
+                    errors.append(f"{rel}: 분야 규칙 밖에는 '## 2.' 절만 둘 수 있음 ({h})")
+            has_generic = block_of(text, "generic") is not None
+            has_own = bool(re.search(r"^## 2\. ", own, re.M))
+            if has_generic and has_own:
+                errors.append(f"{rel}: 모델 전용 '## 2.' 절과 generic 블록이 함께 있음. 하나만 둔다")
+            elif not has_generic and not has_own:
+                warns.append(f"{rel}: '## 2.' 절도 generic 블록도 없음")
+            elif has_generic and not skip_blocks and dom in DOMAINS and block_of(text, "generic") != generic_part(dom):
+                errors.append(f"{rel}: generic 블록이 원본과 다름 (sync 필요)")
+        for hit in research_hits(text):
             errors.append(f"{rel}: 컨텍스트 문서에 리서치 표지 {hit} — docs/로 옮긴다")
-        own = strip_blocks(text, ["contract", "model", "domain"])
         for bad in ("TODO", "TBD", "[PROJECT_NAME]"):
             if bad in own:
                 errors.append(f"{rel}: 자리표시자 '{bad}' 남아 있음")
     return count
+
+
+def check_global_files(errors):
+    """모델 폴더의 전역 지침(AGENTS·CLAUDE·GEMINI.md)도 200줄 아래, 리서치 표지 없음, 같은 줄 반복 없음을 지킨다."""
+    for fam in FAMILIES:
+        for p in sorted((MD / fam).glob("*/*.md")):
+            if p.name not in GLOBAL_FILES:
+                continue
+            rel = str(p.relative_to(ROOT))
+            text = read(p)
+            n = len(text.splitlines())
+            if n > HARD_LIMIT:
+                errors.append(f"{rel}: {n}줄 > {HARD_LIMIT}")
+            for hit in research_hits(text, skip_tags=True):
+                errors.append(f"{rel}: 전역 지침에 리서치 표지 {hit}")
+            if EFFORT_PATTERN.search(text):
+                errors.append(f"{rel}: 추론 강도 단계 언급 '{EFFORT_PATTERN.search(text).group(0)}'")
+            seen = set()
+            for line in text.splitlines():
+                if line.startswith("- "):
+                    key = line[:40]
+                    if key in seen:
+                        errors.append(f"{rel}: 같은 항목이 반복됨 '{key}'")
+                    seen.add(key)
 
 
 FACT_HEAD = "시점에 민감한 사실"
@@ -351,8 +409,12 @@ def check_docs(errors, warns, complete):
             msg = f"md/{fam}/{model}: 분야 문서 {len(miss)}개 누락 ({', '.join(miss)})"
             (errors if complete else warns).append(msg)
         mdir = DOCS / fam / model
-        want = ["README.md", "sources.md"] if "general" in have else []
-        want += [f"domains/{d}.md" for d in have if d in DOMAINS and d != "general"]
+        globals_ = [g for g in GLOBAL_FILES if (MD / fam / model / g).exists()]
+        if len(globals_) != 1:
+            msg = f"md/{fam}/{model}: 전역 지침({', '.join(GLOBAL_FILES)})이 정확히 하나여야 함 (현재 {len(globals_)}개)"
+            (errors if complete else warns).append(msg)
+        want = ["README.md", "sources.md"]
+        want += [f"domains/{d}.md" for d in have if d in DOMAINS]
         want += ["korean-writing.md"] if have & set(KO_DOMAINS) else []
         for rel_name in want:
             if not (mdir / rel_name).exists():
@@ -365,7 +427,7 @@ def check_docs(errors, warns, complete):
                 text = read(dp)
                 if not text.startswith("# "):
                     errors.append(f"{rel}: 첫 줄이 H1 제목이 아님")
-                if in_domains and (dp.stem not in DOMAINS or dp.stem == "general"):
+                if in_domains and dp.stem not in DOMAINS:
                     warns.append(f"{rel}: 대응하는 md 분야 이름이 아님")
                 if not in_domains and dp.stem not in MODEL_DOC_NAMES:
                     warns.append(f"{rel}: 알려진 조사 기록 이름이 아님 ({', '.join(sorted(MODEL_DOC_NAMES))})")
@@ -383,8 +445,9 @@ def check(complete, skip_blocks=False):
                 errors.append(f"{old}/: 옛 위치다. md/{fam}/ 와 docs/{fam}/ 로 나눈다")
     if (ROOT / "_shared").exists():
         errors.append("_shared/: 없앤 폴더다. 범용 지침은 universal/, 모델 지침은 md/에 둔다")
-    contract = check_universal(errors, skip_blocks)
-    count = check_md(errors, warns, contract_text() if (UNIV / "contract.md").exists() else contract, skip_blocks)
+    check_universal(errors, skip_blocks)
+    count = check_md(errors, warns, skip_blocks)
+    check_global_files(errors)
     check_docs(errors, warns, complete)
     check_fact_tables(errors)
     for w in warns:

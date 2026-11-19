@@ -8,7 +8,8 @@
 docs/
 ├── README.md                         이 문서
 ├── _common/                          계열과 모델에 공통인 조사 기록
-│   ├── domain-rules/분야.md          분야별 규칙의 근거 수준 (행 단위 대조 표, 9개 분야)
+│   ├── domain-rules/분야.md          분야별 규칙의 근거 수준 (행 단위 대조 표, 8개 분야)
+│   ├── generic-notes.md              모델 전용 2절이 없을 때 쓰는 범용 2절의 근거
 │   └── korean-writing/               한국어 문체 조사 기록 (측정 도구, 실측, 문장 원리, 서지)
 └── 계열/모델/
     ├── README.md                     해당 모델 조사 기록의 색인
@@ -28,11 +29,11 @@ docs/
 
 | `md/계열/모델/`의 지침 문서 | `docs/계열/모델/`의 조사 문서 |
 |---|---|
-| `general.md` | `overview.md`, `performance.md`, `operations.md`, `critique.md`, `sources.md`, `xcheck.md` |
+| 전역 지침(`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`) | `overview.md`, `performance.md`, `operations.md`, `critique.md`, `sources.md`, `xcheck.md` |
 | `web.md`, `app.md`, `native.md`, `hardware.md`, `firmware.md`, `web-research.md`, `research.md`, `tech-research.md` | `domains/` 안의 같은 이름 파일 |
 | `ko-academic.md`, `ko-everyday.md`, `ko-literary.md` | `korean-writing.md` (세 분야의 조사를 하나로 통합) |
 
-`domains/` 문서의 절 번호는 지침 문서와 같습니다. 0절은 복명복창과 보고 형식, 1절은 작업 원칙, 2절은 모델 지침, 3절은 분야 규칙입니다.
+`domains/` 문서의 절 번호는 지침 문서와 같습니다. 1절은 분야 규칙, 2절은 이 모델의 분야 운용입니다. 복명복창과 보고 형식, 작업 원칙은 전역 지침이 맡습니다. 지침 문서의 2절은 이 폴더의 2절에서 근거 표기와 수치를 걷어 낸 것이고, 걷어 낸 내용은 이 폴더에만 남습니다.
 
 ## 지원하는 계열과 모델
 

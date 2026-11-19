@@ -1,9 +1,9 @@
 # MAI Code 2 · 네이티브 — 조사 기록
-> 제공자: Microsoft AI · 모델 ID: 미공개 [미확인] (GitHub Copilot 모델 이름 `MAI Code 2`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Microsoft AI · 모델 ID: 미공개 [미확인] (GitHub Copilot 모델 이름 `MAI Code 2`) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/13-microsoft/mai-code-2/native.md`](../../../../md/13-microsoft/mai-code-2/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -15,8 +15,12 @@ MAI Code 2 전용 네이티브 작업 측정은 찾지 못했다. [미확인] �
 
 **네이티브 작업에서 따로 확인할 것**
 - 메모리 안전·동시성 버그 진단 정확도, 디버거·새니타이저 출력의 해석를 같은 과제로 비교 모델과 직접 대조한다. 이 문서의 수치를 네이티브 작업 성능으로 읽지 않는다. [추정]
+- **아주 긴 자율 작업과 기초 과학 연구에는 맡기지 않는다.** 제작사가 이 모델이 그 용도로 조정되지 않았다고 밝혔다. 그런 일은 상위 모델로 하고 이 모델은 다중 파일 변경과 디버깅 범위로 쓴다. [부분: 제작사 발표]
+- **제작사 평균 수치로 도입을 정하지 않는다.** 같은 과제와 같은 하네스로 직접 비교한 뒤 정한다. [부분: 제작사 수치뿐]
 
 ## 4. 근거와 한계
 - [InfoWorld: MAI Code 2 보도](https://www.infoworld.com/article/4250152/microsoft-launches-mai-code-2-models-to-challenge-openai-and-anthropic-in-ai-coding.html)
 - [Unite.AI: MAI Code 2 출시](https://www.unite.ai/microsoft-ai-releases-mai-code-2-and-mai-code-2-flash-for-enterprises/)
+- 추가 확인(2026-11-19 웹 검색): [Microsoft AI: MAI Code 2와 Code 2 Flash](https://microsoft.ai/news/introducing-mai-code-2-and-mai-code-2-flash/)
+- 추가 확인(2026-11-19 웹 검색): [Techzine: MAI Code 2](https://www.techzine.eu/news/devops/145878/microsoft-mai-code-2-generates-code-at-a-fraction-of-the-price/)
 - 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 네이티브 작업을 직접 측정한 것이 아니다. 분야 규칙은 모델과 무관한 공통 근거를 따른다.

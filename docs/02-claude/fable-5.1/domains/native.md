@@ -1,9 +1,9 @@
 # Claude Fable 5.1 · 네이티브 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-fable-5-1` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-fable-5-1` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/fable-5.1/native.md`](../../../../md/02-claude/fable-5.1/native.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/native.md`](../../../_common/domain-rules/native.md)
 
 ## 2. 이 모델의 네이티브 작업 운용
@@ -17,9 +17,11 @@
 - **sanitizer 빌드와 성능 측정은 직접 한다.** 모델의 "이 경고는 무시해도 된다"를 근거로 억제 지시문을 넣지 않는다. 성능 주장은 명령, 입력, 환경, 전후 수치로 쓴다.
 - **effort.** `high`에서 시작하고, 어려운 동시성·메모리 손상은 `xhigh`를 비교한다. `max_tokens`를 크게 잡는다. 컴파일 오류 분류 같은 단순 작업은 `medium`이나 `low`로 충분한지 측정한다. [확인]
 - **시스템 경로, 레지스트리, 드라이버, 부트 설정, 서명 키는 승인 없이 건드리지 않는다.**
+- **Fable 5.2로 옮긴다.** 5.1은 지원 종료 예정으로 표시돼 있고 `max`가 `xhigh`보다 낮다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - 거짓 양성·부분 편집·범위 억제: [Prompting Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) [확인]
 - 테스트 하드코딩 회피: [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) [확인]
 - 순위 비교: [Artificial Analysis](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra) [부분]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: claude-fable-5-1 모델 페이지](https://artificialanalysis.ai/models/claude-fable-5-1)
 - 한계: C·C++·Rust 시스템 코드에 대한 Fable 5.1 전용 독립 평가는 찾지 못했다.

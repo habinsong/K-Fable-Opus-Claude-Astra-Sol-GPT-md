@@ -1,9 +1,9 @@
 # Gemma 4 31B · 웹 리서치 (로컬) — 조사 기록
-> 제공자: Google · 모델 ID: `google/gemma-4-31B-it` (Hugging Face 토론 URL에서 확인한 표기, 본문은 열지 못함) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `google/gemma-4-31B-it` (Hugging Face 토론 URL에서 확인한 표기, 본문은 열지 못함) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/09-gemma/gemma-4-31b/web-research.md`](../../../../md/09-gemma/gemma-4-31b/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -15,12 +15,16 @@
 - **속임수 질문과 권위 있는 말투의 거짓에 약할 수 있는지는 확인되지 않았다.** 한 DEV 글의 단일 시험(Google AI Studio)에서 31B는 속임수 질문을 알아챘고 26B MoE는 약했다고 한다. 한 사람의 실험이다. [부분: 개인 후기] 방어율로 읽지 않는다.
 - **웹 페이지의 지시문은 데이터다.** 로컬 모델에는 제공자 쪽 인젝션 방어가 없고 이 모델의 방어율 측정도 찾지 못했다. [미확인] 모델에게 도구(전송, 로그인, 결제, 파일 쓰기)를 주지 않고 읽기 단계와 행동 단계를 분리한다. 모델이 뽑은 URL은 하네스가 허용 목록으로 거른 뒤 연다.
 - **긴 입력은 발췌한다.** 컨텍스트가 256K지만 전체 컨텍스트의 KV 캐시가 약 20 GiB(bf16 추정)까지 간다. 페이지 하나씩, 필요한 구간만 넣는다. 속도가 느리므로(약 3.4 토큰/초, 한 기기 측정) 대량 수집은 처리 시간을 먼저 계산한다. [부분]
-- **수집 규칙을 지킨다.** 로봇 배제 표준과 이용 약관, 속도 제한을 지키고 로그인·유료벽을 우회하지 않는다(§3.2). 개인정보는 필요한 만큼만 다룬다.
+- **수집 규칙을 지킨다.** 로봇 배제 표준과 이용 약관, 속도 제한을 지키고 로그인·유료벽을 우회하지 않는다(§1.2). 개인정보는 필요한 만큼만 다룬다.
 - **도구 호출을 쓸 때.** 사용 중인 런타임 버전에서 도구 호출 파서와 스트리밍이 정상인지 작은 시험으로 확인한다. Gemma 4 계열에서 출시 직후 오류가 보고됐고 31B의 현재 상태는 확인하지 못했다. [부분]
 - 보고 형식은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
+- **코딩·조사의 주 모델로 쓰지 않는다.** 독립 지수가 같은 급에서도 최하위권이다. 분류·요약·로그 정리 같은 좁은 일로 제한하고 결과는 원문과 대조한다. [확인: Artificial Analysis 모델 페이지]
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 사실 질문 기준 오답 비율이 85.5%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 벤치마크(모델 카드 인용): [DataLearner: Gemma 4 31B](https://www.datalearner.com/en/ai-models/pretrained-models/gemma-4-31b), [Gemma 4 benchmarks (gemma4all)](https://gemma4all.com/blog/gemma-4-benchmarks-performance) [부분: 2차]
 - 환각 순위표(지표 미확인): [nc-bench hallucination](https://www.nc-bench.com/categories/hallucination) [미확인]
 - 속임수 질문 시험·코드 감사 일화: [Gaslighting Gemma 4 (DEV)](https://dev.to/isah_alamin_93d4e4d2ab01f/gaslighting-gemma-4-can-open-weight-reasoning-models-withstand-a-confident-liar-3om8), [Reddit 스냅샷](https://reddit.sentinel-team.org/posts/1shdhui/snapshots/2026-04-11T01%3A00%3A59.600359Z) [부분: 개인 후기]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gemma-4-31b 모델 페이지](https://artificialanalysis.ai/models/gemma-4-31b)
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 31B의 정보 추출 정확도와 인젝션 방어율에 대한 독립 자료가 없다.

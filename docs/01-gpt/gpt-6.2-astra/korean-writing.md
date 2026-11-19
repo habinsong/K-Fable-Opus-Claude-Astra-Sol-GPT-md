@@ -1,5 +1,5 @@
 # GPT-6.2 Astra · 한국어 윤문 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6.2-astra` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6.2-astra` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`ko-academic`](../../../md/01-gpt/gpt-6.2-astra/ko-academic.md) · [`ko-everyday`](../../../md/01-gpt/gpt-6.2-astra/ko-everyday.md) · [`ko-literary`](../../../md/01-gpt/gpt-6.2-astra/ko-literary.md)

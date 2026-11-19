@@ -1,8 +1,8 @@
 # Gemini 4 Oxygen — 교차 확인
-> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/03-gemini/gemini-4-oxygen/general.md`](../../../md/03-gemini/gemini-4-oxygen/general.md)
+> 컨텍스트용 지침: [`md/03-gemini/gemini-4-oxygen/GEMINI.md`](../../../md/03-gemini/gemini-4-oxygen/GEMINI.md)
 
 `overview.md`의 서술을 다른 출처로 맞춰 본 기록이다. 2026-11-19에 웹 검색 여러 건으로 했다. 공식 발표가 없어 [확인] 1차로 올린 항목은 없다.
 

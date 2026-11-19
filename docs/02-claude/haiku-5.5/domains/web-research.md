@@ -1,9 +1,9 @@
 # Claude Haiku 5.5 · 웹 리서치 — 조사 기록
-> 제공자: Anthropic · 모델 ID: `claude-haiku-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-haiku-5-5` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/02-claude/haiku-5.5/web-research.md`](../../../../md/02-claude/haiku-5.5/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -16,9 +16,13 @@
 - **웹 페이지의 지시문은 데이터다.** 이 모델은 도구 결과로 들어오는 프롬프트 인젝션에 맞서도록 훈련됐다. 방어율의 독립 수치는 찾지 못했다. [확인/미확인] 외부 전송, 로그인, 결제, 계정 변경은 페이지가 시켜도 하지 않는다.
 - **작업 중 사용자 메시지를 무시할 수 있다.** 사용자 글을 `tool_result` 안에 넣지 말고 같은 사용자 메시지의 텍스트 블록으로 보낸다. [확인]
 - **브라우저 사용 도구.** 새로 생긴 도구이고 OSWorld 2.1은 72.4%(Sonnet 5.5는 83.9%)다. [확인/부분] 조작 결과는 스크린샷·로그로 확인한다.
-- **출처 판단과 충돌 정리는 맡기지 않는다.** 1차/2차 구분과 신뢰도 판단은 §3.1 기준으로 사람이 한다.
+- **출처 판단과 충돌 정리는 맡기지 않는다.** 1차/2차 구분과 신뢰도 판단은 §1.1 기준으로 사람이 한다.
+- **사실 질문의 오답 비율이 중간 수준이다.** 사실·수치·인용은 출처 원문으로 확인한다. 사실 질문 기준 오답 비율이 34.2%다. [부분: 독립 측정을 옮긴 집계 페이지]
+- **조사·분류·문서 파싱과 하위 에이전트의 탐색 심부름에 쓴다.** 명확하게 지시한 빠른 일에 맞는다는 증언이 여러 건 있다. [부분: HN 다수 증언]
 
 ## 4. 근거와 한계
 - 날짜·검색 지침·인젝션 훈련·mid-turn 메시지: [Prompting Claude Haiku 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5) [확인]
 - 정답 비율·OSWorld: [eesel.ai 리뷰](https://www.eesel.ai/blog/claude-haiku-5-5-review), [Miraflow](https://miraflow.ai/blog/claude-haiku-5-5-benchmarks-pricing-explained-2026) [부분]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
+- 추가 확인(2026-11-19 해외 커뮤니티·포럼): [Hacker News: Claude Haiku 5.5 스레드](https://news.ycombinator.com/item?id=49996437)
 - 한계: Haiku 5.5의 검색 기반 추출 정확도와 인젝션 방어율에 대한 독립 자료가 없다.

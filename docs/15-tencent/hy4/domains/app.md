@@ -1,9 +1,9 @@
 # Tencent Hy4 · 앱 — 조사 기록
-> 제공자: Tencent(Hunyuan) · 모델 ID: `tencent/hy4`(OpenRouter 표기) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Tencent(Hunyuan) · 모델 ID: `tencent/hy4`(OpenRouter 표기) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/15-tencent/hy4/app.md`](../../../../md/15-tencent/hy4/app.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/app.md`](../../../_common/domain-rules/app.md)
 
 ## 2. 이 모델의 앱 작업 운용
@@ -15,8 +15,12 @@ Tencent Hy4 전용 앱 작업 측정은 찾지 못했다. [미확인] 아래는 
 
 **앱 작업에서 따로 확인할 것**
 - 모바일·데스크톱 빌드·서명 도구와의 호환, 긴 세션의 비용, 화면 입력 이해를 같은 과제로 비교 모델과 직접 대조한다. 이 문서의 수치를 앱 작업 성능으로 읽지 않는다. [추정]
+- **추론과 자체 검증이 길어질 수 있다.** 제작사가 초기 체크포인트의 알려진 문제로 꼽았다. 시간·토큰 상한을 두고 같은 검증을 반복하면 끊는다. [부분: 검색 요약만 확인]
+- **프리뷰 체크포인트다.** 같은 이름으로 동작이 바뀔 수 있으므로 갱신 전후에 같은 과제로 회귀 시험을 돌린다. [부분]
 
 ## 4. 근거와 한계
 - [Tencent Hy4 정리(explainx)](https://explainx.ai/blog/tencent-hy4-official-release-770b-vision-computer-use-terminal-bench-44-4-weights-planned-2026)
 - [OpenRouter: tencent/hy4](https://openrouter.ai/tencent/hy4)
+- 추가 확인(2026-11-19 웹 검색): [eesel: Tencent Hy4 리뷰](https://www.eesel.ai/blog/tencent-hy4-review)
+- 추가 확인(2026-11-19 웹 검색): [MindStudio: Tencent Hy4 프리뷰](https://www.mindstudio.ai/blog/tencent-hy4-preview-model)
 - 한계: 위 수치는 일반 벤치마크와 제조사 발표이며 앱 작업을 직접 측정한 것이 아니다. 분야 규칙은 모델과 무관한 공통 근거를 따른다.

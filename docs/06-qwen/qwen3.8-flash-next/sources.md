@@ -1,8 +1,8 @@
 # Qwen3.8-Flash-Next — 출처와 한계
-> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-Flash-Next` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Alibaba(Qwen) · 모델 ID: `Qwen/Qwen3.8-Flash-Next` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/06-qwen/qwen3.8-flash-next/general.md`](../../../md/06-qwen/qwen3.8-flash-next/general.md)
+> 컨텍스트용 지침: [`md/06-qwen/qwen3.8-flash-next/AGENTS.md`](../../../md/06-qwen/qwen3.8-flash-next/AGENTS.md)
 > 소제목의 번호(2.x)는 주제별로 나누기 전 일반 조사 기록의 번호다. 문장 속 `§2.x`는 그 번호를 가리킨다.
 
 ## 4. 근거와 한계

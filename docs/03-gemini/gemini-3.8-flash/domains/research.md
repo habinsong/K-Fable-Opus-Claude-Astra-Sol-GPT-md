@@ -1,9 +1,9 @@
 # Gemini 3.8 Flash · 연구 — 조사 기록
-> 제공자: Google · 모델 ID: `gemini-3.8-flash` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `gemini-3.8-flash` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-3.8-flash/research.md`](../../../../md/03-gemini/gemini-3.8-flash/research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/research.md`](../../../_common/domain-rules/research.md)
 
 ## 2. 이 모델의 연구 작업 운용
@@ -16,8 +16,10 @@
 - **`thinking_level`.** 서식 변환은 `LOW`. 통계 계산이 걸린 정리는 `MEDIUM` 이상. `MINIMAL`은 검증 오류이고 추론을 완전히 끌 수 없다. 생각 토큰은 출력 요금이다. [부분]
 - **긴 논문 묶음을 한꺼번에 넣지 않는다.** 컨텍스트 1,048,576 토큰 안에 들어가더라도 세부 연결 정확도를 보증하지 않는다. 필요한 구간을 발췌한다.
 - **전문 영역(의료, 법률, 안전) 결론에는 "전문가 검토 필요"를 붙인다.**
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 사실 질문 기준 오답 비율이 55.1%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 지수·정답 비율: [eesel.ai 리뷰](https://www.eesel.ai/blog/gemini-3-8-flash), [Claude Haiku 5.5 리뷰(비교표 인용)](https://www.eesel.ai/blog/claude-haiku-5-5-review) [부분]
 - 참고문헌 정확도(타 모델 포함): [Biomedical Reference Generation Remains Unreliable across 26 LLMs](https://arxiv.org/pdf/2609.14988) [부분]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 3.8 Flash의 연구 보조 정확도를 직접 측정한 독립 자료가 없다. 사용 범위 제한은 일반 지표에서 도출한 보수적 권고다.

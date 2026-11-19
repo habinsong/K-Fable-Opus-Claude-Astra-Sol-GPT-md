@@ -1,8 +1,8 @@
 # Claude Haiku 4.5 — 교차 확인
-> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Anthropic · 모델 ID: `claude-haiku-4-5-20251001` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/02-claude/haiku-4.5/general.md`](../../../md/02-claude/haiku-4.5/general.md)
+> 컨텍스트용 지침: [`md/02-claude/haiku-4.5/CLAUDE.md`](../../../md/02-claude/haiku-4.5/CLAUDE.md)
 
 `overview.md`의 사양을 다른 출처로 다시 맞춰 본 기록이다. 2026-11-19에 Anthropic 공식 문서 두 페이지와 Artificial Analysis 두 페이지를 직접 읽었다.
 

@@ -1,9 +1,9 @@
 # GPT-6 Astra · 앱 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6-astra/app.md`](../../../../md/01-gpt/gpt-6-astra/app.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/app.md`](../../../_common/domain-rules/app.md)
 
 ## 2. 이 모델의 앱 작업 운용
@@ -14,10 +14,12 @@
   → 화면 조작 결과는 모델의 "됐다"는 말이 아니라 스크린샷·로그·테스트 출력으로 확인한다.
 - **빌드가 길고 로그가 크다.** 이 모델은 긴 자율 작업에서 세부에 매몰되고 토큰을 많이 쓴다는 평가가 있다. 빌드·테스트 출력은 파일로 한 번 저장한 뒤 실패한 구간만 읽고, 같은 빌드를 필터만 바꿔 반복하지 않는다.
 - **Fast 모드에 의존하지 않는다.** Astra의 Fast 모드는 지연 SLA가 없고 EU 데이터 레지던시에서 쓸 수 없다. CI·릴리즈 절차의 시간 제한을 Fast 모드에 맞춰 잡지 않는다. [확인]
-- **승인 필요 동작은 §1.6 목록뿐이다.** 서명 키 접근, 스토어 제출, 배포, 외부 전송은 사용자 승인 전에 하지 않는다. 그 밖의 읽기·편집·로컬 빌드는 묻지 않고 진행한다.
-- **스토어 정책은 기억하지 않는다.** §3.2 표의 날짜와 요건은 작업 시점에 공식 문서로 다시 확인한다. 이 모델이 아는 값이 기준일 이후와 다를 수 있다.
+- **승인 필요 동작은 전역 지침 목록뿐이다.** 서명 키 접근, 스토어 제출, 배포, 외부 전송은 사용자 승인 전에 하지 않는다. 그 밖의 읽기·편집·로컬 빌드는 묻지 않고 진행한다.
+- **스토어 정책은 기억하지 않는다.** §1.2 표의 날짜와 요건은 작업 시점에 공식 문서로 다시 확인한다. 이 모델이 아는 값이 기준일 이후와 다를 수 있다.
+- **GPT-6.2 Astra로 옮긴다.** GPT-6 Astra는 지원 종료 예정으로 표시돼 있다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - API 규칙: [openai/codex 마이그레이션 가이드](https://raw.githubusercontent.com/openai/codex/main/codex-rs/skills/src/assets/samples/openai-docs/references/upgrading-to-gpt-6-astra.md) [확인]
 - 컴퓨터 사용 수치: [OpenAI 발표 페이지](https://openai.com/index/gpt-6-astra/) 검색 스니펫, [CryptoBriefing 요약](https://cryptobriefing.com/openai-gpt-6-astra-computer-use-agents/) [부분: 벤더 수치를 2차 출처가 재인용]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gpt-6-astra 모델 페이지](https://artificialanalysis.ai/models/gpt-6-astra)
 - 한계: 모바일 개발에 대한 근거가 없어 이 문서의 모델별 권고는 일반 특성에서 끌어온 것이다. 이 모델로 앱 작업을 해 보고 실제로 겪은 실패를 §2에 추가한다.

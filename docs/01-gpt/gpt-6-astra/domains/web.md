@@ -1,9 +1,9 @@
 # GPT-6 Astra · 웹 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6-astra/web.md`](../../../../md/01-gpt/gpt-6-astra/web.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web.md`](../../../_common/domain-rules/web.md)
 
 ## 2. 이 모델의 웹 작업 운용
@@ -15,8 +15,10 @@
 - **완료 기준을 시작할 때 적는다.** 예: "해당 화면이 브라우저에서 열리고, 콘솔 오류가 없고, 키보드만으로 조작되며, 관련 테스트가 통과한다." 중간 검토를 위해 멈추라는 지시는 넣지 않는다(일찍 멈추는 쪽으로 기운다).
 - **접근성·성능·보안을 "충족했다"는 자기 판단을 증거로 쓰지 않는다.** 이 모델의 자기 평가가 틀린 사례가 보고됐다. 접근성 도구, 브라우저 콘솔, 성능 측정 출력으로 확인한다.
 - **시각 확인.** 스크린샷은 모델의 해석이 아니라 실제 렌더링과 대조한다. 확인하지 못했으면 "화면 미확인"이라고 보고한다.
+- **GPT-6.2 Astra로 옮긴다.** GPT-6 Astra는 지원 종료 예정으로 표시돼 있다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - 모델 사양·API 규칙: [openai/codex 마이그레이션 가이드](https://raw.githubusercontent.com/openai/codex/main/codex-rs/skills/src/assets/samples/openai-docs/references/upgrading-to-gpt-6-astra.md) [확인]
 - UI 평가: [Claude Fable 5.1 vs GPT-6 Astra for Product Design](https://eidosdesign.substack.com/p/claude-fable-51-vs-gpt-6-astra-for), [A Short Review of OpenAI's GPT 6 Astra](https://medium.com/jonathans-musings/a-short-review-of-openais-gpt-6-astra-091fa5beccf9) [부분: 개별 후기·단일 시험]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gpt-6-astra 모델 페이지](https://artificialanalysis.ai/models/gpt-6-astra)
 - 한계: 웹 UI에 대한 체계적 독립 벤치마크는 찾지 못했다. "Fable 5.1보다 약하다"는 평가도 "첫 초안이 낫다"는 평가도 재현 확인 전까지 잠정이다.

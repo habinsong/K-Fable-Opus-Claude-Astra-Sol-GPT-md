@@ -1,8 +1,8 @@
 # Nemotron 3.5 Super VL — 교차 확인
-> 제공자: NVIDIA · 모델 ID: `nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16`(Hugging Face), `nvidia/nemotron-3.5-super-vl`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: NVIDIA · 모델 ID: `nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16`(Hugging Face), `nvidia/nemotron-3.5-super-vl`(OpenRouter) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/14-nvidia/nemotron-3.5-super-vl/general.md`](../../../md/14-nvidia/nemotron-3.5-super-vl/general.md)
+> 컨텍스트용 지침: [`md/14-nvidia/nemotron-3.5-super-vl/AGENTS.md`](../../../md/14-nvidia/nemotron-3.5-super-vl/AGENTS.md)
 
 `overview.md`의 사양을 다른 출처로 다시 맞춰 본 기록이다. 2026-11-19에 NVIDIA 블로그와 Hugging Face 모델 카드를 직접 읽고 웹 검색으로 맞췄다.
 

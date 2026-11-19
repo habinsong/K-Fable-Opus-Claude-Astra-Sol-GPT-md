@@ -1,9 +1,9 @@
 # Gemma 4 31B · 앱 (로컬) — 조사 기록
-> 제공자: Google · 모델 ID: `google/gemma-4-31B-it` (Hugging Face 토론 URL에서 확인한 표기, 본문은 열지 못함) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Google · 모델 ID: `google/gemma-4-31B-it` (Hugging Face 토론 URL에서 확인한 표기, 본문은 열지 못함) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/09-gemma/gemma-4-31b/app.md`](../../../../md/09-gemma/gemma-4-31b/app.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/app.md`](../../../_common/domain-rules/app.md)
 
 ## 2. 이 모델의 앱 작업 운용
@@ -19,10 +19,12 @@
 **개발 보조로 쓸 때**
 - **모바일(Kotlin·Swift) 코드에 대한 31B의 독립 평가는 찾지 못했다.** [미확인] 일반 코딩 후기는 있다(한 사용자의 8건 실무 과제 중 7건 통과, 다른 사용자의 "코드 생성에 매우 좋다" 평가). 모바일 과제가 아니고 비공식 보고다. [부분: 개인 후기] 컴파일·린트·단위 테스트·UI 테스트로 검증한다.
 - **어려운 단발 요청에 쓰고 대화형 반복 편집에는 쓰지 않는다.** 속도가 느려 수정-확인 루프의 지연이 크다. 반복 편집은 26B A4B나 더 빠른 모델이 낫다. 수명주기·권한·비동기 처리가 걸린 구현은 `02-claude/sonnet-5.5`, `gpt-6.1-sol`, `gemini-4-argon` 같은 상위 모델 문서를 따른다.
-- 스토어 규정은 기억으로 답하지 않고 공식 문서로 확인한다(§3.2). 서명 키, 프로파일, 스토어 제출·배포는 승인 후에만 한다.
+- 스토어 규정은 기억으로 답하지 않고 공식 문서로 확인한다(§1.2). 서명 키, 프로파일, 스토어 제출·배포는 승인 후에만 한다.
+- **코딩·조사의 주 모델로 쓰지 않는다.** 독립 지수가 같은 급에서도 최하위권이다. 분류·요약·로그 정리 같은 좁은 일로 제한하고 결과는 원문과 대조한다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - 메모리·크기: [Gemma 4 model overview](https://ai.google.dev/gemma/docs/core), [Gemma 4 hardware requirements (Yotta Labs)](https://www.yottalabs.ai/post/gemma-4-hardware-requirements-gpu-memory-2026) (스니펫만) [부분]
 - 모바일 SDK 상태(E2B 기준): [Gemma 4 E2B on mobile (DEV)](https://dev.to/devpicon/gemma-4-e2b-on-mobile-android-vs-ios-reality-1-38lm), [Apple 개발자 포럼](https://origin-devforums.apple.com/forums/profile/jingyangye) [부분: 개인 후기]
 - 일반 코딩 후기: [Reddit 스냅샷](https://reddit.sentinel-team.org/posts/1slnhrd/snapshots/2026-04-17T23%3A20%3A42.645991Z) [부분: 개인 후기]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gemma-4-31b 모델 페이지](https://artificialanalysis.ai/models/gemma-4-31b)
 - 한계: 모바일 앱 개발에 대한 31B 전용 평가가 없다. SDK 지원 상태는 시점이 지났을 수 있다.

@@ -1,8 +1,8 @@
 # Muse Spark — 교차 확인
-> 제공자: Meta · 모델 ID: `muse-spark` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: Meta · 모델 ID: `muse-spark` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
-> 컨텍스트용 지침: [`md/10-muse/muse-spark/general.md`](../../../md/10-muse/muse-spark/general.md)
+> 컨텍스트용 지침: [`md/10-muse/muse-spark/AGENTS.md`](../../../md/10-muse/muse-spark/AGENTS.md)
 
 `overview.md`에서 [부분]이던 사양을 공식 문서 말고 다른 출처로 다시 맞춰 본 기록이다. 2026-11-03에 웹 검색 여러 건과 공식 GitHub 저장소 읽기로 했다. 여기서 [확인]은 제공자의 공식 문서나 공식 저장소를 이 환경에서 직접 읽었다는 뜻이다.
 

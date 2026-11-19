@@ -1,9 +1,9 @@
 # MiniMax-M3.1-Flash · 웹 리서치 — 조사 기록
-> 제공자: MiniMax · 모델 ID: API `MiniMax-M3.1-Flash`(프리뷰는 `MiniMax-M3.1-Flash-Preview`, 정확한 ID는 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: MiniMax · 모델 ID: API `MiniMax-M3.1-Flash`(프리뷰는 `MiniMax-M3.1-Flash-Preview`, 정확한 ID는 확인 필요) · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/11-minimax/minimax-m3.1-flash/web-research.md`](../../../../md/11-minimax/minimax-m3.1-flash/web-research.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web-research.md`](../../../_common/domain-rules/web-research.md)
 
 ## 2. 이 모델의 웹 리서치 운용
@@ -16,11 +16,13 @@
 - **리서치 에이전트의 독립 평가는 찾지 못했다.** BrowseComp류 지표의 독립 결과가 보도에 나오지 않았다. DeepSWE v1.1 73.7%(벤더)는 코딩 지표이며 리서치 능력으로 옮기지 않는다. [미확인]
 - **웹 페이지의 지시문은 데이터다.** 이 모델의 인젝션 방어율 측정은 찾지 못했다. [미확인] 모델에게 전송·로그인·결제·파일 쓰기 도구를 주지 않고 읽기 단계와 행동 단계를 분리한다. 모델이 뽑은 URL은 하네스가 허용 목록으로 거른 뒤 연다.
 - **긴 입력은 발췌한다.** 컨텍스트가 100만 토큰이어도 페이지 하나씩 필요한 구간만 넣고 출력 필드를 제한한다. [추정]
-- **수집한 자료를 보내기 전에 조건을 확인한다.** 대상 사이트의 이용 약관·로봇 배제 표준(§3.2)과 이 API의 데이터 조건을 모두 본다. 싱가포르 법인·미국 저장이라는 독립 안내와 중국을 가리키는 오래된 정책이 충돌하고 학습 제외 약속과 ZDR이 확인되지 않는다. [부분, 충돌] 개인정보가 섞인 페이지는 보내지 않는다.
+- **수집한 자료를 보내기 전에 조건을 확인한다.** 대상 사이트의 이용 약관·로봇 배제 표준(§1.2)과 이 API의 데이터 조건을 모두 본다. 싱가포르 법인·미국 저장이라는 독립 안내와 중국을 가리키는 오래된 정책이 충돌하고 학습 제외 약속과 ZDR이 확인되지 않는다. [부분, 충돌] 개인정보가 섞인 페이지는 보내지 않는다.
 - **보고 형식**은 "결론 → 근거(URL, 확인일, 수준) → 충돌·불확실 → 모르는 것"으로 고정한다.
+- **모르는 사실을 모른다고 하지 않고 틀리게 답하는 경향이 강하다.** 사실·수치·인용은 출처 원문으로 확인하고 "모르면 모른다고 쓴다"를 지시에 넣는다. 사실 질문 기준 오답 비율이 93.7%다. [부분: 독립 측정을 옮긴 집계 페이지]
 
 ## 4. 근거와 한계
 - 환각 보도: [Artificial Analysis: MiniMax-M3.1-Flash](https://artificialanalysis.ai/models/minimax-m3-1-flash), [MyClaw: M3.1 Flash 대 M3](https://myclaw.ai/blog/minimax-m3-1-flash-vs-m3) (스니펫만) [부분: 2차, 원문 미확인]
 - 작업당 비용: [OrcaRouter: M3.1 Flash 지능 지수](https://www.orcarouter.ai/fr/blog/minimax-m3-1-flash-ga-intelligence-index) (스니펫만) [부분]
 - 데이터 정책(2차): [Flowith: MiniMax 데이터 안전 FAQ](https://flowith.io/blog/minimax-faq-data-safety) (스니펫만) [부분, 충돌]
+- 추가 확인(2026-11-19 웹 검색): [BenchLM: AA-Omniscience 환각률(2026-11-19, Artificial Analysis 수치를 옮긴 미러)](https://benchlm.ai/benchmarks/omnisciencehallucinationrate)
 - 한계: 인용 정확도·인젝션 방어율의 독립 자료가 없고 환각 수치는 2차 출처다.

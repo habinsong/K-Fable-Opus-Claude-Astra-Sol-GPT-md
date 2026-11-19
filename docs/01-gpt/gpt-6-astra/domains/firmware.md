@@ -1,9 +1,9 @@
 # GPT-6 Astra · 펌웨어 — 조사 기록
-> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 §1.3)
+> 제공자: OpenAI · 모델 ID: `gpt-6-astra` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/01-gpt/gpt-6-astra/firmware.md`](../../../../md/01-gpt/gpt-6-astra/firmware.md)
-> 절 번호는 지침 문서의 번호를 따른다(§0 응답 계약, §1 작업 원칙, §2 모델 지침, §3 분야 규칙).
+> 절 번호는 지침 문서의 번호를 따른다(§1 분야 규칙, §2 이 모델의 분야 운용). 응답 계약과 작업 원칙은 전역 지침(AGENTS·CLAUDE·GEMINI.md)이 맡는다.
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/firmware.md`](../../../_common/domain-rules/firmware.md)
 
 ## 2. 이 모델의 펌웨어 작업 운용
@@ -16,8 +16,10 @@
 - **레지스터와 타이밍은 문서로 확인한다.** 비트 필드, 클럭 설정, 인터럽트 번호를 기억으로 쓰지 않는다. 데이터시트·레퍼런스 매뉴얼의 개정판과 페이지를 근거로 남기고, 확인하지 못했으면 값을 쓰지 않는다.
 - **호스트에서 돌릴 수 있게 나눈다.** 하드웨어 추상화 뒤쪽 로직은 호스트 단위 테스트가 가능하도록 분리하라고 지시한다. 과잉 설계를 막기 위해 새 추상화 계층은 테스트에 꼭 필요한 한 겹으로 제한한다.
 - **"통과했다"는 자기 판단을 쓰지 않는다.** 컴파일 성공이나 모델의 요약을 동작 확인으로 보고하지 않는다. 실제 보드에서 확인하지 못했으면 "하드웨어 미검증"이라고 쓴다.
+- **GPT-6.2 Astra로 옮긴다.** GPT-6 Astra는 지원 종료 예정으로 표시돼 있다. [확인: Artificial Analysis 모델 페이지]
 
 ## 4. 근거와 한계
 - 리버스 엔지니어링·커널 최적화: [GPT-6 Astra System Card](https://deploymentsafety.openai.com/gpt-6-astra), [The New Stack](https://thenewstack.io/openai-gpt6-astra-benchmarks/) [부분: 벤더 자체 평가]
 - Terminal-Bench 수치 불일치: [Vellum](https://www.vellum.ai/blog/gpt-6-astra-benchmarks-explained), [DataCamp](https://www.datacamp.com/blog/gpt-6-astra) [부분]
+- 추가 확인(2026-11-19 웹 검색): [Artificial Analysis: gpt-6-astra 모델 페이지](https://artificialanalysis.ai/models/gpt-6-astra)
 - 한계: 임베디드·드라이버·브링업에 대한 독립 근거가 없다. 이 문서의 정지점 규칙은 모델의 자율 진행 경향(OpenAI 지침)과 비가역 작업의 위험에서 도출한 안전 권고이며, 실험으로 검증된 규칙이 아니다.
