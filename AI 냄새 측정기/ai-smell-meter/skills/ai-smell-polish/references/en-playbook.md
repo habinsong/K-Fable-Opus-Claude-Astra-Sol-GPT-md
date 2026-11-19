@@ -52,6 +52,16 @@
 | Parenthetical hedges ("(and, perhaps more importantly, ...)") | Own sentence or cut |
 | GPT-6-era words in a cluster (dependable, echoed, steady, prioritize, ...) | Plain word or cut. A single occurrence is not evidence |
 
+## Hard-to-decode sentences (`opaque`)
+
+Sentences the reader cannot unpack. Swapping a word does not fix them; rewrite the sentence.
+
+- Introduce a name the first time: say what it is in a line, or say what it does instead. Do not assume the reader knows an internal file, rule number, or shorthand label.
+- Turn metaphors (load-bearing, moat, the goal bites, modules sit on modules) into what actually happens, with a number or a fact.
+- Expand fragments and arrows into subject-verb sentences; state cause and effect with a connective.
+- Replace "The fix", "the ask", "the thing to watch" with the thing itself, and introduce it before pointing at it.
+- "Be concise" means saying fewer things, not packing each thing into fewer words. Keep the definition when you cut.
+
 ## Linking sentences
 
 Connectives matter more by their absence than by their number. When you delete filler and shorten sentences, short declaratives pile up with nothing between them, and that is a new tell. "Prefer deleting" applies to filler, not to the links between sentences. If a cut leaves two sentences unlinked, link them again: a conjunction (but, so, yet), a conjunctive adverb (however, therefore), a subordinate clause (because, although, which), a demonstrative (this, such), or the previous sentence's last noun as the next subject.

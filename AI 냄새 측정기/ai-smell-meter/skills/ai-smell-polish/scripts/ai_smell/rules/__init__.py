@@ -4,8 +4,8 @@ from __future__ import annotations
 from typing import List
 
 from ..model import Rule
-from . import (common, en_hedging, en_puffery, en_residue, en_structure, en_vocab, en_voice, ko_figurative,
-               ko_lexicon, ko_overdescribe, ko_residue, ko_style, ko_tics, ko_voice)
+from . import (common, en_hedging, en_opaque, en_puffery, en_residue, en_structure, en_vocab, en_voice, ko_figurative,
+               ko_lexicon, ko_opaque, ko_overdescribe, ko_residue, ko_style, ko_tics, ko_voice)
 from .build import check_unique
 
 _CACHE: List[Rule] = []
@@ -14,8 +14,8 @@ _CACHE: List[Rule] = []
 def load_rules(lang: str = "auto") -> List[Rule]:
     """lang이 'ko'나 'en'이면 그 언어와 공통(any) 규칙만, 'auto'면 전부."""
     if not _CACHE:
-        for mod in (en_residue, en_puffery, en_structure, en_hedging, en_vocab, en_voice,
-                    ko_residue, ko_style, ko_lexicon, ko_figurative, ko_overdescribe, ko_tics, ko_voice, common):
+        for mod in (en_residue, en_puffery, en_structure, en_hedging, en_vocab, en_voice, en_opaque,
+                    ko_residue, ko_style, ko_lexicon, ko_figurative, ko_overdescribe, ko_tics, ko_voice, ko_opaque, common):
             _CACHE.extend(mod.RULES)
         check_unique(_CACHE)
     if lang in ("ko", "en"):

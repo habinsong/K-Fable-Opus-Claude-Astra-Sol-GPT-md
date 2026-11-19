@@ -80,7 +80,7 @@ RULES = [
       "Abstract container noun.", cluster=2, w=0.5, protect=True),
     R("en.vocab.dynamic", "en", "vocab", "C", r"\bdynamic\b|\binnovative\b|\bprofound(?:ly)?\b|"
       r"\bremarkabl[ey]\b|\bessential\b|\bvital\b", "Vague intensifier.", cluster=2, w=0.4),
-    R("en.vocab.era-2026", "en", "vocab", "C", r"\bload[- ]bearing\b|\bquietly\b",
+    R("en.vocab.era-2026", "en", "vocab", "C", r"\bquietly\b",
       "Reported as a recent assistant tic (anecdotal).", cluster=1, w=0.5),
     # ---- 10개 상투 개념 대응
     R("en.vocab.gauge", "en", "vocab", "B",

@@ -43,6 +43,7 @@ CATEGORIES: Dict[str, Category] = {c.key: c for c in (
     Category("attribution", "출처 없는 권위", "vague attribution", 1.0, 3.0),
     Category("translationese", "번역투", "translationese", 0.6, 3.0),
     Category("emotion", "감정 직접 서술", "told emotion", 0.7, 2.0),
+    Category("opaque", "해독 부담", "hard to decode", 0.9, 4.0),
     Category("rhythm", "리듬 단조", "monotone rhythm", 0.8, 1.5),
     Category("format", "서식 신호", "formatting tells", 0.5, 1.5),
     Category("hygiene", "보이지 않는 문자", "invisible characters", 0.0, 0.0),

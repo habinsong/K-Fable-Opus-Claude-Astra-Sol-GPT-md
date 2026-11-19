@@ -151,6 +151,20 @@
 | `en.signpost.fake-casual` | en | 예고·안내 | C | 0.3 | - | Props that stand in for a casual voice. |
 | `en.puffery.launch` | en | 의미 부풀리기 | B | 0.6 | - | Launch-copy introduction. |
 | `en.vocab.era-gpt6` | en | 과다 어휘 | C | 0.3 | - | Words reported for GPT-6-era output (Wikipedia, 2026); only counted in a cluster. |
+| `en.opaque.the-noun` | en | 해독 부담 | C | 0.3 | - | A sentence opens with 'The <label>' for something the reader was never told about. |
+| `en.opaque.file-ref` | en | 해독 부담 | C | 0.3 | - | Points at an internal notes file the reader may not have. |
+| `en.opaque.arrow` | en | 해독 부담 | C | 0.25 | - | An arrow stands in for a verb or a causal link in running prose. |
+| `en.opaque.inanimate-verb` | en | 해독 부담 | C | 0.4 | - | A thing does what only a person does ('the goal bites', 'modules sit on modules'). |
+| `en.opaque.telegraphic` | en | 해독 부담 | C | 0.4 | - | A verbless run of fragments joined by semicolons (label-style shorthand). |
+| `en.opaque.abstract-chain` | en | 해독 부담 | C | 0.3 | - | Three abstract nouns packed into one stretch of a sentence. |
+| `en.opaque.vague-move` | en | 해독 부담 | C | 0.25 | - | 'The right move' names a choice without saying what it is. |
+| `en.vocab.load-bearing` | en | 과다 어휘 | B | 0.6 | - | 'Load-bearing' as a general word for 'important' (reported as a Claude-family tic across several independent counts). |
+| `en.vocab.claude-stock` | en | 과다 어휘 | C | 0.35 | - | Stock engineering metaphors that recent assistants reach for; each is fine alone and repeats across a text. |
+| `en.signpost.pushback` | en | 예고·안내 | C | 0.5 | - | Combat framing for an ordinary statement. |
+| `en.signpost.candor-plain` | en | 예고·안내 | C | 0.5 | - | Labels the next claim as plain or honest before making it. |
+| `en.puffery.is-the-lever` | en | 의미 부풀리기 | C | 0.45 | - | Aphorism that names a single lever ('X is the unlock'). |
+| `en.puffery.self-rank` | en | 의미 부풀리기 | C | 0.35 | - | Ranks its own claim instead of letting the reader judge. |
+| `en.puffery.matters-because` | en | 의미 부풀리기 | C | 0.4 | - | Announces significance before giving the reason. |
 | `ko.residue.opener` | ko | 챗봇 잔재 | A | 1.0 | standard | 챗봇식 수락 서두. |
 | `ko.residue.hope-helps` | ko | 챗봇 잔재 | A | 1.0 | standard | 챗봇식 맺음 인사. |
 | `ko.residue.ask-more` | ko | 챗봇 잔재 | A | 1.0 | standard | 더 도울 일을 묻는 맺음. |
@@ -329,6 +343,15 @@
 | `ko.puffery.lingering` | ko | 의미 부풀리기 | C | 0.5 | - | 필자의 주의가 머물렀다는 확인할 수 없는 주장. |
 | `ko.trans.enable` | ko | 번역투 | C | 0.3 | - | 무생물 주어가 '~를 가능하게 한다'로 서술한다(영어 allow, enable의 직역). |
 | `ko.trans.plural` | ko | 번역투 | C | 0.0 | - | 복수 표지가 겹친다('여러 정보들'). 영어 복수형의 직역(실측에서 사람 글과 구분되지 않아 점수에서 뺀다). |
+| `ko.opaque.differ-on` | ko | 해독 부담 | C | 0.4 | - | '~에서 갈린다'. 무엇이 어떻게 달라지는지 말하지 않고 갈림만 말한다. |
+| `ko.figure.moat` | ko | 해독 부담 | C | 0.35 | - | 방어 시설 비유('해자', '방어선'). 독자가 풀어야 뜻이 나온다. |
+| `ko.opaque.closes-on` | ko | 해독 부담 | C | 0.4 | - | '~에 닫힌다'. 끝난다는 말을 구조물에 빗댄다. |
+| `ko.opaque.self-qa-dash` | ko | 해독 부담 | C | 0.4 | - | 묻고 줄표로 바로 답하는 틀('그럼 무엇이 문제인가 — 기준이 없다'). |
+| `ko.opaque.arrow` | ko | 해독 부담 | C | 0.25 | - | 화살표가 동사나 인과를 대신한다. |
+| `ko.opaque.telegraphic-end` | ko | 해독 부담 | C | 0.3 | - | 명사로 끝나는 개조식 줄이 문서 안에서 되풀이된다. |
+| `ko.opaque.vague-referent` | ko | 해독 부담 | C | 0.2 | - | '그 부분', '해당 건'처럼 무엇을 가리키는지 앞에 없는 말. |
+| `ko.opaque.inanimate-verb` | ko | 해독 부담 | C | 0.4 | - | 사물이 사람처럼 말하고 버틴다. |
+| `ko.figure.load-bearing` | ko | 해독 부담 | C | 0.45 | - | 영어 'load-bearing'의 직역('하중을 받는'). 중요하다는 말을 건축 비유로 한다. |
 | `any.markup.oaicite` | any | 누출된 마크업 | A | 1.0 | safe | 누출된 인용 토큰. |
 | `any.markup.turn-ref` | any | 누출된 마크업 | A | 1.0 | safe | 누출된 도구 참조 토큰. |
 | `any.markup.private-use` | any | 누출된 마크업 | A | 1.0 | safe | 비공개 영역 인용 표지. |

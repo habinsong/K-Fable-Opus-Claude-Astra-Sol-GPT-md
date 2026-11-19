@@ -221,9 +221,39 @@ def doc_register(masked: str, sents: Sequence[Span], paras: Sequence[Span], genr
                 sugg="문서 종류에 맞는 말투 하나로 맞춘다. 의도한 섞임이면 그대로 둔다.")]
 
 
+UNDEF_LABEL = re.compile(r"\b(?:[A-Z]{2,4}v\d+|[a-z]{1,4}\d{1,3}(?:-[a-z0-9]+){1,4}|[A-Z][A-Z0-9]*_[A-Z0-9_]{2,}|"
+                         r"[A-Z][A-Z0-9_]{3,}\.md)\b")
+LABEL_GLOSS = re.compile(r"(?:called|named|known as|so-called|라는|이라는|이라고|라고 부르는)[ \t\"'“‘]*$", re.I)
+
+
+def opaque_labels(masked: str, genre: str) -> List[Finding]:
+    """코드 밖 줄글에 정의 없이 쓰인 내부 이름(MAv2, q23-grades-strict, TAME_GUIDANCE, NOTES.md)이 여럿이다.
+    쓴 사람은 알지만 독자는 모르는 이름이다. 처음 나올 때 풀이(called, 괄호)가 없는 것만 센다."""
+    seen: Dict[str, int] = {}
+    first = -1
+    for m in UNDEF_LABEL.finditer(masked):
+        lab = m.group(0)
+        if lab in seen:
+            seen[lab] += 1
+            continue
+        before = masked[max(0, m.start() - 24):m.start()]
+        after = masked[m.end():m.end() + 4]
+        if LABEL_GLOSS.search(before) or after.lstrip().startswith("("):
+            continue
+        seen[lab] = 1
+        if first < 0:
+            first = m.start()
+    if len(seen) < 3 or sum(seen.values()) < 4:
+        return []
+    return [_mk("any.opaque.undefined-labels", "opaque", "C", first, first, 0.5, genre,
+                f"처음 나올 때 풀이 없는 내부 이름이 {len(seen)}개다(예: {', '.join(list(seen)[:3])}). "
+                "Internal names are used without ever being introduced.", gmap={"technical": 0.4},
+                sugg="이름을 처음 쓸 때 무엇인지 한 줄로 풀거나, 이름 대신 하는 일을 쓴다.", text=next(iter(seen)))]
+
+
 def signals(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], units: int,
             genre: str) -> List[Finding]:
     return (label_colon(masked, genre) + english_gloss(masked, units, genre) + ko_commas(masked, genre) +
             synonym_cycling(masked, sents, paras, genre) + rhythm_band(masked, sents, paras, genre) +
             punct_flat(masked, sents, paras, genre) + headings(masked, genre) +
-            doc_register(masked, sents, paras, genre))
+            doc_register(masked, sents, paras, genre) + opaque_labels(masked, genre))
