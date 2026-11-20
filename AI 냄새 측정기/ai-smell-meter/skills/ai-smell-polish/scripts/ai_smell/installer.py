@@ -92,7 +92,7 @@ def _install_skill(dest: Path, force: bool) -> str:
     if src in dest.parents or src == dest:
         raise ValueError("설치 위치가 원본 폴더 안이다")
     if dest.exists() and not _ours(dest) and not force:
-        return "건너뜀: 같은 이름의 다른 폴더가 있다(--force로 덮어씀)"
+        return "제외: 같은 이름의 다른 폴더가 있다(--force로 덮어씀)"
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.parent / f".{SKILL}.tmp-{os.getpid()}"
     if tmp.exists():
@@ -117,9 +117,9 @@ def _install_agent(dest: Path, force: bool) -> str:
     ag = agents_source()
     src = (ag / "claude" / AGENT_FILE) if ag else None
     if src is None or not src.is_file():
-        return "건너뜀: 에이전트 정의 원본을 찾지 못했다"
+        return "제외: 에이전트 정의 원본을 찾지 못했다"
     if dest.exists() and not _ours(dest) and not force:
-        return "건너뜀: 같은 이름의 다른 파일이 있다(--force로 덮어씀)"
+        return "제외: 같은 이름의 다른 파일이 있다(--force로 덮어씀)"
     dest.parent.mkdir(parents=True, exist_ok=True)
     existed = dest.exists()
     shutil.copyfile(src, dest)
@@ -130,7 +130,7 @@ def _remove(dest: Path) -> str:
     if not dest.exists():
         return "없음"
     if not _ours(dest):
-        return "건너뜀: 이 도구가 설치한 것이 아니다"
+        return "제외: 이 도구가 설치한 것이 아니다"
     shutil.rmtree(dest) if dest.is_dir() else dest.unlink()
     return "제거됨"
 
@@ -161,7 +161,7 @@ def _append_instructions(project: Path, dry: bool) -> List[Dict[str, Any]]:
         src = (ag / folder / snippet) if ag else None
         if src is None or not src.is_file():
             out.append({"tool": folder, "scope": "project", "kind": "instructions", "path": str(target),
-                        "status": "건너뜀: 원본 없음", "check": ""})
+                        "status": "제외: 원본 없음", "check": ""})
             continue
         if target.exists() and BEGIN in target.read_text(encoding="utf-8"):
             status = "이미 있음"
@@ -214,7 +214,7 @@ def install(args) -> int:
             sys.stdout.write(f"{r['status']:<8} [{r['tool']}/{r['scope']}/{r['kind']}] {r['path']}"
                              + (f"  ({r['check']})" if r["check"] else "") + "\n")
         if not args.dry_run and not args.uninstall:
-            sys.stdout.write("\nAI 에이전트를 새로 시작하면 스킬 목록에 `ai-smell-polish`가 보입니다.\n"
+            sys.stdout.write("\nAI 에이전트를 새로 시작하면 스킬 목록에 `ai-smell-polish`가 나타납니다.\n"
                              "바로 쓰기: python3 <설치 경로>/scripts/ai-smell polish 글.md\n")
     return 1 if failed or any(r["status"].startswith("실패") for r in results) else 0
 

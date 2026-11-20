@@ -1,7 +1,7 @@
-"""문체 습관 신호. 정규식 한 줄로는 못 잡고 밀도나 비율로 판단하는 것들.
+"""문체 습관 항목. 정규식 한 줄로는 못 잡고 비율이나 빈도로 판단하는 것들.
 
-문서 전체에 대한 신호는 길이 0인 구간(start == end)에 두어 다른 신호를 가리지도 가려지지도 않게 한다.
-근거와 한계는 docs/research.md 10절. 대부분 C등급이고, 비율 신호는 집단 통계라 개인 문체를 오탐할 수 있다.
+문서 전체에 걸린 항목은 길이 0인 구간(start == end)에 두어 다른 항목을 가리지도 가려지지도 않게 한다.
+근거와 약점은 docs/research.md 8절. 대부분 C등급이고, 비율 신호는 집단 통계라 개인 문체를 오탐할 수 있다.
 """
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ def _body(masked: str, paras: Sequence[Span]) -> List[Span]:
 
 
 def label_colon(masked: str, genre: str) -> List[Finding]:
-    """'라벨: 설명' 꼴 줄이 목록과 문단에 줄줄이 있다(제목형 콜론). 굵은 라벨 불릿은 any.format.bold-lead가 센다."""
+    """'라벨: 설명' 꼴 줄이 목록과 문단에 줄줄이 있다(제목형 콜론). 굵은 라벨 불릿은 any.format.bold-lead가 찾는다."""
     lines = [(m.start(), m.group(0)) for m in re.finditer(r"^[^\n]+$", masked, re.M)]
     items = [(p, t) for p, t in lines if t.strip() and not t.lstrip().startswith(SKIP) and len(t.split()) >= 3
              and not t.lstrip().startswith("**")]
@@ -78,7 +78,7 @@ def english_gloss(masked: str, units: int, genre: str) -> List[Finding]:
 
 
 def ko_commas(masked: str, genre: str) -> List[Finding]:
-    """한국어 규범은 접속부사와 연결어미 뒤에 쉼표를 두지 않는 쪽을 자연스럽게 본다. 영어식 쉼표가 몰리면 센다."""
+    """한국어 규범은 접속부사와 연결어미 뒤에 쉼표를 두지 않는 쪽을 자연스럽게 본다. 영어식 쉼표가 몰리면 찾는다."""
     if not re.search(r"[가-힣]", masked):
         return []
     out: List[Finding] = []
@@ -98,7 +98,7 @@ def ko_commas(masked: str, genre: str) -> List[Finding]:
     if len(ends) >= 8 and len(commas) >= 0.4 * len(ends):
         p = commas[0].start("c")
         out.append(_mk("ko.punct.ending-comma", "rhythm", "C", p, p, 0.3, genre,
-                       f"연결어미 {len(ends)}곳 중 {len(commas)}곳 뒤에 쉼표가 있다. 사람 글 4~13%, LLM 글 16~28%라는 보고(KatFishNet)와 비교한다.",
+                       f"연결어미 {len(ends)}곳 중 {len(commas)}곳 뒤에 쉼표가 있다. 사람이 쓴 글 4~13%, LLM이 쓴 글 16~28%라는 보고(KatFishNet)와 비교한다.",
                        lang="ko", gmap=gm, text=commas[0].group(0),
                        sugg="숨 쉬는 자리에만 쉼표를 둔다. 개인 문체일 수 있으니 필자 확인 뒤에 줄인다."))
     return out
@@ -132,6 +132,54 @@ def synonym_cycling(masked: str, sents: Sequence[Span], paras: Sequence[Span], g
     return out
 
 
+_ECHO_SUFFIX = re.compile(r"(?:입니다|이다|이며|이고|으로는|에서는|으로|에서|에게|까지|부터|보다|처럼|이|가|은|는|을|를|의|에|도|로|과|와|만|들)$")
+_ECHO_SKIP = {"우리", "그것", "이것", "때문", "이후", "이상", "경우", "정도", "하나", "모두", "위해", "대한", "통해", "다른", "여기",
+              "저기", "거기", "자신", "사람", "이전", "이하", "관련", "이번", "다음", "동안", "사이", "가운데"}
+
+
+def word_echo(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
+    """한 문단에서 같은 명사가 세 번 이상 되풀이된다. 핵심 용어를 지키는 반복과 습관적으로 되풀이하는 말은 글쓴이가 가려야 한다."""
+    out: List[Finding] = []
+    for ps, pe in _body(masked, paras):
+        seg = masked[ps:pe]
+        if len([1 for s in sents if ps <= s[0] < pe]) < 3 or not re.search(r"[가-힣]", seg):
+            continue
+        seen: Dict[str, List[int]] = {}
+        for m in re.finditer(r"[가-힣]{2,}", seg):
+            tok = m.group(0)
+            stem = _ECHO_SUFFIX.sub("", tok, count=1)
+            if stem == tok or len(stem) < 2 or stem in _ECHO_SKIP or stem[-1] in "하지되라다고며":
+                continue
+            seen.setdefault(stem, []).append(m.start())
+        hot = sorted(((w, p) for w, p in seen.items() if len(p) >= 3), key=lambda x: -len(x[1]))[:2]
+        for w, pos in hot:
+            at = ps + pos[2]
+            out.append(_mk("ko.vocab.word-echo", "vocab", "C", at, at, 0.25, genre,
+                           f"한 문단에서 '{w}'이(가) {len(pos)}번 되풀이된다.", lang="ko",
+                           gmap={"academic": 0.5, "technical": 0.3, "literary": 0.5},
+                           sugg="핵심 용어면 두고, 아니면 대명사나 생략으로 줄이거나 문장을 합친다.", text=seg[pos[2]:][:30]))
+    return out
+
+
+_TRACE_DETAIL = re.compile(r"자국|얼룩|상처|흠집|긁|발자국|그을|파편|지문|핏|부서진|깨진|찢어진|눌린|패인|닳은|바랜")
+
+
+def trace_word(masked: str, paras: Sequence[Span], genre: str) -> List[Finding]:
+    """'흔적'이 어떤 흔적인지 앞에서 서술하지 않고 불쑥 나온다. 앞 150자(같은 문단) 안에 구체적인 자국 낱말이 없으면 찾는다."""
+    out: List[Finding] = []
+    for ps, pe in _body(masked, paras):
+        seg = masked[ps:pe]
+        for m in re.finditer(r"흔적", seg):
+            before = seg[max(0, m.start() - 150):m.start()]
+            if _TRACE_DETAIL.search(before):
+                continue
+            at = ps + m.start()
+            out.append(_mk("ko.vocab.trace-bare", "vocab", "B", at, at + 2, 0.4, genre,
+                           "'흔적'. 앞에서 어떤 자국인지 서술하지 않고 '흔적'이라는 말만 쓴다.", lang="ko",
+                           sugg="무엇이 어디에 남았는지 구체적으로 쓰거나 '흔적'을 빼고 쓴다.", text=seg[m.start():][:20]))
+    return out
+
+
 def rhythm_band(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
     """문장 길이가 한 구간에 몰려 있다. 위키백과(2026)는 최근 출력이 8~20낱말 한도에 붙는다고 적는다."""
     body = _body(masked, paras)
@@ -156,7 +204,7 @@ def rhythm_band(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre
 
 
 def punct_flat(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """쉼표와 마침표뿐이다. 줄표를 걷어 낸 최근 출력은 다른 부호도 함께 줄었다는 보고(위키백과 2026)."""
+    """쉼표와 마침표뿐이다. 대시를 걷어 낸 최근 출력은 다른 부호도 함께 줄었다는 보고(위키백과 2026)."""
     body = _body(masked, paras)
     text = "\n".join(masked[a:b] for a, b in body)
     if len(re.findall(r"[.!?]", text)) < 15 or linkers.detect(text) not in ("en", "es", "fr", "pt", "it", "de", "ru"):
@@ -196,7 +244,7 @@ def headings(masked: str, genre: str) -> List[Finding]:
 
 
 def doc_register(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """문서 전체에서 합니다체와 평어가 섞였다(문단 안 혼용은 ko.register.mixed가 센다)."""
+    """문서 전체에서 합니다체와 평어가 섞였다(문단 안 혼용은 ko.register.mixed가 찾는다)."""
     body = _body(masked, paras)
     elig = []
     for a, b in sents:
@@ -228,7 +276,7 @@ LABEL_GLOSS = re.compile(r"(?:called|named|known as|so-called|라는|이라는|�
 
 def opaque_labels(masked: str, genre: str) -> List[Finding]:
     """코드 밖 줄글에 정의 없이 쓰인 내부 이름(MAv2, q23-grades-strict, TAME_GUIDANCE, NOTES.md)이 여럿이다.
-    쓴 사람은 알지만 독자는 모르는 이름이다. 처음 나올 때 풀이(called, 괄호)가 없는 것만 센다."""
+    쓴 사람은 알지만 독자는 모르는 이름이다. 처음 나올 때 풀이(called, 괄호)가 없는 것만 찾는다."""
     seen: Dict[str, int] = {}
     first = -1
     for m in UNDEF_LABEL.finditer(masked):
@@ -248,12 +296,13 @@ def opaque_labels(masked: str, genre: str) -> List[Finding]:
     return [_mk("any.opaque.undefined-labels", "opaque", "C", first, first, 0.5, genre,
                 f"처음 나올 때 풀이 없는 내부 이름이 {len(seen)}개다(예: {', '.join(list(seen)[:3])}). "
                 "Internal names are used without ever being introduced.", gmap={"technical": 0.4},
-                sugg="이름을 처음 쓸 때 무엇인지 한 줄로 풀거나, 이름 대신 하는 일을 쓴다.", text=next(iter(seen)))]
+                sugg="이름을 처음 쓸 때 무엇인지 한 줄로 풀거나, 이름 대신 실제 동작을 쓴다.", text=next(iter(seen)))]
 
 
 def signals(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], units: int,
             genre: str) -> List[Finding]:
     return (label_colon(masked, genre) + english_gloss(masked, units, genre) + ko_commas(masked, genre) +
-            synonym_cycling(masked, sents, paras, genre) + rhythm_band(masked, sents, paras, genre) +
+            synonym_cycling(masked, sents, paras, genre) + word_echo(masked, sents, paras, genre) + trace_word(masked, paras, genre) +
+            rhythm_band(masked, sents, paras, genre) +
             punct_flat(masked, sents, paras, genre) + headings(masked, genre) +
             doc_register(masked, sents, paras, genre) + opaque_labels(masked, genre))

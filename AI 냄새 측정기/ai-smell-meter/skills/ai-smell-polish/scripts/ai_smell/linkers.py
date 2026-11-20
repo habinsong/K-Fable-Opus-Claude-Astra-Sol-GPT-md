@@ -1,6 +1,6 @@
 """문장을 잇는 말의 사전과 언어 판별. 규칙 파일이 아니라 분석기(cohesion.py)가 쓰는 데이터다.
 
-품사표와 문법 개념표를 이렇게 옮겼다(출처와 근거는 docs/research.md 8절).
+품사표와 문법 개념표를 이렇게 옮겼다(출처와 근거는 docs/research.md 7절).
   접속사(기능사류)          conj  and, but, 그리고, そして   | 종속 접속사는 sub (because, although)
   접속부사(부사류)          adv   그러나, however, sin embargo, しかし
   전치사·조사가 이끄는 구   phrase because of, 그 때문에, そのため, por eso
@@ -30,7 +30,7 @@ LANG_NAME = {"ko": ("한국어", "Korean"), "en": ("영어", "English"), "ja": (
 SUPPORTED = tuple(k for k in LANG_NAME if k != "other")
 
 # 문장 하나가 '짧다'고 보는 길이(한국어는 어절, 일본어·중국어는 글자, 나머지는 낱말)와 문단 평균의 중간 길이.
-# 영어 낱말 8개 안팎을 짧은 문장으로 보는 실무 기준(docs/research.md 8절)에서 출발했고, 11월 실측으로 언어별로 다시 맞췄다
+# 영어 낱말 8개 안팎을 짧은 문장으로 보는 실무 기준(docs/research.md 7절)에서 출발했고, 11월 실측으로 언어별로 다시 맞췄다
 # (docs/evaluation.md): 사람 글(위키백과, 뉴스, 소설)에서 끊긴 단문 연속이 걸리는 비율이 5~10% 안에 들도록 잡았다.
 # 한국어는 6어절이 사람 글 10.6% 대 2025년 모델 글 25.3%로 가장 갈렸다(8어절은 21.2% 대 34.8%).
 SHORT = {"ko": 6, "en": 9, "es": 10, "fr": 10, "pt": 10, "it": 10, "de": 7, "ru": 5, "ja": 14, "zh": 18, "other": 9}
@@ -304,7 +304,7 @@ KIND_EN = {"adv": "conjunctive adverb", "conj": "conjunction", "sub": "subordina
 
 
 def table(lang: str, ui: str = "ko") -> str:
-    """언어 하나의 이음말을 관계와 품사별로 보인다. 윤문할 때 알맞은 말을 고르는 용도다."""
+    """언어 하나의 이어지는 말을 관계와 품사별로 정리해 준다. 윤문할 때 알맞은 말을 고르는 용도다."""
     raw = _RAW.get(lang)
     if raw is None:
         return ""

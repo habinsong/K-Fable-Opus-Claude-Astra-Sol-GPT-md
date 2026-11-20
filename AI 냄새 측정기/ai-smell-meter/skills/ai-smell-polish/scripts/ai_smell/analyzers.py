@@ -1,7 +1,7 @@
-"""정규식 한 줄로 잡히지 않고 '밀도'와 '연속'으로 판단하는 신호들.
+"""정규식 한 줄로 잡히지 않고 비율과 연속 횟수로 판단하는 항목들.
 
-각 함수는 Finding 목록을 돌려준다. 줄·열은 detect가 채운다. 문서 전체에 대한 신호는
-길이 0인 구간(start == end)으로 두어 다른 신호와 겹쳐 가려지지 않게 한다.
+각 함수는 Finding 목록을 돌려준다. 줄·열은 detect가 채운다. 문서 전체에 걸린 항목은
+길이 0인 구간(start == end)으로 두어 다른 항목과 겹쳐 가려지지 않게 한다.
 """
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ KO_INTENS = re.compile(r"(?<![가-힣])(?:매우|정말|굉장히|상당히|아�
 EMOTION = ("기뻤", "슬펐", "행복했", "외로웠", "두려웠", "불안했", "벅차", "벅찼", "먹먹", "울컥", "뭉클", "철렁", "눈물이 흘렀",
            "숨이 멎", "가슴이 아렸", "가슴이 미어", "감동", "설렜", "서글펐", "그리웠", "뿌듯", "애틋", "저릿", "찡했", "눈시울",
            "가슴이 뛰", "심장이 뛰", "숨이 막", "온몸이 떨", "마음이 무거웠", "슬퍼졌", "외로워졌", "행복해졌")
-# 실제 줄표만 센다. 하이픈(" - "), en dash, "--"는 사람 글에 훨씬 흔하다(실측: 영어 사람 글 20%, 8%, 9% 대 AI 글 2%, 1%, 0%).
+# 실제 대시만 찾는다. 하이픈(" - "), en dash, "--"는 사람 글에 훨씬 흔하다(실측: 영어 사람 글 20%, 8%, 9% 대 AI 글 2%, 1%, 0%).
 DASH = re.compile(r"[—―]")
 
 
@@ -70,7 +70,7 @@ def _by_para(sents: Sequence[Span], paras: Sequence[Span]) -> List[List[Span]]:
 
 
 def dashes(masked: str, sents: Sequence[Span], units: int, genre: str) -> List[Finding]:
-    """줄표(em dash) 남발을 센다. 한국어는 1개부터 번역투, 영어는 2개부터 세고 3개 이상이면 과다로 본다."""
+    """대시(em dash) 남발을 찾는다. 한국어는 1개부터 번역투, 영어는 2개부터 걸리고 3개 이상이면 과다로 본다."""
     hits = list(DASH.finditer(masked))
     is_ko = bool(re.search(r"[가-힣]", masked))
     if not is_ko and linkers.detect(masked) != "en":
@@ -99,15 +99,15 @@ def dashes(masked: str, sents: Sequence[Span], units: int, genre: str) -> List[F
                 edit = Edit(s, e, ", ", rid, "standard", before=masked[s:e])
             elif len(ms) == 1 and nxt.islower() and s > 0 and masked[s - 1].isalnum():
                 edit = Edit(s, e, ", ", rid, "strong", before=masked[s:e])
-            note = ("한국어 산문에서 줄표(—)는 번역투이자 어색한 삽입구 흉내이다." if is_ko else "줄표(em dash)가 여러 번 쓰였다.")
+            note = ("한국어 산문에서 대시(—)는 번역투이자 어색한 삽입구 흉내이다." if is_ko else "대시(em dash)가 여러 번 쓰였다.")
             out.append(_mk(rid, cat, "A" if is_ko else "B", m.start(), m.end(), 0.8 if is_ko else 0.4, genre,
                            note, text=m.group(0).strip(), lang="ko" if is_ko else "any",
                            sugg="쉼표, 마침표, 괄호로 바꾼다.", edit=edit))
     if len(hits) >= 3:
         out.append(_mk("any.structure.em-dash-overuse", "structure", "A", 0, 0, 0.8, genre,
-                       f"줄표(em dash)가 글 전체에 과다하게 남발된다 (총 {len(hits)}건)." if is_ko else
+                       f"대시(em dash)가 글 전체에 과다하게 남발된다 (총 {len(hits)}건)." if is_ko else
                        f"Em dashes are excessively used across the text ({len(hits)} occurrences).",
-                       lang="any", sugg="줄표를 쉼표, 괄호, 또는 마침표로 나누어 정리한다."))
+                       lang="any", sugg="대시를 쉼표, 괄호, 마침표로 나누어 정리한다."))
     return out
 
 
@@ -117,11 +117,11 @@ def _delete_edit(rid: str, start: int, end: int, tier: str, recap: bool, text: s
 
 def transitions(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str,
                 gmap) -> List[Finding]:
-    """문두 접속어가 문단 안에 3번 이상이면 절반(2번째, 4번째...)을 센다.
+    """문두 접속어가 문단 안에 3번 이상이면 절반(2번째, 4번째...)을 걸러 낸다.
 
-    접속어는 문장 사이 관계를 드러내는 말이라 많은 것보다 없는 것이 더 큰 결함일 때가 많다(cohesion.py).
+    접속어는 문장 사이 관계를 보여 주는 말이라 많은 것보다 없는 것이 더 큰 결함일 때가 많다(cohesion.py).
     그래서 의식적으로 얹는 더하기 접속어(또한, Moreover)만 지울 수 있고, 지워도 지시어나 되받는 말로
-    앞 문장과 여전히 이어질 때만 지운다. 대조·인과 접속어는 세기만 하고 지우지 않는다.
+    앞 문장과 여전히 이어질 때만 지운다. 대조·인과 접속어는 찾기만 하고 지우지 않는다.
     """
     out: List[Finding] = []
     flagged: List[Tuple[Span, re.Match, str, Optional[Span]]] = []
@@ -154,7 +154,7 @@ def transitions(text: str, masked: str, sents: Sequence[Span], paras: Sequence[S
 
 
 def triples(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """A, B, 그리고 C 꼴의 3항 나열. 문서에 2번 이상이거나 한 문단에 2번 이상일 때 센다."""
+    """A, B, 그리고 C 꼴의 3항 나열. 문서에 2번 이상이거나 한 문단에 2번 이상일 때 찾는다."""
     found: List[Tuple[Span, int, int, str]] = []
     for sp in sents:
         seg = masked[sp[0]:sp[1]]
@@ -262,7 +262,7 @@ def rhythm(text: str, masked: str, sents: Sequence[Span], genre: str) -> List[Fi
 
 
 def emotion(masked: str, paras: Sequence[Span], genre: str) -> List[Finding]:
-    """한 문단에 감정을 직접 서술하는 말이 둘 이상이면 둘째부터 센다(universal/ko-core.md 3.7)."""
+    """한 문단에 감정을 직접 서술하는 말이 둘 이상이면 둘째부터 찾는다(universal/ko-core.md 3.7)."""
     out: List[Finding] = []
     for ps, pe in paras:
         seg = masked[ps:pe]
@@ -281,7 +281,7 @@ def emotion(masked: str, paras: Sequence[Span], genre: str) -> List[Finding]:
 
 
 def intensifiers(text: str, masked: str, units: int, genre: str) -> List[Finding]:
-    """겹친 강조어. 100단위당 밀도가 높고 4개 이상일 때, 앞의 둘을 빼고 센다."""
+    """겹친 강조어. 100단위당 개수가 많고 4개 이상일 때, 앞의 둘을 빼고 찾는다."""
     out: List[Finding] = []
     for lang, rx in (("ko", KO_INTENS), ("en", EN_INTENS)):
         hits = list(rx.finditer(masked))
@@ -318,7 +318,7 @@ SUMMARY_KO = re.compile(r"(?:결론적으로|요약하자면|요약하면|정리
 
 
 def summary_closers(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """문단의 마지막 문장이 '결론적으로', 'Ultimately' 같은 맺음 표지로 열리면 센다."""
+    """문단의 마지막 문장이 '결론적으로', 'Ultimately' 같은 맺음 표지로 열리면 찾는다."""
     out: List[Finding] = []
     for inside in _by_para(sents, paras):
         if len(inside) < 2:
@@ -349,7 +349,7 @@ def _register(sentence: str) -> str:
 
 
 def register_mix(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """한 문단 안에 존댓말과 평어 종결이 섞이면 센다(universal/ko-everyday.md, ko-academic.md). 따옴표 문장은 뺀다."""
+    """한 문단 안에 존댓말과 평어 종결이 섞이면 찾는다(universal/ko-everyday.md, ko-academic.md). 따옴표 문장은 뺀다."""
     out: List[Finding] = []
     for inside in _by_para(sents, paras):
         kinds = []
@@ -381,7 +381,7 @@ def exclamations(masked: str, sents: Sequence[Span], genre: str) -> List[Finding
 
 
 def paragraph_cadence(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
-    """문단마다 문장 수와 길이가 2~6문장으로 거의 일정하여 기계적인 정보 분배를 보이는 경우를 센다."""
+    """문단마다 문장 수와 길이가 2~6문장으로 거의 일정하여 기계적인 정보 분배에 가까운 경우를 찾는다."""
     body_paras = [p for p in paras if not masked[p[0]:p[1]].strip().startswith(
         ("#", ">", "|", "```", "<!--", "- ", "* ", "1. ", "2. ", "3. "))]
     if len(body_paras) < 4:
@@ -395,7 +395,7 @@ def paragraph_cadence(text: str, masked: str, sents: Sequence[Span], paras: Sequ
         std_s = math.sqrt(sum((s - mean_s) ** 2 for s in s_lens) / n)
         if std_s <= 1.8:
             is_ko = bool(re.search(r"[가-힣]", text))
-            msg = (f"{n}개 문단이 모두 2~6문장으로 분량이 균일하여 기계적 정보 분배를 보인다." if is_ko
+            msg = (f"{n}개 문단이 모두 2~6문장으로 길이가 균일하여 기계적 정보 분배에 가깝다." if is_ko
                    else f"All {n} paragraphs are uniformly 2-6 sentences long with robotic cadence.")
             sugg = ("한 줄 문단이나 긴 문단을 섞는다." if is_ko
                     else "Vary paragraph lengths to create natural rhythm.")

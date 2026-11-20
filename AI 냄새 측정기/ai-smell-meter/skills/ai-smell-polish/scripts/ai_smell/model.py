@@ -11,7 +11,7 @@ VERSION = "1.0.0"
 TIER_RANK = {"safe": 0, "standard": 1, "strong": 2, "none": 99}
 TIERS = ("safe", "standard", "strong")
 GRADES = ("A", "B", "C")
-# 근거 등급 계수. A는 뚜렷한 잔재이거나 독립된 정량 근거가 둘 이상, B는 정량 근거 하나이거나
+# 근거 등급 계수. A는 분명한 잔재이거나 독립된 정량 근거가 둘 이상, B는 정량 근거 하나이거나
 # 편집자 합의, C는 실무자 목록이나 일화다. 근거는 docs/research.md에 있다.
 GRADE_FACTOR = {"A": 1.0, "B": 0.75, "C": 0.45}
 GENRES = ("general", "academic", "everyday", "literary", "technical")
@@ -24,7 +24,7 @@ class Category:
     ko: str
     en: str
     weight: float          # 규칙이 따로 정하지 않았을 때의 기본 가중치
-    cap: float             # 100단위당 가중 밀도 상한. 한 범주가 점수를 독점하지 못하게 한다
+    cap: float             # 100단위당 가중치 합 상한. 한 범주가 점수를 독점하지 못하게 한다
     absolute: bool = False  # True면 길이와 무관하게 건수로 센다(챗봇 잔재 같은 것)
 
 

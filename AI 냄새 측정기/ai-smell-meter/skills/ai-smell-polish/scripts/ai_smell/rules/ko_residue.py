@@ -1,4 +1,4 @@
-"""한국어: 챗봇 잔재와 아첨, 빈 자리표시자. 글의 내용이 아니라 대화의 껍데기를 잡는다."""
+"""한국어: 챗봇 잔재와 아첨, 빈 자리표시자. 글의 내용보다 대화의 껍데기를 잡는다."""
 from __future__ import annotations
 
 from .. import fixers as fx

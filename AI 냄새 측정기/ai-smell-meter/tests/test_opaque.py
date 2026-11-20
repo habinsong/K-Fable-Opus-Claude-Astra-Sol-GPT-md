@@ -27,7 +27,9 @@ CASES = [
     ("en.puffery.self-rank", "This is the cleanest idea. That is the deepest point.", "This is one idea.", 1),
     ("en.puffery.matters-because", "This matters because it is slow. That matters because it fails.", "It is slow.", 1),
 
-    ("ko.opaque.differ-on", "결과는 입력 품질에서 갈린다. 승부는 비용에서 갈린다.", "결과는 입력 품질로 정해진다.", 2),
+    ("ko.opaque.differ-on", "결과는 입력 품질에서 갈린다. 여기서 갈립니다.", "결과는 입력 품질로 정해진다.", 1),
+    ("ko.opaque.divide", "에세이는 잘 나뉘었고 시는 나뉘지 않았다.", "에세이는 정확도가 높았다.", 1),
+    ("ko.opaque.cut-apart", "에세이는 잘 갈랐고 시는 약하게만 갈랐다.", "에세이는 정확도가 높았다.", 1),
     ("ko.figure.moat", "이 검증이 해자다. 저 단계가 방어선이다.", "이 검증이 오류를 막는다.", 2),
     ("ko.opaque.closes-on", "논의는 여기서 결론에 닫힌다.", "논의는 여기서 끝난다.", 1),
     ("ko.opaque.self-qa-dash", "그럼 무엇이 문제인가 — 기준이 없다. 그럼 어디서 막히는가 — 입력이다.", "문제는 기준이 없다는 점이다.", 2),

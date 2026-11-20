@@ -1,12 +1,12 @@
-"""문장과 문장이 이어지는지 본다. 끊긴 단문의 연속과, 이음말 없이 나열만 된 문단을 센다.
+"""문장과 문장이 이어지는지 본다. 끊긴 단문의 연속과, 이어지는 말 없이 나열만 된 문단을 찾는다.
 
 기존 신호는 접속어를 '많이 쓴 것'만 감점해서 윤문이 접속어를 지우고 문장을 쪼개는 쪽으로 쏠렸다.
-이 모듈은 반대쪽, 곧 '이음이 없는 것'을 센다. 두 문장이 이어졌다고 보는 증거(bridge)는 셋이다.
+이 모듈은 반대쪽, 곧 '이음이 없는 것'을 찾는다. 두 문장이 이어졌다고 보는 증거(bridge)는 셋이다.
   1. 문장 첫머리의 접속부사·접속사·종속접속사·순서어·연결 구(linkers.lead_link)
   2. 문장 첫머리의 대명사·지시어(성·수·격이 바뀐 형태까지)
   3. 앞 문장 끝의 말을 다음 문장 첫머리가 되받음(어순: 새 정보가 주제로 올라오는 자리)
 언어는 문단마다 따로 가린다. 사전이 없는 언어(other)는 길이만 보고, 더 길게 이어져야 센다.
-이 신호는 접속어를 넣으라는 명령이 아니다. 문장 사이에 실제 관계가 없으면 이음말을 넣지 않는다.
+이 신호는 접속어를 넣으라는 명령이 아니고, 문장 사이에 실제 관계가 있을 때만 이어지는 말을 넣는다.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ RUN_MIN = 3                                  # 끊긴 단문이 이만큼 이어
 RUN_MIN_OTHER = 5                            # 사전이 없는 언어는 더 길 때만
 NOBRIDGE_MIN_SENTS = 5
 NOBRIDGE_RATIO = 0.2
-FLOOD_MIN_SENTS = 5                          # 접속어 도배: 실측에서 사람·AI 글 모두 문단의 1% 안팎만 0.75를 넘는다(docs/research.md 12절)
+FLOOD_MIN_SENTS = 5                          # 접속어 도배: 실측에서 사람·AI 글 모두 문단의 1% 안팎만 0.75를 넘는다(docs/research.md 10절)
 FLOOD_RATIO = 0.75
 SKIP_START = ("#", ">", "|", "```", "<!--", "- ", "* ", "+ ", "1. ", "2. ", "3. ", "1) ", "2) ")
 GENRE = {"literary": 0.3, "academic": 0.8, "technical": 0.4}   # 문학은 병치가 문체, 기술 문서는 명세·변경 이력이 짧은 문장이다
@@ -106,7 +106,7 @@ def _group(sents: Sequence[Span], paras: Sequence[Span]) -> List[List[Span]]:
 
 
 def _ko_ending(s: str) -> str:
-    """한국어 종결 형태의 서법·시제. 형태소 분석 없이 어미 끝으로 짐작하는 근삿값이다."""
+    """한국어 종결 형태의 서법·시제. 형태소 분석 없이 어미 끝으로 짐작한다."""
     core = re.sub(r"[^가-힣?]+$", "", s.strip())
     tail = core.rstrip("?")
     if s.rstrip().endswith("?") or re.search(r"(?:까|니|냐|나요|가요)$", tail):
@@ -132,7 +132,7 @@ def _mk(rid: str, grade: str, start: int, end: int, w: float, genre: str, note: 
 def _sugg(lang: str, is_ko: bool) -> str:
     menu = linkers.menu(lang, "ko" if is_ko else "en", per=2)
     if is_ko:
-        return (f"관계를 정해 이음말로 잇는다({menu}). 같은 흐름이면 연결어미(-고, -는데, -지만)로 합치거나 "
+        return (f"관계를 정해 이어지는 말로 잇는다({menu}). 같은 흐름이면 연결어미(-고, -는데, -지만)로 합치거나 "
                 "앞 문장 끝의 말을 다음 문장 첫머리에서 받는다. 관계가 없으면 넣지 않는다.")
     return ("Name the relation and link it" + (f" ({menu})" if menu else "") +
             ", merge with a conjunction or subordinate clause, or open with the previous sentence's last noun. "

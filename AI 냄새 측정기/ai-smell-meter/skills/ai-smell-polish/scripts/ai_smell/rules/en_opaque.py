@@ -2,7 +2,7 @@
 
 2026년 하반기 개발자 커뮤니티(GitHub 이슈, Hacker News)가 Claude 계열 모델의 글을 두고 가장 많이 한 불만을 옮긴 것이다.
 낱말 하나하나는 정상이고 기술 글에서는 실제 뜻으로도 쓰이므로 대부분 C등급이고, 되풀이될 때만 센다.
-모두 보고만 하고 자동으로 고치지 않는다. 근거와 한계는 docs/research.md 13절.
+모두 보고만 하고 자동으로 고치지 않는다. 근거와 한계는 docs/research.md 11절.
 """
 from __future__ import annotations
 

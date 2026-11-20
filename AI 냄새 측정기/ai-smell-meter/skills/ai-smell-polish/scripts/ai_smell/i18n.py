@@ -14,8 +14,8 @@ S: Dict[str, Dict[str, str]] = {
         "lang_ko": "한국어", "lang_en": "영어", "lang_mixed": "한영 혼합",
         "genre_general": "일반", "genre_academic": "학술", "genre_everyday": "일상", "genre_literary": "문학",
         "genre_technical": "기술",
-        "disclaimer": "이 수치는 문체 표현의 출현 빈도입니다. 'AI가 썼을 확률'이 아니며, 사람이 쓴 글이 높게, "
-                      "AI가 쓴 글이 낮게 나올 수 있습니다. 저자 판정에 쓰지 마세요.",
+        "disclaimer": "이 수치는 문체 표현이 걸린 빈도입니다. AI가 썼을 확률과는 다릅니다. 사람이 쓴 글이 높은 점수를 받기도 하고 "
+                      "AI가 쓴 글이 낮은 점수를 받기도 합니다. 저자 판정에 쓰지 마세요.",
         "categories": "범주별 (100단위당 가중치 합산)",
         "findings": "주요 검출 항목",
         "of": "전체",
@@ -23,7 +23,7 @@ S: Dict[str, Dict[str, str]] = {
         "paragraphs_h": "문단별 점수 (높은 순)",
         "info_h": "참고 (점수에 넣지 않음)",
         "next": "다음 단계",
-        "next_polish": "`ai-smell polish` 로 교정문을 출력합니다. 구조 습관은 바로 못 고치므로 "
+        "next_polish": "`ai-smell polish` 로 교정문을 출력합니다. 틀이 굳은 문장은 바로 고칠 수 없으므로 "
                        "`ai-smell prompt` 로 LLM 윤문 프롬프트를 만듭니다.",
         "how": "고치는 법",
         "none_found": "검출된 어색한 항목이 없습니다.",
@@ -40,7 +40,7 @@ S: Dict[str, Dict[str, str]] = {
         "verify": "대조 검증",
         "status": "판정",
         "needs_review": "strong 단계 교정은 뜻이 조금 달라질 수 있으니 읽어 확인하세요.",
-        "limits": "한계: 정규식 기반이라 오탐과 미탐이 있고, 자연스러움은 사람이 읽어 판단해야 합니다.",
+        "limits": "정규식으로 찾기 때문에 오탐지와 미탐지가 있고, 글이 자연스러운지는 읽는 사람이 판단해야 합니다.",
         "rules_h": "규칙",
         "grade": "등급",
         "tier_h": "교정 단계",

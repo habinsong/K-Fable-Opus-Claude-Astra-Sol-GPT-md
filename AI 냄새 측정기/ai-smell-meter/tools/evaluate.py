@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""라벨이 붙은 글 묶음으로 신호별 오탐·검출 비율을 잰다. 엔진을 고친 뒤 다시 돌려 전후를 견주는 용도다.
+"""라벨이 붙은 글 묶음으로 신호별 오탐·검출 비율을 구한다. 엔진을 고친 뒤 다시 돌려 전후를 견주는 용도다.
 
 입력은 JSONL이다. 한 줄에 {"id", "lang", "label": "human"|"ai", "source", "genre", "text"}.
 출력은 (1) 언어·장르별 점수 분포와 AUROC, (2) 규칙·신호별 '사람 글에서 걸린 비율'과 'AI 글에서 걸린 비율'(Wilson 95% 구간)이다.
-말뭉치는 이 저장소에 없다(KatFish, HC3, M4, 위키백과를 직접 내려받아 합친다. docs/research.md 12절).
+말뭉치는 이 저장소에 없다(KatFish, HC3, M4, 위키백과를 직접 내려받아 합친다. docs/research.md 10절).
 이 도구는 글을 실행하지 않고 읽어서 통계만 낸다. 표준 라이브러리만 쓴다.
 
   python3 tools/evaluate.py corpus.jsonl [--out result.json] [--min-n 30] [--jobs 4]

@@ -1,4 +1,4 @@
-"""원문과 윤문본을 대조한다. 사실이 그대로인지, 얼마나 바뀌었는지, 새 결함이 생기지 않았는지 본다.
+"""원문과 윤문본을 대조한다. 사실이 그대로인지 확인하고 변경 규모와 새 결함도 살핀다.
 
 이 검증은 의미를 증명하지 못한다. 숫자, 주소, 코드, 인용, 영문 고유명사가 그대로인지와
 변경 규모를 기계적으로 볼 뿐이다. 의미가 같은지는 사람이 읽어서 판단한다.
@@ -83,7 +83,7 @@ def _tokens(text: str) -> List[str]:
 
 
 def change_rate(a: str, b: str) -> float:
-    """원문 어절 중 바뀌거나 사라진 비율. 어절 단위로 전체를 맞춘다.
+    """원문 어절 중 바뀌거나 사라진 비율. 어절 단위로 전체를 대조한다.
 
     아주 긴 글(곱이 4천만을 넘음)은 줄 단위로 먼저 맞추고 바뀐 덩어리만 어절 단위로 본다.
     """
@@ -165,9 +165,9 @@ def verify(original: str, revised: str, *, genre: str = "general", lang: str = "
         msgs.append(("WARN", guards.message(injected)))
     if cut_after > cut_before:
         msgs.append(("WARN", f"문장 사이 이음이 더 끊겼다(연결 단절 {cut_before} → {cut_after}건). 문장을 쪼갰거나 "
-                             "접속어를 지웠는지 보고, 이음말로 다시 잇는다."))
+                             "접속어를 지웠는지 보고, 이어지는 말로 다시 잇는다."))
     if ratio < 0.6:
-        msgs.append(("WARN", f"분량이 {1 - ratio:.0%} 줄었다. 의미가 빠졌는지 확인한다."))
+        msgs.append(("WARN", f"글이 {1 - ratio:.0%} 짧아졌다. 의미가 빠졌는지 확인한다."))
     if after.score >= before.score and before.score > 0:
         msgs.append(("WARN", "점수가 줄지 않았다."))
     order = {"PASS": 0, "WARN": 1, "CONFIRM": 2, "FAIL": 3}

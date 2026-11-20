@@ -79,8 +79,8 @@ def _apply_filters(found: List[Tuple[Rule, Finding]]) -> List[Finding]:
 
 
 def _shadow(findings: List[Finding]) -> None:
-    """겹치는 검출 항목은 가장 가중치가 큰 하나만 점수에 반영한다. 가려진 항목의 교정안은 그대로 둔다.
-    연결 단절(cohesion)은 문장 사이의 성질이라 첫 문장에 붙여 두었을 뿐이므로 다른 신호를 가리지도 가려지지도 않는다."""
+    """겹치는 검출 항목은 가장 가중치가 큰 하나만 점수에 반영한다. 가려진 항목의 교정안은 남긴다.
+    연결 단절(cohesion)은 문장 사이의 성질이라 첫 문장에 붙여 두었을 뿐이므로 다른 항목을 가리지도 가려지지도 않는다."""
     items = sorted((f for f in findings if f.end > f.start and f.category != "cohesion"),
                    key=lambda f: (f.start, -f.end))
     group: List[Finding] = []
@@ -153,10 +153,10 @@ def analyze(text: str, *, genre: str = "general", lang: str = "auto", ban: Itera
         notes.append("표본이 짧아(40단위 미만) 점수가 불안정하다.")
     lang_main = linkers.detect(masked) if units >= 20 else ""        # 짧은 글은 언어를 가리기 어려워 안내하지 않는다
     if lang_main and lang_main not in ("ko", "en"):
-        notes.append(f"이 언어({lang_main})에는 AI 냄새 규칙이 없고 연결 단절·서식 신호만 있다. 점수는 AI 판별에 쓸 수 없다"
-                     "(실측: 중국어·러시아어에서는 사람 글이 더 높게 나왔다).")
+        notes.append(f"이 언어({lang_main})에는 AI 냄새 규칙이 없고 연결 단절과 서식 항목만 있다. 점수로 AI가 썼는지는 알 수 없다"
+                     "(실측: 중국어와 러시아어에서는 사람이 쓴 글의 점수가 더 높았다).")
     if not findings:
-        notes.append("검출된 항목이 없다. 검출 항목이 없다고 사람이 쓴 글이라는 보증은 아니다.")
+        notes.append("검출된 항목이 없지만, 사람이 쓴 글이라는 보증으로 읽으면 안 된다.")
     return Analysis(lang=detect_lang(masked), genre=genre, units=units, sentences=len(sents),
                     paragraphs=len(paras), score=int(res["score"]), label_ko=str(res["label_ko"]),
                     label_en=str(res["label_en"]), density=float(res["density"]), residue=float(res["residue"]),

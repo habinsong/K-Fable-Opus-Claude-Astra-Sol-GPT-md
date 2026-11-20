@@ -1,7 +1,7 @@
 """윤문이 필자에게 없던 것을 주입했는지 보는 표지. 윤문기가 '사람 같게' 만들려고 지어 넣기 쉬운 것들이다.
 
 conorbronsdon/avoid-ai-writing의 'Never inject these' 목록(지어낸 화자의 관점, 만들어 낸 걸림돌, 억지 반론, 연출된 솔직함,
-줄표 연출, 쪼개기, 지어낸 구체값)을 옮겼다. 쪼개기는 cohesion.py가, 지어낸 구체값은 verify.py가 이미 본다.
+대시 연출, 쪼개기, 지어낸 구체값)을 옮겼다. 쪼개기는 cohesion.py가, 지어낸 구체값은 verify.py가 이미 본다.
 verify는 원문과 윤문본의 개수를 견주고, 윤문본이 더 많을 때만 알린다(원문에 이미 있던 것은 필자의 문체다).
 """
 from __future__ import annotations

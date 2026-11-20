@@ -134,6 +134,15 @@ class Habits(unittest.TestCase):
         self.assertIn("ko.vocab.synonym-cycling", found(ko))
         self.assertNotIn("en.vocab.synonym-cycling", found("The company grew. The company hired. The company opened. Revenue followed."))
 
+    def test_word_echo(self):
+        ko = "신호를 찾는다. 이 신호가 낮다. 점수는 신호의 밀도다. 글은 짧다."
+        self.assertIn("ko.vocab.word-echo", found(ko))
+        self.assertNotIn("ko.vocab.word-echo", found("신호를 찾는다. 점수가 낮다. 밀도는 높다. 글은 짧다."))
+
+    def test_trace_word(self):
+        self.assertIn("ko.vocab.trace-bare", found("글에 흔적이 남았다. 다시 본다."))
+        self.assertNotIn("ko.vocab.trace-bare", found("문에 긁힌 자국이 있다. 그 흔적이 남았다."))
+
     def test_sentence_length_band_and_flat_punctuation(self):
         text = sentences(16)
         ids = found(text)

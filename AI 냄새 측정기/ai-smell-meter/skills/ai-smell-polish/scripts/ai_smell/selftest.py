@@ -1,7 +1,7 @@
 """설치 직후 돌리는 내장 시험. 외부 파일이나 네트워크가 필요 없다.
 
 종료 코드 0이면 이 설치본에서 규칙, 점수, 교정, 대조, 명령줄이 모두 동작한다는 뜻이다.
-(이 시험이 통과해도 윤문 품질이 보장되지는 않는다. 표본이 작고 직접 쓴 것이다.)
+(표본이 작고 직접 쓴 것이라, 통과한 뒤에도 윤문 품질은 글을 읽어 판단해야 한다.)
 """
 from __future__ import annotations
 
@@ -34,13 +34,13 @@ def _scores() -> List[Check]:
     out: List[Check] = []
     for lang, text in AI_STRONG.items():
         s = analyze(text).score
-        out.append((f"뚜렷한 AI풍 {lang} >= 60", s >= 60, f"지수 {s}"))
+        out.append((f"강한 AI풍 {lang} >= 60", s >= 60, f"점수 {s}"))
     for lang, text in AI_MID.items():
         s = analyze(text).score
-        out.append((f"중간 AI풍 {lang} >= 30", s >= 30, f"지수 {s}"))
+        out.append((f"중간 AI풍 {lang} >= 30", s >= 30, f"점수 {s}"))
     for name, text in HUMAN.items():
         s = analyze(text).score
-        out.append((f"사람 글 {name} < 8", s < 8, f"지수 {s}"))
+        out.append((f"사람 글 {name} < 8", s < 8, f"점수 {s}"))
     return out
 
 
@@ -89,7 +89,7 @@ def _properties() -> List[Check]:
                 bad.append(f"{key}:사실훼손")
         out.append((f"교정 성질({tier}): 멱등, 점수 비상승, 사실 보존", not bad, ", ".join(bad) or "이상 없음"))
     changed = [n for n, t in HUMAN.items() if polish(t, tier="standard").text != t]
-    out.append(("사람 글은 standard 단계에서 그대로", not changed, ", ".join(changed) or "이상 없음"))
+    out.append(("사람이 쓴 글은 standard 단계에서 그대로", not changed, ", ".join(changed) or "이상 없음"))
     v = verify("Revenue grew 38% in 2025.", "Revenue grew 83% in 2025.")
     out.append(("대조 검증이 숫자 변경을 FAIL로 잡음", v.status == "FAIL", v.status))
     v2 = verify("See https://a.example/x now.", "See the link now.")
@@ -100,7 +100,7 @@ def _properties() -> List[Check]:
 def _cli() -> Check:
     launcher = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ai-smell")
     if not os.path.exists(launcher):
-        return "명령줄 실행", True, "실행 파일 없음(패키지로 설치됨): 건너뜀"
+        return "명령줄 실행", True, "실행 파일 없음(패키지로 설치됨): 생략"
     proc = subprocess.run([sys.executable, "-I", launcher, "analyze", "--text", "Certainly! I hope this helps!",
                            "--format", "json"], capture_output=True, text=True, encoding="utf-8", timeout=60)
     ok = proc.returncode == 0 and '"score"' in proc.stdout
@@ -129,6 +129,6 @@ def run(fmt: str = "text") -> int:
         sys.stdout.write(f"\nselftest {'통과' if not failed else '실패'}: {len(checks) - len(failed)}/{len(checks)}"
                          f" (ai-smell {VERSION})\n")
         if not failed:
-            sys.stdout.write("이 시험은 동작 확인이다. 윤문 품질은 보장하지 않는다. 한계는 docs/limits.md를 본다.\n")
+            sys.stdout.write("이 시험은 동작 확인용이다. 윤문 품질은 글을 읽어 판단하고, 한계는 docs/limits.md에 적혀 있다.\n")
     return 0 if not failed else 1
 

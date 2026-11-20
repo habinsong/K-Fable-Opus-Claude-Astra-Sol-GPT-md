@@ -1,6 +1,6 @@
-"""필자 문체 표본을 수치로 요약한다. 윤문이 필자의 목소리에 맞는지 가늠하는 기준을 프롬프트에 싣는 용도다.
+"""필자 문체 표본을 수치로 요약한다. 윤문이 필자의 목소리에 가까운지 볼 수 있게 프롬프트에 싣는다.
 
-blader/humanizer와 avoid-ai-writing은 필자 표본이 있으면 표본이 일반 규칙보다 앞선다고 정한다(줄표 비율까지 표본을 따른다).
+blader/humanizer와 avoid-ai-writing은 필자 표본이 있으면 표본이 일반 규칙보다 앞선다고 정한다(대시 비율까지 표본을 따른다).
 이 요약은 점수에 들어가지 않는다. 표본이 짧으면(문장 8개 미만) 수치가 불안정하다고 알린다.
 """
 from __future__ import annotations
@@ -68,7 +68,7 @@ def render(p: Dict[str, object], ui: str = "ko") -> str:
                              f"{p['dashes_per_1000_units']}, questions {p['questions_share']:.0%}, exclamations "
                              f"{p['exclamations_share']:.0%}, first person per 100 sentences {p['first_person_per_100_sentences']}"))
     br = p.get("bridge_ratio")
-    lines.append((f"문장 첫머리 이음말 비율 {p['link_initial_share']:.0%}" + (f", 문장 사이 이음 비율 {br:.0%}" if br is not None else ""))
+    lines.append((f"문장 첫머리 이어지는 말 비율 {p['link_initial_share']:.0%}" + (f", 문장 사이 이음 비율 {br:.0%}" if br is not None else ""))
                  if ko else (f"Sentences opening with a linking word {p['link_initial_share']:.0%}" +
                              (f", joins carrying a link {br:.0%}" if br is not None else "")))
     if "register" in p:
