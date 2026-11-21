@@ -180,6 +180,22 @@ def trace_word(masked: str, paras: Sequence[Span], genre: str) -> List[Finding]:
     return out
 
 
+_SELF_REF = {"필자": r"필자(?:는|가|의|도)", "본 연구": r"본\s*(?:연구|논문)(?:는|에서는|에서|의|은)", "우리": r"(?<![가-힣])우리(?:는|가)(?![가-힣])",
+             "저자": r"(?<![가-힣])저자(?:는|가|들은)", "연구자": r"(?<![가-힣])연구자(?:는|가)(?![가-힣])"}
+
+
+def self_reference(masked: str, genre: str) -> List[Finding]:
+    """학술 글에서 글쓴이를 가리키는 말('필자', '본 연구', '우리')이 둘 이상 섞인다."""
+    found = [(k, m.start()) for k, rx in _SELF_REF.items() for m in [re.search(rx, masked)] if m]
+    if len(found) < 2:
+        return []
+    names = ", ".join(sorted(k for k, _ in found))
+    at = sorted(p for _, p in found)[1]
+    return [_mk("ko.genre.self-reference-mix", "structure", "C", at, at, 0.35, genre,
+                f"글쓴이를 가리키는 말이 섞였다({names}).", lang="ko", gmap={"everyday": 0.3, "literary": 0.3},
+                sugg="투고처 관행에 맞춰 하나로 통일한다.", text=masked[at:at + 20])]
+
+
 def rhythm_band(masked: str, sents: Sequence[Span], paras: Sequence[Span], genre: str) -> List[Finding]:
     """문장 길이가 한 구간에 몰려 있다. 위키백과(2026)는 최근 출력이 8~20낱말 한도에 붙는다고 적는다."""
     body = _body(masked, paras)
@@ -302,7 +318,7 @@ def opaque_labels(masked: str, genre: str) -> List[Finding]:
 def signals(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], units: int,
             genre: str) -> List[Finding]:
     return (label_colon(masked, genre) + english_gloss(masked, units, genre) + ko_commas(masked, genre) +
-            synonym_cycling(masked, sents, paras, genre) + word_echo(masked, sents, paras, genre) + trace_word(masked, paras, genre) +
+            synonym_cycling(masked, sents, paras, genre) + word_echo(masked, sents, paras, genre) + trace_word(masked, paras, genre) + self_reference(masked, genre) +
             rhythm_band(masked, sents, paras, genre) +
             punct_flat(masked, sents, paras, genre) + headings(masked, genre) +
             doc_register(masked, sents, paras, genre) + opaque_labels(masked, genre))
