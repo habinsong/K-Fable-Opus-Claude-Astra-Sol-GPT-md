@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 하드웨어 (미출시 대비)
+# Gemini 4 Neon · 하드웨어
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 하드웨어

@@ -1,5 +1,5 @@
 # Gemini 4 Oxygen — 비판적 평가·쓸 때와 쓰지 않을 때
-> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
+> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-22 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-oxygen/GEMINI.md`](../../../md/03-gemini/gemini-4-oxygen/GEMINI.md)

@@ -1,5 +1,5 @@
 # Gemini 4 Argon — 교차 확인
-> 제공자: Google · 모델 ID: `gemini-4-argon` · 기준일: 2026-11-03 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
+> 제공자: Google · 모델 ID: `gemini-4-argon` · 기준일: 2026-11-22 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-argon/GEMINI.md`](../../../md/03-gemini/gemini-4-argon/GEMINI.md)
@@ -20,14 +20,14 @@
 | 발표 / GA | 발표 2026-09-30(사이버 방어자 한정), GA 2026-10-13 | [확인] 1차(식별자 10-14) + [부분] 2차 4곳 일치 | toolhalla(Gemini API changelog 인용), tech-insider(Google Cloud 발표 인용), letsdatascience, braindetox | Apidog·OrcaRouter 일부 글은 09-30 한정 공개 시점의 서술이라 낡았다 |
 | 모델 ID | `gemini-4-argon` | [확인] 1차 + [부분] 2차 2곳 일치 | SDK 변경 기록; toolhalla, tech-insider |  |
 | 컨텍스트 / 출력 | 1,048,576(입출력 공유) / 동기 요청 기본 65,536 | [부분] 2차 3곳 일치 | codersera, toolhalla, pricepertoken | 한 목록은 출력을 32,768로 적는다 |
-| 가격 (입력/출력) | $2 / $10 (2026-11-30까지) → $4 / $20 (12-01부터), 캐시 입력 $0.10 → $0.20 | [부분] 2차 7곳 일치 | letsdatascience, fourweekmba(2건), eesel.ai, daniel vaughan, smartscope, buildmvpfast | Google 각주를 인용했다는 글이 여럿이다. Vertex AI는 소개가를 '순지출의 50% 크레딧 환급'으로 적용하고 'Gemini 4 Argon Cyber Permissive'에는 적용되지 않는다는 서술. 한 글은 각주가 기간을 정의하지 않았다고 적어 상충 |
+| 가격 (입력/출력) | $2 / $10 (2026-11-30까지) → $4 / $20 (12-01부터), 캐시 입력 $0.10 → $0.20 | [확인] 1차(AI Studio 가격 페이지, 2026-11-22) + [부분] 2차 7곳 일치 | letsdatascience, fourweekmba(2건), eesel.ai, daniel vaughan, smartscope, buildmvpfast | Google 각주를 인용했다는 글이 여럿이다. Vertex AI는 소개가를 '순지출의 50% 크레딧 환급'으로 적용하고 'Gemini 4 Argon Cyber Permissive'에는 적용되지 않는다는 서술. 한 글은 각주가 기간을 정의하지 않았다고 적어 상충 |
 | Gemini 앱 구독자 개방 | 2026-10-13 | [부분] 단일 출처 | letsdatascience | API와 앱은 다른 표면이다 |
 | 제공 표면 | Gemini API, Google AI Studio, Antigravity | [부분] 단일 출처, 일부 상충 | tech-insider, braindetox | Pro 구독의 Gemini 앱 포함 여부는 서술이 갈린다 (API와 앱은 다른 표면) |
 
 ## 아직 못 올린 것
-- blog.google, ai.google.dev가 이 환경에서 열리지 않아 공식 모델 페이지, 요금표, changelog 본문은 읽지 못했다.
+- 공식 모델 페이지와 changelog 본문은 읽지 못했다. 요금표는 2026-11-22에 AI Studio 가격 페이지로 읽었다(Batch·Flex $1 / $5 → $2 / $10, Priority $3.60 / $18 → $7.20 / $36, Contributor $1 / $5).
 - 집계 사이트는 같은 원천(OpenRouter 등)을 베낀 것일 수 있어 '곳 수'가 독립성을 보증하지 않는다.
-- 소개가가 12-01에 두 배가 되는 점은 이 문서 기준일(11-03)에서 한 달도 남지 않았으므로 쓰기 전에 요금 페이지로 다시 확인한다.
+- 도입가가 12-01에 두 배가 되는 점은 가격 페이지로 확인했다(2026-11-22 기준 9일 남음).
 
 ## 출처
 - [googleapis/python-genai CHANGELOG](https://raw.githubusercontent.com/googleapis/python-genai/main/CHANGELOG.md)

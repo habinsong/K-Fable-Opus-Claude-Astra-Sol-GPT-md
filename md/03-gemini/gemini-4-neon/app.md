@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 앱 (미출시 대비)
+# Gemini 4 Neon · 앱
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 앱 (모바일)

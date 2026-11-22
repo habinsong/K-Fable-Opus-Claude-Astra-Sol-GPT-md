@@ -41,7 +41,7 @@ docs/
 |---|---|---|
 | `01-gpt/` | OpenAI | `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol`, `gpt-6.1-terra`, `gpt-6.2-astra`, `gpt-6.2-sol` |
 | `02-claude/` | Anthropic | `fable-5.1`, `fable-5.2`, `fable-5.5`, `haiku-4.5`, `haiku-5.5`, `opus-5.5`, `sonnet-5.5` |
-| `03-gemini/` | Google | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-hydrogen`, `gemini-4-krypton`, `gemini-4-neon`, `gemini-4-oxygen` |
+| `03-gemini/` | Google | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-hydrogen`, `gemini-4-krypton`, `gemini-4-neon`, `gemini-4-oxygen`, `gemini-4-sodium` |
 | `04-grok/` | xAI | `grok-4.7`, `grok-4.8`, `grok-5` |
 | `05-deepseek/` | DeepSeek | `v4.1-flash-1017` |
 | `06-qwen/` | Alibaba | `qwen3.6-27b`, `qwen3.6-35b-a3b`, `qwen3.7-max`, `qwen3.8-2.4t-a95b`, `qwen3.8-27b`, `qwen3.8-flash-next`, `qwen3.8-max`, `qwen4-27b`, `qwen4-max` |

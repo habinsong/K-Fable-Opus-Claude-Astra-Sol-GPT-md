@@ -241,7 +241,7 @@ git switch -c 내-작업-브랜치
 |---|---|
 | `01-gpt` | `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol`, `gpt-6.1-terra`, `gpt-6.2-astra`, `gpt-6.2-sol` |
 | `02-claude` | `fable-5.1`, `fable-5.2`, `fable-5.5`(미출시, 이름만 보존), `haiku-4.5`, `haiku-5.5`, `opus-5.5`, `sonnet-5.5` |
-| `03-gemini` | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-hydrogen`, `gemini-4-neon`(미출시), `gemini-4-oxygen`(미출시, 소문), `gemini-4-krypton`(미출시, 소문) |
+| `03-gemini` | `gemini-3.8-flash`, `gemini-4-argon`, `gemini-4-carbon`, `gemini-4-hydrogen`, `gemini-4-neon`, `gemini-4-oxygen`(미출시, 소문), `gemini-4-krypton`(미출시, 소문), `gemini-4-sodium`(미출시, 소문) |
 | `04-grok` | `grok-4.7`, `grok-4.8`(곧 출시), `grok-5`(가까운 미래에 출시) |
 | `05-deepseek` | `v4.1-flash-1017` |
 | `06-qwen` | `qwen3.6-27b`, `qwen3.6-35b-a3b`, `qwen3.7-max`, `qwen3.8-2.4t-a95b`, `qwen3.8-27b`, `qwen3.8-flash-next`, `qwen3.8-max`, `qwen4-27b`(미출시), `qwen4-max` |
@@ -316,7 +316,7 @@ python3 -I -m unittest discover -s scripts/tests
 
 ## 알려진 한계
 
-- 본 조사는 조사 시점의 최신 공개 자료를 기준으로 작성되었습니다. 미출시 모델 9종(Fable 5.5, Gemini 4 Neon, Gemini 4 Oxygen, Gemini 4 Krypton, GLM-5.5, Grok 4.8, Grok 5, Kanana 2.5, Qwen4-27B)의 상태는 2026-11-19 기준으로 재검토를 거쳤으나 최신 출처는 대체로 직전 배포 시점 기준입니다. 이후 발표된 세부 변경 사항은 반영되지 않았을 수 있습니다.
+- 본 조사는 조사 시점의 최신 공개 자료를 기준으로 작성되었습니다. 미출시 모델 9종(Fable 5.5, Gemini 4 Oxygen, Gemini 4 Krypton, Gemini 4 Sodium, GLM-5.5, Grok 4.8, Grok 5, Kanana 2.5, Qwen4-27B)의 상태는 2026-11-22 기준으로 재검토를 거쳤으나 최신 출처는 대체로 직전 배포 시점 기준입니다. 이후 발표된 세부 변경 사항은 반영되지 않았을 수 있습니다.
 - 모델별 상세 교차 검증 결과는 `docs/계열/모델/xcheck.md`에 투명하게 기재해 두었습니다. 식별자, 단가, 컨텍스트 크기는 중요한 의사결정 전에 공식 1차 문서를 통해 한 번 더 확인하시는 것이 안전합니다.
 - 모델별 한국어 문체에 대한 대규모 독립 실측 자료는 아직 공개된 바가 적어 정량 규칙의 일부 수치는 프로젝트 저자의 자체 보고에 기초하고 있습니다.
 

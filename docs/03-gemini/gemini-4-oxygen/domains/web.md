@@ -1,5 +1,5 @@
 # Gemini 4 Oxygen · 웹 — 조사 기록
-> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
+> 제공자: Google · 모델 ID: 미공개 [미확인] (코드명 소문) · 기준일: 2026-11-22 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사·검증 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-oxygen/web.md`](../../../../md/03-gemini/gemini-4-oxygen/web.md)
@@ -7,7 +7,7 @@
 > 분야 규칙의 근거 수준 표기 원본: [`docs/_common/domain-rules/web.md`](../../../_common/domain-rules/web.md)
 
 ## 2. 이 모델의 웹 작업 운용 (잠정)
-2026-11-19 기준 Gemini 4 Oxygen은 공식 발표가 없고 모델 ID·사양이 확인되지 않았다.
+2026-11-22 기준 Gemini 4 Oxygen은 공식 발표가 없고 모델 ID·사양이 확인되지 않았다.
 모델 상태와 공개 시 확인 체크리스트는 상위 폴더의 [`README.md`](../README.md)가 안내하는 개요·운용·비판 문서를 따른다. 공개 전에는 `03-gemini/gemini-4-hydrogen/web.md`(Gemini 4 Hydrogen)의 규칙을 잠정 기준선으로 삼는다. [추정]
 
 **공개 뒤 웹 작업에서 따로 확인할 것**

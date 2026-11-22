@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 네이티브 (미출시 대비)
+# Gemini 4 Neon · 네이티브
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 네이티브 프로그램

@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 웹 리서치 (미출시 대비)
+# Gemini 4 Neon · 웹 리서치
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 웹 리서치

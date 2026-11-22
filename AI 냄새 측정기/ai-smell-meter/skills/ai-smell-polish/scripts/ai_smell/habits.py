@@ -315,10 +315,58 @@ def opaque_labels(masked: str, genre: str) -> List[Finding]:
                 sugg="이름을 처음 쓸 때 무엇인지 한 줄로 풀거나, 이름 대신 실제 동작을 쓴다.", text=next(iter(seen)))]
 
 
+_PRED_END = ("합니다|됩니다|했습니다|됐습니다|하였습니다|되었습니다|한다|된다|했다|됐다|하며|되며|하고|되고|하여|되어|하면서|되면서|"
+             "시킵니다|시키며|시킨다")
+_PRED = re.compile(r"(?<![가-힣])(?P<r>[가-힣]{2,6}?)(?P<e>" + _PRED_END + r")(?![가-힣])")
+_FINAL = {"합니다", "됩니다", "했습니다", "됐습니다", "하였습니다", "되었습니다", "한다", "된다", "했다", "됐다"}
+# 하다/되다 계열은 어간이 달라도('연결합니다', '유지됩니다') 같은 종결 어미로 읽히므로 한 묶음으로 센다.
+_ENDING_CLASS = {"합니다": "~합니다/~됩니다", "됩니다": "~합니다/~됩니다", "했습니다": "~했습니다/~됐습니다",
+                 "됐습니다": "~했습니다/~됐습니다", "하였습니다": "~했습니다/~됐습니다", "되었습니다": "~했습니다/~됐습니다",
+                 "한다": "~한다/~된다", "된다": "~한다/~된다", "했다": "~했다/~됐다", "됐다": "~했다/~됐다"}
+
+
+def predicate_repeat(masked: str, sents: Sequence[Span], genre: str) -> List[Finding]:
+    """같은 서술어를 어미만 바꿔 잇달아 쓴다('유지되며 ... 유지됩니다'), 같은 종결 어미가 두 문장 연속된다."""
+    out: List[Finding] = []
+    ko = [sp for sp in sents if re.search(r"[가-힣]", masked[sp[0]:sp[1]])
+          and not masked[sp[0]:sp[1]].lstrip().startswith(SKIP) and not LISTISH.match(masked[sp[0]:sp[1]])]
+    prev_roots: List[str] = []
+    prev_end = ""
+    run = 1
+    for a, b in ko:
+        seg = masked[a:b]
+        found = [(m.group("r"), m.group("e")) for m in _PRED.finditer(seg)]
+        finals = [(r, e) for r, e in found if e in _FINAL]
+        last_root, last_end = finals[-1] if finals and re.search(rf"{re.escape(finals[-1][1])}[^가-힣]*$", seg) else ("", "")
+        if last_root:
+            same_in = [r for r, e in found[:-1] if r == last_root]
+            if same_in:
+                out.append(_mk("ko.rhythm.verb-restate", "rhythm", "C", a, b, 0.35, genre,
+                               f"한 문장에서 '{last_root}'를 어미만 바꿔 되풀이한다.", lang="ko", text=seg[:40],
+                               sugg="앞 절은 다른 동사로 바꾸거나 한 번만 쓴다."))
+            elif last_root in prev_roots:
+                out.append(_mk("ko.rhythm.verb-restate", "rhythm", "C", a, b, 0.35, genre,
+                               f"앞 문장에 나온 '{last_root}'를 어미만 바꿔 다시 쓴다.", lang="ko", text=seg[:40],
+                               sugg="앞 문장과 합치거나 다른 동사로 바꾼다."))
+        last_end = _ENDING_CLASS.get(last_end, "")
+        if last_end and last_end == prev_end:
+            run += 1
+            if run == 2:
+                out.append(_mk("ko.rhythm.pair-ending", "rhythm", "C", a, b, 0.2, genre,
+                               f"같은 종결 어미('{last_end}')가 두 문장 연속된다(어간만 다르다).", lang="ko", text=seg[:40],
+                               sugg="한쪽 문장의 구조나 종결 형태를 바꾼다."))
+        else:
+            run = 1
+        prev_end = last_end
+        prev_roots = [r for r, _ in found]
+    return out
+
+
 def signals(text: str, masked: str, sents: Sequence[Span], paras: Sequence[Span], units: int,
             genre: str) -> List[Finding]:
     return (label_colon(masked, genre) + english_gloss(masked, units, genre) + ko_commas(masked, genre) +
             synonym_cycling(masked, sents, paras, genre) + word_echo(masked, sents, paras, genre) + trace_word(masked, paras, genre) + self_reference(masked, genre) +
             rhythm_band(masked, sents, paras, genre) +
             punct_flat(masked, sents, paras, genre) + headings(masked, genre) +
-            doc_register(masked, sents, paras, genre) + opaque_labels(masked, genre))
+            doc_register(masked, sents, paras, genre) + opaque_labels(masked, genre) +
+            predicate_repeat(masked, sents, genre))

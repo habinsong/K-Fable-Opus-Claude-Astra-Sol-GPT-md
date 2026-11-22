@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 펌웨어 (미출시 대비)
+# Gemini 4 Neon · 펌웨어
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 펌웨어

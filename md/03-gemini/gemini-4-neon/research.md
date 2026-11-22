@@ -1,4 +1,4 @@
-# Gemini 4 Neon · 연구 (미출시 대비)
+# Gemini 4 Neon · 연구
 
 <!-- BEGIN:domain -->
 ## 1. 분야 규칙 — 연구

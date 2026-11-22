@@ -1,5 +1,5 @@
 # Gemini 4 Carbon — 비판적 평가·쓸 때와 쓰지 않을 때
-> 제공자: Google · 모델 ID: `gemini-4-carbon` · 기준일: 2026-11-19 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
+> 제공자: Google · 모델 ID: `gemini-4-carbon` · 기준일: 2026-11-22 · 근거 표기: [확인]·[부분]·[미확인] (정의는 docs/README.md의 근거 수준)
 
 > 사람이 읽는 조사 기록이다. LLM 컨텍스트에 넣지 않는다.
 > 컨텍스트용 지침: [`md/03-gemini/gemini-4-carbon/GEMINI.md`](../../../md/03-gemini/gemini-4-carbon/GEMINI.md)
@@ -7,6 +7,7 @@
 
 #### 2.5 비판적 점검
 - **벤더 1위 주장은 지수 하나의 결과다.** 발표 때 Google은 Carbon이 지수 1위라고 했지만 일반 공개 뒤 보도에서는 Fable 5.2가 65, Carbon이 60이다. 지표별로 순위가 갈린다: Terminal-Bench 4.0과 Zapier AutomationBench에서는 Carbon이 앞서고 FrontierCode 2.0과 FrontierSWE v2에서는 Fable 5.2가 앞선다는 2차 정리가 있다. [부분]
+- **같은 회사의 Neon이 지수에서 Carbon과 비슷하거나 앞선다고 Google이 적었다.** Neon 61(`xhigh`, Google 인용)과 이 저장소의 Carbon 60(`high`)은 단계와 시점이 달라 서열로 읽지 않는다. 다만 Carbon만이 Google 최상위라는 서술은 근거가 약해졌다. Google은 Carbon을 가장 어려운 장기 프로젝트용으로 둔다. [부분]
 - **가격 이점은 도입가 한정이다.** 도입가($2/$10)는 Fable 5.2의 4분의 1이지만 2026-12-01부터 $4/$20으로 절반이다. [부분]
 - **보호 장치 없는 벤치마크는 배포 성능이 아니다.** 사이버 수치는 안전장치 없이 평가한 값이다. 배포 모델이 실제로 거부하는 범위는 따로 측정해야 한다. [부분]
 - **이 저장소의 Gemini 계열 경고는 그대로다.** 전역 규칙 무시, 없는 사실 날조 사례를 근거로 여전히 권장하지 않는다. [추정]
